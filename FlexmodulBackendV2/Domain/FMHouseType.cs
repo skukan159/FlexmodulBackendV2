@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FlexmodulAPI.Models
+namespace FlexmodulBackendV2.Domain
 {
-    public class FMHouseType
+    public class FmHouseType
     {
-        public int FMHouseTypeId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         [Required]
         public int HouseType { get; set; }
         public ICollection<MaterialOnHouseType> MaterialsOnHouse { get; set; }

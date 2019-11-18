@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FlexmodulAPI.Data;
 using FlexmodulBackendV2.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +29,7 @@ namespace FlexmodulBackendV2
 
                 try
                 {
-                    DBInitializer.Initialize(dbContext);
+                    DbInitializer.Initialize(dbContext);
                 }
                 catch (Exception ex)
                 {
@@ -38,7 +37,6 @@ namespace FlexmodulBackendV2
                     logger.LogError(ex, "An error occurred creating the DB.");
                 }
 
-                //Todo: Uncomment this when the rest of the app works
                 var roleManager = serviceScope.ServiceProvider
                     .GetRequiredService<RoleManager<IdentityRole>>();
 

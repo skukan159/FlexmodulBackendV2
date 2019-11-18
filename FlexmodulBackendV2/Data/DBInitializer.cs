@@ -1,17 +1,16 @@
-﻿using FlexmodulAPI.Models;
-using System;
+﻿using System;
 using System.Linq;
-using FlexmodulBackendV2.Data;
+using FlexmodulBackendV2.Domain;
 
-namespace FlexmodulAPI.Data
+namespace FlexmodulBackendV2.Data
 {
-    public static class DBInitializer
+    public static class DbInitializer
     {
         public static void Initialize(ApplicationDbContext context)
         {
             //context.Database.EnsureCreated();
 
-            if (context.FMHouseType.Any())
+            if (context.FmHouseTypes.Any())
             {
                 return;   // DB has been seeded
             }
@@ -73,24 +72,24 @@ namespace FlexmodulAPI.Data
 
             foreach (Customer customer in customers)
             {
-                context.Customer.Add(customer);
+                context.Customers.Add(customer);
             }
 
             context.SaveChanges();
 
 
-            var houseTypes = new FMHouseType[]
+            var houseTypes = new FmHouseType[]
             {
-                new FMHouseType { HouseType = 1},
-                new FMHouseType { HouseType = 2},
-                new FMHouseType { HouseType = 3},
-                new FMHouseType { HouseType = 4},
-                new FMHouseType { HouseType = 5},
+                new FmHouseType { HouseType = 1},
+                new FmHouseType { HouseType = 2},
+                new FmHouseType { HouseType = 3},
+                new FmHouseType { HouseType = 4},
+                new FmHouseType { HouseType = 5},
             };
 
-            foreach (FMHouseType s in houseTypes)
+            foreach (FmHouseType s in houseTypes)
             {
-                context.FMHouseType.Add(s);
+                context.FmHouseTypes.Add(s);
             }
             context.SaveChanges();
 
@@ -115,66 +114,66 @@ namespace FlexmodulAPI.Data
 
             foreach (Material m in materials)
             {
-                context.Material.Add(m);
+                context.Materials.Add(m);
             }
             context.SaveChanges();
 
             var materialsOnHouses = new MaterialOnHouseType[]
             {
                 new MaterialOnHouseType { 
-                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").MaterialId,
-                    FMHouseTypeId = houseTypes.Single( h => h.HouseType == 1).FMHouseTypeId
+                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").Id,
+                    FmHouseTypeId = houseTypes.Single( h => h.HouseType == 1).Id
                 },
                 new MaterialOnHouseType {
-                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").MaterialId,
-                    FMHouseTypeId = houseTypes.Single( h => h.HouseType ==2).FMHouseTypeId
+                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").Id,
+                    FmHouseTypeId = houseTypes.Single( h => h.HouseType ==2).Id
                 },
                 new MaterialOnHouseType {
-                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").MaterialId,
-                    FMHouseTypeId = houseTypes.Single( h => h.HouseType == 3).FMHouseTypeId
+                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").Id,
+                    FmHouseTypeId = houseTypes.Single( h => h.HouseType == 3).Id
                 },
                 new MaterialOnHouseType {
-                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").MaterialId,
-                    FMHouseTypeId = houseTypes.Single( h => h.HouseType == 4).FMHouseTypeId
+                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").Id,
+                    FmHouseTypeId = houseTypes.Single( h => h.HouseType == 4).Id
                 },
                 new MaterialOnHouseType {
-                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").MaterialId,
-                    FMHouseTypeId = houseTypes.Single( h => h.HouseType == 5).FMHouseTypeId
+                    MaterialId = materials.Single( s => s.Name == "12 MM OSB").Id,
+                    FmHouseTypeId = houseTypes.Single( h => h.HouseType == 5).Id
                 },
 
                 new MaterialOnHouseType {
-                    MaterialId = materials.Single( s => s.Name == "45x195 mm regel").MaterialId,
-                    FMHouseTypeId = houseTypes.Single( h => h.HouseType == 5).FMHouseTypeId
+                    MaterialId = materials.Single( s => s.Name == "45x195 mm regel").Id,
+                    FmHouseTypeId = houseTypes.Single( h => h.HouseType == 5).Id
                 },
 
             };
 
              foreach (MaterialOnHouseType mat in materialsOnHouses)
              {
-                 context.MaterialOnHouseType.Add(mat);
+                 context.MaterialOnHouseTypes.Add(mat);
              }
              context.SaveChanges();
 
-            var fmHouses = new FMHouse[]
+            var fmHouses = new FmHouse[]
             {
-                new FMHouse {
+                new FmHouse {
                     HouseType = houseTypes.Single( ht => ht.HouseType == 1),
                     SquareMeters = 23,
                 },
-                new FMHouse {
+                new FmHouse {
                     HouseType = houseTypes.Single( ht => ht.HouseType == 2),
                     SquareMeters = 33,
                 },
-                new FMHouse {
+                new FmHouse {
                     HouseType = houseTypes.Single( ht => ht.HouseType == 3),
                     SquareMeters = 50,
                 },
 
             };
 
-            foreach (FMHouse h in fmHouses)
+            foreach (FmHouse h in fmHouses)
             {
-                context.FMHouse.Add(h);
+                context.FmHouses.Add(h);
             }
             context.SaveChanges();
 
@@ -211,7 +210,7 @@ namespace FlexmodulAPI.Data
 
             foreach (ProductionInformation pi in productionInformations)
             {
-                context.ProductionInformation.Add(pi);
+                context.ProductionInformations.Add(pi);
             }
             context.SaveChanges();
 
@@ -258,19 +257,19 @@ namespace FlexmodulAPI.Data
             var rents = new Rent[]
             {
                 new Rent {
-                    HouseProductionInfo = productionInformations.Single( pi => pi.House == houseType1),
+                    ProductionInformation = productionInformations.Single( pi => pi.House == houseType1),
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now,
                     RentPrice = 10000f,
                 },
                 new Rent {
-                    HouseProductionInfo = productionInformations.Single( pi => pi.House == houseType2),
+                    ProductionInformation = productionInformations.Single( pi => pi.House == houseType2),
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now,
                     RentPrice = 15000f,
                 },
                 new Rent {
-                    HouseProductionInfo = productionInformations.Single( pi => pi.House == houseType3),
+                    ProductionInformation = productionInformations.Single( pi => pi.House == houseType3),
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now,
                     RentPrice = 9000f,
@@ -280,7 +279,7 @@ namespace FlexmodulAPI.Data
 
             foreach (Rent r in rents)
             {
-                context.Rent.Add(r);
+                context.Rents.Add(r);
             }
             context.SaveChanges();
 
@@ -317,7 +316,7 @@ namespace FlexmodulAPI.Data
 
             foreach (RentalOverview ro in rentalOverviews)
             {
-                context.RentalOverview.Add(ro);
+                context.RentalOverviews.Add(ro);
             }
             context.SaveChanges();
 

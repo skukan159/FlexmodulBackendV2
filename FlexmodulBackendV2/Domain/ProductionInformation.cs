@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FlexmodulAPI.Models
+namespace FlexmodulBackendV2.Domain
 {
     public class ProductionInformation
     {
-        public int ProductionInformationId { get; set; }
-        public FMHouse House { get; set; }
-        public int HouseId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public Guid HouseId { get; set; }
+        public FmHouse House { get; set; }
+        public List<Rent> Rents { get; set; }
         [Required]
         public Customer Customer { get; set; }
         public int? ExteriorWalls { get; set; }
@@ -20,7 +20,7 @@ namespace FlexmodulAPI.Models
         public int ProductionPrice { get; set; }
         [Required]
         public DateTime ProductionDate { get; set; }
-        public ICollection<AdditionalCosts> AdditionalCosts { get; set; }
+        public ICollection<AdditionalCost> AdditionalCosts { get; set; }
         [Required]
         public User LastUpdatedBy { get; set; }
         [Required]

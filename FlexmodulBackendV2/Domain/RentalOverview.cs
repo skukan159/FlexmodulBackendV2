@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace FlexmodulAPI.Models
+namespace FlexmodulBackendV2.Domain
 {
     public class RentalOverview
     {
@@ -15,9 +14,9 @@ namespace FlexmodulAPI.Models
             Stock,
             SoldOut
         }
-
-        public int RentalOverviewId { get; set; }
-        public ICollection<FMHouse> RentedHouses { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public ICollection<FmHouse> RentedHouses { get; set; }
         public ICollection<ProductionInformation> ProductionInformation { get; set; }
         public PurchaseStatuses PurchaseStatus { get; set; }
         public string SetupAddressTown { get; set; }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace FlexmodulAPI.Models
+namespace FlexmodulBackendV2.Domain
 {
     public class Material
     {
@@ -18,8 +16,8 @@ namespace FlexmodulAPI.Models
             RoofCeiling
         }
 
-
-        public int MaterialId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public HouseSections HouseSection { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }

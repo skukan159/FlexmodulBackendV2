@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Options;
 using FlexmodulBackendV2.Services;
+using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

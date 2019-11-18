@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace FlexmodulAPI.Models
+namespace FlexmodulBackendV2.Domain
 {
     public class Customer
     {
-        public int CustomerId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string CompanyName { get; set; }
         public string CompanyTown { get; set; }
         public string CompanyStreet { get; set; }

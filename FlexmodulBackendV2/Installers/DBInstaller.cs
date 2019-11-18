@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
+using FlexmodulBackendV2.Services;
+using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,11 +19,17 @@ namespace FlexmodulBackendV2.Installers
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
-                //TODO: uncomment when the rest of the app works
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IAdditionalCostsService, AdditionalCostsService>();
+            services.AddScoped<IFmHouseTypesService, FmHouseTypesService>();
+            services.AddScoped<IFmHousesService, FmHousesService>();
+            services.AddScoped<IMaterialsService, MaterialsService>();
+            services.AddScoped<IProductionInformationsService, ProductionInformationsService>();
+            services.AddScoped<IRentalOverviewsService, RentalOverviewsService>();
+            services.AddScoped<IRentsService, RentsService>();
         }
     }
 }

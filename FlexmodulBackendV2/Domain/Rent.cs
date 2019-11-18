@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FlexmodulAPI.Models
+namespace FlexmodulBackendV2.Domain
 {
     public class Rent
     {
-        public int RentId { get; set; }
-        public ProductionInformation HouseProductionInfo { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public Guid ProductionInformationId { get; set; }
+        public ProductionInformation ProductionInformation { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public float InsurancePrice { get; set; }
