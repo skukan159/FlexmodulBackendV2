@@ -1,120 +1,106 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FlexmodulBackendV2.Data;
+using FlexmodulBackendV2.Contracts.V1;
+using FlexmodulBackendV2.Contracts.V1.Requests.MaterialOnHouseType;
+using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Domain;
+using FlexmodulBackendV2.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
-    [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MaterialOnHouseTypesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
 
-        public MaterialOnHouseTypesController(ApplicationDbContext context)
+        private readonly IMaterialOnHouseTypesService _materialOnHouseTypesService;
+
+        public MaterialOnHouseTypesController(IMaterialOnHouseTypesService materialOnHouseTypesService)
         {
-            _context = context;
+            _materialOnHouseTypesService = materialOnHouseTypesService;
         }
 
-        // GET: api/MaterialOnHouseTypes
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MaterialOnHouseType>>> GetMaterialOnHouseType()
+
+        [HttpGet(ApiRoutes.MaterialOnHouseTypes.GetAll)]
+        public async Task<ActionResult<IEnumerable<MaterialOnHouseType>>> GetAll()
         {
-            return await _context.MaterialOnHouseTypes.ToListAsync();
+            var materialOnHouseType = await _materialOnHouseTypesService.GetMaterialOnHouseTypesAsync();
+            var materialOnHouseTypeResponses = materialOnHouseType
+                .Select(MaterialOnHouseTypeToMaterialOnHouseTypeResponse).ToList();
+            return Ok(materialOnHouseTypeResponses);
         }
 
-        // GET: api/MaterialOnHouseTypes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<MaterialOnHouseType>> GetMaterialOnHouseType(int id)
+        [HttpGet(ApiRoutes.MaterialOnHouseTypes.Get)]
+        public async Task<ActionResult<MaterialOnHouseType>> Get([FromRoute] Guid id)
         {
-            var materialOnHouseType = await _context.MaterialOnHouseTypes.FindAsync(id);
-
+            var materialOnHouseType = await _materialOnHouseTypesService
+                .GetMaterialOnHouseTypeByIdAsync(id);
             if (materialOnHouseType == null)
-            {
                 return NotFound();
-            }
-
-            return materialOnHouseType;
+            return base.Ok(MaterialOnHouseTypeToMaterialOnHouseTypeResponse(materialOnHouseType));
         }
 
-        // PUT: api/MaterialOnHouseTypes/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMaterialOnHouseType(int id, MaterialOnHouseType materialOnHouseType)
+        //public async Task<IActionResult> Update([FromRoute] Guid materialId, [FromBody] UpdateMaterialRequest request)
+        [HttpPut(ApiRoutes.MaterialOnHouseTypes.Update)]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMaterialOnHouseTypeRequest request)//, MaterialOnHouseType materialOnHouseType)
         {
-            if (id.ToString() != materialOnHouseType.FmHouseTypeId.ToString())
-            {
-                return BadRequest();
-            }
+            var materialOnHouseType = await _materialOnHouseTypesService.GetMaterialOnHouseTypeByIdAsync(id);
+            materialOnHouseType.FmHouseTypeId = request.FmHouseTypeId;
+            materialOnHouseType.MaterialId = request.MaterialId;
+            materialOnHouseType.MaterialAmount = request.MaterialAmount;
 
-            _context.Entry(materialOnHouseType).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MaterialOnHouseTypeExists(id.ToString()))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updated = await _materialOnHouseTypesService.UpdateMaterialOnHouseTypeAsync(materialOnHouseType);
+            if (updated)
+                return Ok(MaterialOnHouseTypeToMaterialOnHouseTypeResponse(materialOnHouseType));
+            return NotFound();
         }
 
-        // POST: api/MaterialOnHouseTypes
-        [HttpPost]
-        public async Task<ActionResult<MaterialOnHouseType>> PostMaterialOnHouseType(MaterialOnHouseType materialOnHouseType)
+        [HttpPost(ApiRoutes.MaterialOnHouseTypes.Create)]
+        public async Task<IActionResult> Create([FromBody] CreateMaterialOnHouseTypeRequest materialOnHouseTypeRequest)
         {
-            _context.MaterialOnHouseTypes.Add(materialOnHouseType);
-            try
+            var materialOnHouseType = new MaterialOnHouseType
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (MaterialOnHouseTypeExists(materialOnHouseType.FmHouseTypeId.ToString()))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                MaterialId =  materialOnHouseTypeRequest.MaterialId,
+                FmHouseTypeId = materialOnHouseTypeRequest.FmHouseTypeId,
+                MaterialAmount = materialOnHouseTypeRequest.MaterialAmount
+            };
 
-            return CreatedAtAction("GetMaterialOnHouseType", new { id = materialOnHouseType.FmHouseTypeId }, materialOnHouseType);
+            await _materialOnHouseTypesService.CreateMaterialOnHouseTypeAsync(materialOnHouseType);
+
+            var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
+            var locationuri = baseurl + "/" + ApiRoutes.MaterialOnHouseTypes.Get.Replace("{materialOnHouseTypeId}", materialOnHouseType.Id.ToString());
+
+            var response = MaterialOnHouseTypeToMaterialOnHouseTypeResponse(materialOnHouseType);
+            return Created(locationuri, response);
         }
 
-        // DELETE: api/MaterialOnHouseTypes/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<MaterialOnHouseType>> DeleteMaterialOnHouseType(int id)
+        [HttpDelete(ApiRoutes.MaterialOnHouseTypes.Delete)]
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            var materialOnHouseType = await _context.MaterialOnHouseTypes.FindAsync(id);
-            if (materialOnHouseType == null)
-            {
-                return NotFound();
-            }
+            var deleted = await _materialOnHouseTypesService.DeleteMaterialOnHouseTypeAsync(id);
+            if (deleted)
+                return NoContent();
 
-            _context.MaterialOnHouseTypes.Remove(materialOnHouseType);
-            await _context.SaveChangesAsync();
-
-            return materialOnHouseType;
+            return NotFound();
         }
 
-        private bool MaterialOnHouseTypeExists(string id)
+        public static MaterialOnHouseTypeResponse MaterialOnHouseTypeToMaterialOnHouseTypeResponse
+            (MaterialOnHouseType materialOnHouseType)
         {
-            return _context.MaterialOnHouseTypes.Any(e => e.FmHouseTypeId.ToString() == id);
+            return new MaterialOnHouseTypeResponse
+            {
+                Id =  materialOnHouseType.Id,
+                MaterialId = materialOnHouseType.MaterialId,
+                FmHouseTypeId = materialOnHouseType.FmHouseTypeId,
+                MaterialAmount = materialOnHouseType.MaterialAmount
+            };
         }
     }
 }

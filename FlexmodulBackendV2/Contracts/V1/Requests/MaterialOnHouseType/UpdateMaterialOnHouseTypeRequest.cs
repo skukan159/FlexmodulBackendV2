@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlexmodulBackendV2.Contracts.V1.Responses
+namespace FlexmodulBackendV2.Contracts.V1.Requests.MaterialOnHouseType
 {
-    public class MaterialOnHouseTypeResponse
+    public class UpdateMaterialOnHouseTypeRequest
     {
-        public Guid Id { get; set; }
         public Guid MaterialId { get; set; }
         public Guid FmHouseTypeId { get; set; }
         public Domain.Material Material { get; set; }

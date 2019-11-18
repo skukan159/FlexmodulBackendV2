@@ -10,8 +10,8 @@ namespace FlexmodulBackendV2.Services.ServiceInterfaces
     {
         Task<bool> CreateMaterialOnHouseTypeAsync(MaterialOnHouseType materialOnHouseType);
         Task<List<MaterialOnHouseType>> GetMaterialOnHouseTypesAsync();
-        Task<MaterialOnHouseType> GetMaterialOnHouseTypeByIdAsync(Guid materialOnHouseTypeId);
+        Task<MaterialOnHouseType> GetMaterialOnHouseTypeByIdAsync(Guid id);
         Task<bool> UpdateMaterialOnHouseTypeAsync(MaterialOnHouseType materialOnHouseType);
-        Task<bool> DeleteMaterialOnHouseTypeAsync(Guid materialOnHouseTypeId);
+        Task<bool> DeleteMaterialOnHouseTypeAsync(Guid id);
     }
 }

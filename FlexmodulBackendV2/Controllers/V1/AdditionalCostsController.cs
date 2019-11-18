@@ -9,6 +9,8 @@ using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AdditionalCostsController : Controller
     {
         private readonly IAdditionalCostsService _additionalCostsService;

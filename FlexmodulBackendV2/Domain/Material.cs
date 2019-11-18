@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FlexmodulBackendV2.Domain
@@ -24,5 +25,6 @@ namespace FlexmodulBackendV2.Domain
         public string Supplier { get; set; }
         public string Units { get; set; }
         public float PricePerUnit { get; set; }
+        public List<MaterialOnHouseType> MaterialOnHouseTypes { get; set; }
     }
 }

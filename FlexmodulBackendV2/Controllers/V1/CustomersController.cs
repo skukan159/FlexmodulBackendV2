@@ -6,15 +6,15 @@ using FlexmodulBackendV2.Contracts.V1.Requests.Customer;
 using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
-    //Todo: Enable this functionality
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    //[Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[ApiController]
     public class CustomersController : Controller//ControllerBase
     {

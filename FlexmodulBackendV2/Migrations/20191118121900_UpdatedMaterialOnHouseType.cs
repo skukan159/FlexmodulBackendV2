@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlexmodulBackendV2.Migrations
 {
-    public partial class UpdatedKeysToGuid : Migration
+    public partial class UpdatedMaterialOnHouseType : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -255,16 +255,17 @@ namespace FlexmodulBackendV2.Migrations
                 name: "MaterialOnHouseTypes",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(nullable: false),
                     MaterialId = table.Column<Guid>(nullable: false),
-                    FMHouseTypeId = table.Column<Guid>(nullable: false),
+                    FmHouseTypeId = table.Column<Guid>(nullable: false),
                     MaterialAmount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaterialOnHouseTypes", x => new { x.FMHouseTypeId, x.MaterialId });
+                    table.PrimaryKey("PK_MaterialOnHouseTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MaterialOnHouseTypes_FmHouseTypes_FMHouseTypeId",
-                        column: x => x.FMHouseTypeId,
+                        name: "FK_MaterialOnHouseTypes_FmHouseTypes_FmHouseTypeId",
+                        column: x => x.FmHouseTypeId,
                         principalTable: "FmHouseTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -373,8 +374,8 @@ namespace FlexmodulBackendV2.Migrations
                 name: "Rents",
                 columns: table => new
                 {
-                    RentId = table.Column<Guid>(nullable: false),
-                    HouseProductionInfoId = table.Column<Guid>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    ProductionInformationId = table.Column<Guid>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
                     InsurancePrice = table.Column<float>(nullable: false),
@@ -382,13 +383,13 @@ namespace FlexmodulBackendV2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rents", x => x.RentId);
+                    table.PrimaryKey("PK_Rents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rents_ProductionInformations_HouseProductionInfoId",
-                        column: x => x.HouseProductionInfoId,
+                        name: "FK_Rents_ProductionInformations_ProductionInformationId",
+                        column: x => x.ProductionInformationId,
                         principalTable: "ProductionInformations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -446,6 +447,11 @@ namespace FlexmodulBackendV2.Migrations
                 column: "RentalOverviewId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MaterialOnHouseTypes_FmHouseTypeId",
+                table: "MaterialOnHouseTypes",
+                column: "FmHouseTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MaterialOnHouseTypes_MaterialId",
                 table: "MaterialOnHouseTypes",
                 column: "MaterialId");
@@ -476,9 +482,9 @@ namespace FlexmodulBackendV2.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rents_HouseProductionInfoId",
+                name: "IX_Rents_ProductionInformationId",
                 table: "Rents",
-                column: "HouseProductionInfoId");
+                column: "ProductionInformationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

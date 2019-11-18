@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlexmodulBackendV2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191112091149_UpdatedKeysToGuid")]
-    partial class UpdatedKeysToGuid
+    [Migration("20191118121900_UpdatedMaterialOnHouseType")]
+    partial class UpdatedMaterialOnHouseType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace FlexmodulBackendV2.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("FlexmodulAPI.Models.AdditionalCosts", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.AdditionalCost", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -41,7 +41,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.ToTable("AdditionalCosts");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.Customer", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -63,7 +63,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.FMHouse", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.FmHouse", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -83,7 +83,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.ToTable("FmHouses");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.FMHouseType", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.FmHouseType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -95,7 +95,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.ToTable("FmHouseTypes");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.Material", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.Material", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -117,22 +117,27 @@ namespace FlexmodulBackendV2.Migrations
                     b.ToTable("Materials");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.MaterialOnHouseType", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.MaterialOnHouseType", b =>
                 {
-                    b.Property<Guid>("FMHouseTypeId");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("MaterialId");
+                    b.Property<Guid>("FmHouseTypeId");
 
                     b.Property<int>("MaterialAmount");
 
-                    b.HasKey("FMHouseTypeId", "MaterialId");
+                    b.Property<Guid>("MaterialId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FmHouseTypeId");
 
                     b.HasIndex("MaterialId");
 
                     b.ToTable("MaterialOnHouseTypes");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.ProductionInformation", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.ProductionInformation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -172,63 +177,6 @@ namespace FlexmodulBackendV2.Migrations
                     b.ToTable("ProductionInformations");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.Rent", b =>
-                {
-                    b.Property<Guid>("RentId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<Guid?>("HouseProductionInfoId");
-
-                    b.Property<float>("InsurancePrice");
-
-                    b.Property<float>("RentPrice");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.HasKey("RentId");
-
-                    b.HasIndex("HouseProductionInfoId");
-
-                    b.ToTable("Rents");
-                });
-
-            modelBuilder.Entity("FlexmodulAPI.Models.RentalOverview", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<float>("EstimatedPrice");
-
-                    b.Property<int>("PurchaseStatus");
-
-                    b.Property<int>("SetupAddressPostalCode");
-
-                    b.Property<string>("SetupAddressStreet");
-
-                    b.Property<string>("SetupAddressTown");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RentalOverviews");
-                });
-
-            modelBuilder.Entity("FlexmodulAPI.Models.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AuthenticationLevel");
-
-                    b.Property<string>("Username")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("FlexmodulBackendV2.Domain.RefreshToken", b =>
                 {
                     b.Property<string>("Token")
@@ -251,6 +199,63 @@ namespace FlexmodulBackendV2.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.Rent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<float>("InsurancePrice");
+
+                    b.Property<Guid>("ProductionInformationId");
+
+                    b.Property<float>("RentPrice");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductionInformationId");
+
+                    b.ToTable("Rents");
+                });
+
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.RentalOverview", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("EstimatedPrice");
+
+                    b.Property<int>("PurchaseStatus");
+
+                    b.Property<int>("SetupAddressPostalCode");
+
+                    b.Property<string>("SetupAddressStreet");
+
+                    b.Property<string>("SetupAddressTown");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RentalOverviews");
+                });
+
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AuthenticationLevel");
+
+                    b.Property<string>("Username")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -418,65 +423,58 @@ namespace FlexmodulBackendV2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.AdditionalCosts", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.AdditionalCost", b =>
                 {
-                    b.HasOne("FlexmodulAPI.Models.ProductionInformation")
+                    b.HasOne("FlexmodulBackendV2.Domain.ProductionInformation")
                         .WithMany("AdditionalCosts")
                         .HasForeignKey("ProductionInformationId");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.FMHouse", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.FmHouse", b =>
                 {
-                    b.HasOne("FlexmodulAPI.Models.FMHouseType", "HouseType")
+                    b.HasOne("FlexmodulBackendV2.Domain.FmHouseType", "HouseType")
                         .WithMany()
                         .HasForeignKey("HouseTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlexmodulAPI.Models.RentalOverview")
+                    b.HasOne("FlexmodulBackendV2.Domain.RentalOverview")
                         .WithMany("RentedHouses")
                         .HasForeignKey("RentalOverviewId");
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.MaterialOnHouseType", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.MaterialOnHouseType", b =>
                 {
-                    b.HasOne("FlexmodulAPI.Models.FMHouseType", "FMHouseType")
+                    b.HasOne("FlexmodulBackendV2.Domain.FmHouseType", "FmHouseType")
                         .WithMany("MaterialsOnHouse")
-                        .HasForeignKey("FMHouseTypeId")
+                        .HasForeignKey("FmHouseTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlexmodulAPI.Models.Material", "Material")
-                        .WithMany()
+                    b.HasOne("FlexmodulBackendV2.Domain.Material", "Material")
+                        .WithMany("MaterialOnHouseTypes")
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("FlexmodulAPI.Models.ProductionInformation", b =>
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.ProductionInformation", b =>
                 {
-                    b.HasOne("FlexmodulAPI.Models.Customer", "Customer")
+                    b.HasOne("FlexmodulBackendV2.Domain.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlexmodulAPI.Models.FMHouse", "House")
+                    b.HasOne("FlexmodulBackendV2.Domain.FmHouse", "House")
                         .WithMany()
                         .HasForeignKey("HouseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlexmodulAPI.Models.User", "LastUpdatedBy")
+                    b.HasOne("FlexmodulBackendV2.Domain.User", "LastUpdatedBy")
                         .WithMany()
                         .HasForeignKey("LastUpdatedById")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlexmodulAPI.Models.RentalOverview")
+                    b.HasOne("FlexmodulBackendV2.Domain.RentalOverview")
                         .WithMany("ProductionInformation")
                         .HasForeignKey("RentalOverviewId");
-                });
-
-            modelBuilder.Entity("FlexmodulAPI.Models.Rent", b =>
-                {
-                    b.HasOne("FlexmodulAPI.Models.ProductionInformation", "HouseProductionInfo")
-                        .WithMany()
-                        .HasForeignKey("HouseProductionInfoId");
                 });
 
             modelBuilder.Entity("FlexmodulBackendV2.Domain.RefreshToken", b =>
@@ -484,6 +482,14 @@ namespace FlexmodulBackendV2.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("FlexmodulBackendV2.Domain.Rent", b =>
+                {
+                    b.HasOne("FlexmodulBackendV2.Domain.ProductionInformation", "ProductionInformation")
+                        .WithMany("Rents")
+                        .HasForeignKey("ProductionInformationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

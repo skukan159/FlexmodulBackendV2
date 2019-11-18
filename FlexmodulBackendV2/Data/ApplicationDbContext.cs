@@ -45,7 +45,7 @@ namespace FlexmodulBackendV2.Data
                 .HasOne(r => r.ProductionInformation)
                 .WithMany(pi => pi.Rents)
                 .HasForeignKey(r => r.ProductionInformationId);
-            modelBuilder.Entity<MaterialOnHouseType>().HasKey(sc => new { FMHouseTypeId = sc.FmHouseTypeId, sc.MaterialId });
+            //modelBuilder.Entity<MaterialOnHouseType>().HasKey(sc => new { FMHouseTypeId = sc.FmHouseTypeId, sc.MaterialId });
         }
     }
 }

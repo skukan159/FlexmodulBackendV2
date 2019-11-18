@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
 {
-    //TODO: Implement this service properly
-    public class MaterialOnHouseTypesService //: IMaterialOnHouseTypesService
+
+    public class MaterialOnHouseTypesService : IMaterialOnHouseTypesService
     {
         private readonly ApplicationDbContext _dataContext;
 
@@ -19,7 +19,7 @@ namespace FlexmodulBackendV2.Services
             _dataContext = dataContext;
         }
 
-        /*public async Task<bool> CreateMaterialOnHouseTypeAsync(MaterialOnHouseType materialOnHouseType)
+        public async Task<bool> CreateMaterialOnHouseTypeAsync(MaterialOnHouseType materialOnHouseType)
         {
             await _dataContext.AddAsync(materialOnHouseType);
             var created = await _dataContext.SaveChangesAsync();
@@ -31,30 +31,29 @@ namespace FlexmodulBackendV2.Services
             return await _dataContext.MaterialOnHouseTypes.ToListAsync();
         }
 
-        //Todo: Implement this properly
-        public async Task<MaterialOnHouseType> GetMaterialOnHouseTypeByIdAsync(Guid materialOnHouseTypeId)
+        public async Task<MaterialOnHouseType> GetMaterialOnHouseTypeByIdAsync(Guid id)
         {
             return await _dataContext.MaterialOnHouseTypes
-                .SingleOrDefaultAsync(m => m.MaterialId == materialOnHouseTypeId);
+                .SingleOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task<bool> UpdateMaterialOnHouseTypeAsync(MaterialOnHouseType materialOnHouseType)
         {
-            _dataContext.Materials.Update(material);
+            _dataContext.MaterialOnHouseTypes.Update(materialOnHouseType);
             var updated = await _dataContext.SaveChangesAsync();
             return updated > 0;
         }
 
-        public async Task<bool> DeleteMaterialOnHouseTypeAsync(Guid materialOnHouseTypeId)
+        public async Task<bool> DeleteMaterialOnHouseTypeAsync(Guid id)
         {
-            var material = await GetMaterialByIdAsync(materialId);
+            var materialOnHouseType = await GetMaterialOnHouseTypeByIdAsync(id);
 
-            if (material == null)
+            if (materialOnHouseType == null)
                 return false;
 
-            _dataContext.Materials.Remove(material);
+            _dataContext.MaterialOnHouseTypes.Remove(materialOnHouseType);
             var deleted = await _dataContext.SaveChangesAsync();
             return deleted > 0;
-        }*/
+        }
     }
 }

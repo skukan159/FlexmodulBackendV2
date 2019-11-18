@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
-using FlexmodulBackendV2.Contracts.V1.Requests;
 using FlexmodulBackendV2.Contracts.V1.Requests.Rent;
 using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Domain;
-using FlexmodulBackendV2.Services;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +15,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class RentsController : Controller
     {
         private readonly IRentsService _rentsService;

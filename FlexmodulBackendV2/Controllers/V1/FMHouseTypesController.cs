@@ -9,6 +9,8 @@ using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FmHouseTypesController : Controller
     {
 

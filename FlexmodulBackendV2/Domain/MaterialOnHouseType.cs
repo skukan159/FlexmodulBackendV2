@@ -6,9 +6,9 @@ namespace FlexmodulBackendV2.Domain
 {
     public class MaterialOnHouseType
     {
-        [Key, Column(Order = 1)]
+        [Key]
+        public Guid Id { get; set; }
         public Guid MaterialId { get; set; }
-        [Key, Column(Order = 2)]
         public Guid FmHouseTypeId { get; set; }
         public Material Material { get; set; }
         public FmHouseType FmHouseType { get; set; }

@@ -30,6 +30,7 @@ namespace FlexmodulBackendV2.Installers
             services.AddScoped<IProductionInformationsService, ProductionInformationsService>();
             services.AddScoped<IRentalOverviewsService, RentalOverviewsService>();
             services.AddScoped<IRentsService, RentsService>();
+            services.AddScoped<IMaterialOnHouseTypesService, MaterialOnHouseTypesService>();
         }
     }
 }
