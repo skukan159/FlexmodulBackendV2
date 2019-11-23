@@ -1,20 +1,20 @@
-﻿using FlexmodulBackendV2;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
+using FlexmodulBackendV2;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.Requests;
+using FlexmodulBackendV2.Contracts.V1.Requests.Customer;
 using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Data;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BackendTests
 {
-    class IntegrationTest
+    public class IntegrationTest
     {
         protected readonly HttpClient testClient;
 
@@ -47,17 +47,17 @@ namespace BackendTests
             var response = await testClient.PostAsJsonAsync(ApiRoutes.Identity.Register, new UserRegistrationRequest
             {
                 Email = "test@intergration.com",
-                Password = "SomePass123!"
+                Password = "Test123!"
             });
 
             var registrationResponse = await response.Content.ReadAsAsync<AuthSuccessResponse>();
             return registrationResponse.Token;
         }
 
-        protected async Task<PostResponse> CreatePostAsync(CreatePostRequest request)
+        protected async Task<CustomerResponse> CreateCustomerAsync(CreateCustomerRequest request)
         {
-            var response = await testClient.PostAsJsonAsync(ApiRoutes.Posts.Create, request);
-            return await response.Content.ReadAsAsync<PostResponse>();
+            var response = await testClient.PostAsJsonAsync(ApiRoutes.Customers.Create, request);
+            return await response.Content.ReadAsAsync<CustomerResponse>();
         }
     }
 }

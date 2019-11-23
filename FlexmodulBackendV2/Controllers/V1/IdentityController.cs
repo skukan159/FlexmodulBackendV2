@@ -43,7 +43,6 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.Identity.Register)]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest request)
         {

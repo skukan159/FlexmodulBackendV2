@@ -40,6 +40,9 @@ namespace FlexmodulBackendV2
                 var roleManager = serviceScope.ServiceProvider
                     .GetRequiredService<RoleManager<IdentityRole>>();
 
+                var userManager = serviceScope.ServiceProvider
+                    .GetRequiredService<UserManager<IdentityUser>>();
+
                 if (!await roleManager.RoleExistsAsync("SuperAdmin"))
                 {
                     var superAdminRole = new IdentityRole("SuperAdmin");
@@ -55,6 +58,21 @@ namespace FlexmodulBackendV2
                     var employeeRole = new IdentityRole("Employee");
                     await roleManager.CreateAsync(employeeRole);
                 }
+
+                var newUser = new IdentityUser
+                {
+                    Email = "admin@admin.com",
+                    UserName = "admin@admin.com"
+                };
+                var password = "Admin123!";
+                var existingUser = await userManager.FindByEmailAsync(newUser.Email);
+                if (existingUser == null)
+                {
+                    var createdUser = await userManager.CreateAsync(newUser, password);
+                    if (createdUser.Succeeded)
+                        await userManager.AddToRoleAsync(newUser, "SuperAdmin");
+                }
+
             }
 
             await host.RunAsync();

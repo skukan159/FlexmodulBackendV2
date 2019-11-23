@@ -1,6 +1,6 @@
 ﻿namespace FlexmodulBackendV2.Contracts.V1
 {
-    public class ApiRoutes
+    public static class ApiRoutes
     {
         public const string Root = "api";
         public const string Version = "v1";

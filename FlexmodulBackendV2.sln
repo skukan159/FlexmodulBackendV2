@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexmodulBackendV2", "FlexmodulBackendV2\FlexmodulBackendV2.csproj", "{F06D431D-DD51-462D-90D8-FA450B4FEDEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTests", "BackendTests\BackendTests.csproj", "{8137211A-9157-4C8C-A6F8-07BBEF8DD667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendTests", "BackendTests\BackendTests.csproj", "{8137211A-9157-4C8C-A6F8-07BBEF8DD667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
