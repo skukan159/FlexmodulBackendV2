@@ -18,16 +18,20 @@ namespace FlexmodulBackendV2.Services
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly ApplicationDbContext _context;
-        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, ApplicationDbContext context)
+        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
             _tokenValidationParameters = tokenValidationParameters;
             _context = context;
+            _roleManager = roleManager;
         }
+
+
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
         {
             var existingUser = await _userManager.FindByEmailAsync(email);
@@ -44,6 +48,8 @@ namespace FlexmodulBackendV2.Services
                 Email = email,
                 UserName = email
             };
+
+            
 
             var createdUser = await _userManager.CreateAsync(newUser, password);
 
@@ -139,21 +145,72 @@ namespace FlexmodulBackendV2.Services
             return await GenerateAuthenticationResultForUserAsync(user);
         }
 
+        public async Task<UserRoles> UpdateUserRoles(string userId,List<string> roleNames)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new UserRoles {Errors = new[] {$"User with Id = {userId} cannot be found"}};
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
+
+            if (!result.Succeeded)
+            {
+                return new UserRoles { Errors = new[] { "Cannot remove user existing roles" } };
+            }
+
+            result = await _userManager.AddToRolesAsync(user,roleNames);
+
+            if (!result.Succeeded)
+            {
+                return new UserRoles { Errors = new[] { "Cannot add selected roles to user" } };
+            }
+
+            return new UserRoles();
+        }
+
+        public async Task<List<UserRoles>> GetUserRoles(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new List<UserRoles> { new  UserRoles { Errors = new[] { $"User with Id = {userId} cannot be found" } }};
+            }
+
+            var returnedRoles = new List<UserRoles>();
+
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRole = new UserRoles
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    returnedRoles.Add(userRole);
+                }
+            }
+
+            return returnedRoles;
+        }
+
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             try
             {
                 var principal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var validatedToken);
-                if (!IsJwtWithValidSecurityAlgorithm(validatedToken))
-                {
-                    return null;
-                }
-
-                return principal;
+                return !IsJwtWithValidSecurityAlgorithm(validatedToken) ? null : principal;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return null;
             }
         }

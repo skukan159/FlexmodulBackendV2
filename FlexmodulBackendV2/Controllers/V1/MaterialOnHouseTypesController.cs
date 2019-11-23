@@ -16,7 +16,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class MaterialOnHouseTypesController : ControllerBase
     {
 
@@ -47,9 +47,9 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(MaterialOnHouseTypeToMaterialOnHouseTypeResponse(materialOnHouseType));
         }
 
-        //public async Task<IActionResult> Update([FromRoute] Guid materialId, [FromBody] UpdateMaterialRequest request)
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.MaterialOnHouseTypes.Update)]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMaterialOnHouseTypeRequest request)//, MaterialOnHouseType materialOnHouseType)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMaterialOnHouseTypeRequest request)
         {
             var materialOnHouseType = await _materialOnHouseTypesService.GetMaterialOnHouseTypeByIdAsync(id);
             materialOnHouseType.FmHouseTypeId = request.FmHouseTypeId;
@@ -62,6 +62,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return NotFound();
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.MaterialOnHouseTypes.Create)]
         public async Task<IActionResult> Create([FromBody] CreateMaterialOnHouseTypeRequest materialOnHouseTypeRequest)
         {
@@ -81,6 +82,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete(ApiRoutes.MaterialOnHouseTypes.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {

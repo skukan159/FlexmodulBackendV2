@@ -20,7 +20,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class FmHouseTypesController : Controller
     {
 
@@ -48,6 +48,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(FmHouseTypeToFmHouseTypeResponse(fmHouseType));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.FmHouseTypes.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid fmHouseTypeId, [FromBody]UpdateFmHouseTypeRequest request)
         {
@@ -62,6 +63,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.FmHouseTypes.Create)]
         public async Task<IActionResult> Create([FromBody] CreateFmHouseTypeRequest fmHouseRequest)
         {
@@ -79,6 +81,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete(ApiRoutes.FmHouseTypes.Delete)]
         public async Task<ActionResult> Delete([FromRoute]Guid fmHouseId)
         {

@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.Requests;
 using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Services;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
@@ -17,6 +20,30 @@ namespace FlexmodulBackendV2.Controllers.V1
             _identityService = identityService;
         }
 
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpPost(ApiRoutes.Identity.SetRole)]
+        public async Task<IActionResult> SetUserRole([FromRoute] string userId,[FromBody] string roleId)
+        { 
+            var roles = new List<string>{roleId};
+            var result = await _identityService.UpdateUserRoles(userId,roles);
+
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpGet(ApiRoutes.Identity.GetRoles)]
+        public async Task<IActionResult> GetUserRoles([FromRoute] string userId)
+        {
+            var result = await _identityService.GetUserRoles(userId);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+
+        }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.Identity.Register)]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest request)
         {

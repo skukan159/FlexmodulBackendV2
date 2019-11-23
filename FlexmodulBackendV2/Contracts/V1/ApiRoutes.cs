@@ -101,6 +101,8 @@
             public const string Login = Base + "/identity/login";
             public const string Register = Base + "/identity/register";
             public const string Refresh = Base + "/identity/refresh";
+            public const string GetRoles = Base + "/identity/role/{userId}";
+            public const string SetRole = Base + "/identity/role/{userId}";
         }
 
 

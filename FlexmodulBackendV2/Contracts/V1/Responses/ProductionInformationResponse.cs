@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace FlexmodulBackendV2.Contracts.V1.Responses
 {
@@ -18,7 +19,7 @@ namespace FlexmodulBackendV2.Contracts.V1.Responses
         public int ProductionPrice { get; set; }
         public DateTime ProductionDate { get; set; }
         public ICollection<AdditionalCost> AdditionalCosts { get; set; }
-        public User LastUpdatedBy { get; set; }
+        public IdentityUser LastUpdatedBy { get; set; }
         public DateTime LastUpdatedDate { get; set; }
         public bool IsActive { get; set; }
     }

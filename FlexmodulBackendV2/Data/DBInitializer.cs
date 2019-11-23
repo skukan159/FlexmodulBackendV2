@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FlexmodulBackendV2.Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace FlexmodulBackendV2.Data
 {
@@ -15,34 +16,18 @@ namespace FlexmodulBackendV2.Data
                 return;   // DB has been seeded
             }
 
-            var users = new User[]
+            var newUser = new IdentityUser
             {
-                new User {
-                    Username = "Guest",
-                    AuthenticationLevel = User.AuthenticationLevels.Guest
-                },
-                new User {
-                    Username = "Employee",
-                    AuthenticationLevel = User.AuthenticationLevels.Employee
-                },
-                new User {
-                    Username = "AdministrationEmployee",
-                    AuthenticationLevel = User.AuthenticationLevels.AdministrationEmployee
-                },
-                new User {
-                    Username = "SuperUser",
-                    AuthenticationLevel = User.AuthenticationLevels.SuperUser
-                },
+                Email = "admin@test.com",
+                UserName = "admin@test.com"
             };
 
-            foreach (User user in users)
-            {
-                context.User.Add(user);
-            }
+            /*context.Users.Add(newUser);
 
-            context.SaveChanges();
+            context.SaveChanges();*/
 
-            var customers = new Customer[]
+
+            var customers = new[]
             {
                 new Customer {
                     CompanyName = "Best Company Ever",
@@ -70,7 +55,7 @@ namespace FlexmodulBackendV2.Data
                 },
             };
 
-            foreach (Customer customer in customers)
+            foreach (var customer in customers)
             {
                 context.Customers.Add(customer);
             }
@@ -78,7 +63,7 @@ namespace FlexmodulBackendV2.Data
             context.SaveChanges();
 
 
-            var houseTypes = new FmHouseType[]
+            var houseTypes = new[]
             {
                 new FmHouseType { HouseType = 1},
                 new FmHouseType { HouseType = 2},
@@ -87,7 +72,7 @@ namespace FlexmodulBackendV2.Data
                 new FmHouseType { HouseType = 5},
             };
 
-            foreach (FmHouseType s in houseTypes)
+            foreach (var s in houseTypes)
             {
                 context.FmHouseTypes.Add(s);
             }
@@ -95,7 +80,7 @@ namespace FlexmodulBackendV2.Data
 
            
             
-            var materials = new Material[]
+            var materials = new[]
             {
                 new Material { 
                     HouseSection = Material.HouseSections.Floor,
@@ -112,13 +97,13 @@ namespace FlexmodulBackendV2.Data
 
             };
 
-            foreach (Material m in materials)
+            foreach (var m in materials)
             {
                 context.Materials.Add(m);
             }
             context.SaveChanges();
 
-            var materialsOnHouses = new MaterialOnHouseType[]
+            var materialsOnHouses = new[]
             {
                 new MaterialOnHouseType { 
                     MaterialId = materials.Single( s => s.Name == "12 MM OSB").Id,
@@ -148,13 +133,13 @@ namespace FlexmodulBackendV2.Data
 
             };
 
-             foreach (MaterialOnHouseType mat in materialsOnHouses)
+             foreach (var mat in materialsOnHouses)
              {
                  context.MaterialOnHouseTypes.Add(mat);
              }
              context.SaveChanges();
 
-            var fmHouses = new FmHouse[]
+            var fmHouses = new[]
             {
                 new FmHouse {
                     HouseType = houseTypes.Single( ht => ht.HouseType == 1),
@@ -171,13 +156,13 @@ namespace FlexmodulBackendV2.Data
 
             };
 
-            foreach (FmHouse h in fmHouses)
+            foreach (var h in fmHouses)
             {
                 context.FmHouses.Add(h);
             }
             context.SaveChanges();
 
-            var productionInformations = new ProductionInformation[]
+            var productionInformations = new[]
             {
                 new ProductionInformation {
                     House = fmHouses.Single( h => h.HouseType == houseTypes.Single( ht => ht.HouseType == 1) ),
@@ -185,7 +170,7 @@ namespace FlexmodulBackendV2.Data
                     ProductionPrice = 1000000,
                     ProductionDate = DateTime.Now,
                     LastUpdatedDate = DateTime.Now,
-                    LastUpdatedBy = users.Single( u => u.Username == "AdministrationEmployee"),
+                    LastUpdatedBy = newUser,
 
                 },
                 new ProductionInformation {
@@ -194,7 +179,7 @@ namespace FlexmodulBackendV2.Data
                     ProductionPrice = 1000000,
                     ProductionDate = DateTime.Now,
                     LastUpdatedDate = DateTime.Now,
-                    LastUpdatedBy = users.Single( u => u.Username == "AdministrationEmployee"),
+                    LastUpdatedBy = newUser,
 
                 },
                 new ProductionInformation {
@@ -203,12 +188,12 @@ namespace FlexmodulBackendV2.Data
                     ProductionPrice = 1000000,
                     ProductionDate = DateTime.Now,
                     LastUpdatedDate = DateTime.Now,
-                    LastUpdatedBy = users.Single( u => u.Username == "AdministrationEmployee"),
+                    LastUpdatedBy = newUser,
 
                 },
             };
 
-            foreach (ProductionInformation pi in productionInformations)
+            foreach (var pi in productionInformations)
             {
                 context.ProductionInformations.Add(pi);
             }
@@ -254,7 +239,7 @@ namespace FlexmodulBackendV2.Data
             }
             context.SaveChanges();*/
 
-            var rents = new Rent[]
+            var rents = new[]
             {
                 new Rent {
                     ProductionInformation = productionInformations.Single( pi => pi.House == houseType1),
@@ -277,13 +262,13 @@ namespace FlexmodulBackendV2.Data
 
             };
 
-            foreach (Rent r in rents)
+            foreach (var r in rents)
             {
                 context.Rents.Add(r);
             }
             context.SaveChanges();
 
-            var rentalOverviews = new RentalOverview[]
+            var rentalOverviews = new[]
            {
                 new RentalOverview {
                     RentedHouses = fmHouses.Where( h => h == houseType1).ToList(),
@@ -314,7 +299,7 @@ namespace FlexmodulBackendV2.Data
 
            };
 
-            foreach (RentalOverview ro in rentalOverviews)
+            foreach (var ro in rentalOverviews)
             {
                 context.RentalOverviews.Add(ro);
             }

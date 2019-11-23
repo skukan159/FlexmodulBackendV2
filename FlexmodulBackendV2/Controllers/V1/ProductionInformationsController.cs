@@ -14,7 +14,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class ProductionInformationsController : Controller
     {
         private readonly IProductionInformationsService _productionInformationsService;
@@ -41,6 +41,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(ProdInfoToProdInfoResponse(productionInformation));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.ProductionInformations.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid productionInformationId, [FromBody] UpdateProductionInformationRequest request)
         {
@@ -64,6 +65,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.ProductionInformations.Create)]
         public async Task<IActionResult> Create([FromBody] CreateProductionInformationRequest productionInformationRequest)
         {
@@ -90,6 +92,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete(ApiRoutes.ProductionInformations.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid productionInformationId)
         {

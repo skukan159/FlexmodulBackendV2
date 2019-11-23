@@ -19,7 +19,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class FmHousesController : Controller
     {
         private readonly IFmHousesService _fmHouseService;
@@ -29,6 +29,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             _fmHouseService = fmHouseService;
         }
 
+        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.FmHouses.GetAll)]
         public async Task<IActionResult> GetAll()
         {
@@ -37,6 +38,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Ok(fmHousesResponse);
         }
 
+        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.FmHouses.Get)]
         public async Task<IActionResult> Get([FromRoute]Guid fmHouseId)
         {
@@ -46,6 +48,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(FmHouseToHouseResponse(fmHouse));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.FmHouses.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid fmHouseId, [FromBody]UpdateFmHouseRequest request)
         {
@@ -60,6 +63,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.FmHouses.Create)]
         public async Task<IActionResult> Create([FromBody] CreateFmHouseRequest fmHouseRequest)
         {
@@ -78,6 +82,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete(ApiRoutes.FmHouses.Delete)]
         public async Task<ActionResult> Delete([FromRoute]Guid fmHouseId)
         {

@@ -15,7 +15,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class RentalOverviewsController : Controller
     {
         private readonly IRentalOverviewsService _rentalOverviewsService;
@@ -42,6 +42,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(RentalOverviewToResponse(rentalOverview));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.RentalOverviews.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid rentalOverviewId, [FromBody] UpdateRentalOverviewRequest request)
         {
@@ -62,6 +63,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.RentalOverviews.Create)]
         public async Task<IActionResult> Create([FromBody] CreateRentalOverviewRequest rentalOverviewRequest)
         {
@@ -85,6 +87,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete(ApiRoutes.RentalOverviews.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid rentalOverviewId)
         {

@@ -15,8 +15,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    //[ApiController]
-    public class CustomersController : Controller//ControllerBase
+    public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;
 
@@ -25,7 +24,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             _customerService = customerService;
         }
 
-        // GET: api/Customers
+        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.Customers.GetAll)]
         public async Task<IActionResult> GetAll()
         {
@@ -34,7 +33,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Ok(customerResponses);
         }
 
-        // GET: api/Customers/5
+        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.Customers.Get)]
         public async Task<IActionResult> GetCustomer([FromRoute]Guid customerId)
         {
@@ -44,7 +43,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(CustomerToCustomerResponse(customer));
         }
 
-        // PUT: api/Customers/5
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.Customers.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid customerId, [FromBody]UpdateCustomerRequest request)
         {
@@ -62,7 +61,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
-        // POST: api/Customers
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.Customers.Create)]
         public async Task<IActionResult> Create([FromBody] CreateCustomerRequest customerRequest)
         {
@@ -85,7 +84,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
-        // DELETE: api/Customers/5
+        [Authorize(Roles = "SuperAdmin")]
         [HttpDelete(ApiRoutes.Customers.Delete)]
         public async Task<ActionResult> DeleteCustomer([FromRoute]Guid customerId)
         {

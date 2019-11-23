@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace FlexmodulBackendV2.Domain
 {
@@ -22,7 +23,7 @@ namespace FlexmodulBackendV2.Domain
         public DateTime ProductionDate { get; set; }
         public ICollection<AdditionalCost> AdditionalCosts { get; set; }
         [Required]
-        public User LastUpdatedBy { get; set; }
+        public IdentityUser LastUpdatedBy { get; set; }
         [Required]
         public DateTime LastUpdatedDate { get; set; }
         public bool IsActive { get; set; }
