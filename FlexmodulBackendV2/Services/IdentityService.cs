@@ -31,6 +31,15 @@ namespace FlexmodulBackendV2.Services
             _roleManager = roleManager;
         }
 
+        public async Task<IdentityUser> GetUserById(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId);
+        }
+
+        public async Task<IdentityUser> GetUserByEmail(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
 
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
         {
@@ -199,6 +208,44 @@ namespace FlexmodulBackendV2.Services
 
             return returnedRoles;
         }
+
+        // Testing purpose only, throw out later on in the project
+        public async Task<AuthenticationResult> RegisterAndAddSuperAdminRole(string email, string password)
+        {
+            var existingUser = await _userManager.FindByEmailAsync(email);
+
+            if (existingUser != null)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "User with this email address already exists." }
+                };
+            }
+            var newUser = new IdentityUser
+            {
+                Email = email,
+                UserName = email
+            };
+
+
+
+            var createdUser = await _userManager.CreateAsync(newUser, password);
+
+            if (!createdUser.Succeeded)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = createdUser.Errors.Select(x => x.Description)
+                };
+            }
+
+            var createdUserData = await _userManager.FindByEmailAsync(email);
+            
+            await UpdateUserRoles(createdUserData.Id, new List<string>(){"SuperAdmin"});
+
+            return await GenerateAuthenticationResultForUserAsync(newUser);
+        }
+
 
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {

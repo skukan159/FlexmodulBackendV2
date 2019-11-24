@@ -7,6 +7,7 @@ using FlexmodulBackendV2.Contracts.V1.Requests;
 using FlexmodulBackendV2.Contracts.V1.Responses;
 using FlexmodulBackendV2.Services;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +33,8 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Ok(result);
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        //Todo: Uncomment
+        //[Authorize(Roles = "SuperAdmin")]
         [HttpGet(ApiRoutes.Identity.GetRoles)]
         public async Task<IActionResult> GetUserRoles([FromRoute] string userId)
         {
@@ -40,6 +42,42 @@ namespace FlexmodulBackendV2.Controllers.V1
             if (result == null)
                 return NotFound();
             return Ok(result);
+
+        }
+
+        [HttpGet(ApiRoutes.Identity.GetById)]
+        public async Task<IActionResult> GetUserById([FromRoute] string userId)
+        {
+            var result = await _identityService.GetUserById(userId);
+            if (result == null)
+                return NotFound();
+
+            var responseObj = new UserResponse()
+            {
+                Id = result.Id,
+                Email = result.Email,
+                UserName = result.UserName
+            };
+
+            return Ok(responseObj);
+
+        }
+        [HttpGet(ApiRoutes.Identity.GetByUsername)]
+        public async Task<IActionResult> GetUserByUsername([FromRoute] string email)
+        {
+            var result = await _identityService.GetUserByEmail(email);
+
+            if (result == null)
+                return NotFound();
+
+            var responseObj = new UserResponse()
+            {
+                Id = result.Id,
+                Email = result.Email,
+                UserName = result.UserName
+            };
+
+            return Ok(responseObj);
 
         }
 
@@ -53,7 +91,15 @@ namespace FlexmodulBackendV2.Controllers.V1
                     Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
                 });
             }
-            var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
+
+            Domain.AuthenticationResult authResponse;
+            //Throw this out later in the project - this is only for testing purposes
+            if (request.SecretPassword == "SuperSecretPassword")
+            { 
+                authResponse = await _identityService.RegisterAndAddSuperAdminRole(request.Email, request.Password);
+            }
+            else
+                authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
 
             if (!authResponse.Success)
             {
@@ -62,6 +108,8 @@ namespace FlexmodulBackendV2.Controllers.V1
                     Errors = authResponse.Errors
                 });
             }
+
+
 
             return Ok(new AuthSuccessResponse
             {
@@ -110,6 +158,16 @@ namespace FlexmodulBackendV2.Controllers.V1
                 Token = authResponse.Token,
                 RefreshToken = authResponse.RefreshToken
             });
+        }
+
+        private async Task<IActionResult> AddRoleToRegisteredUser(string userId, string roleId)
+        {
+            var roles = new List<string> { roleId };
+            var result = await _identityService.UpdateUserRoles(userId, roles);
+
+            if (result == null)
+                return NotFound();
+            return Ok(result);
         }
     }
 }

@@ -47,7 +47,8 @@ namespace BackendTests
             var response = await testClient.PostAsJsonAsync(ApiRoutes.Identity.Register, new UserRegistrationRequest
             {
                 Email = "test@intergration.com",
-                Password = "Test123!"
+                Password = "Test123!",
+                SecretPassword = "SuperSecretPassword"
             });
 
             var registrationResponse = await response.Content.ReadAsAsync<AuthSuccessResponse>();

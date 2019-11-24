@@ -37,6 +37,7 @@ namespace FlexmodulBackendV2
                     logger.LogError(ex, "An error occurred creating the DB.");
                 }
 
+                // Create User Roles
                 var roleManager = serviceScope.ServiceProvider
                     .GetRequiredService<RoleManager<IdentityRole>>();
 

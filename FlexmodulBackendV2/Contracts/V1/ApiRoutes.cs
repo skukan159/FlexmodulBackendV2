@@ -103,8 +103,8 @@
             public const string Refresh = Base + "/identity/refresh";
             public const string GetRoles = Base + "/identity/role/{userId}";
             public const string SetRole = Base + "/identity/role/{userId}";
+            public const string GetById = Base + "/identity/getUserById/{userId}";
+            public const string GetByUsername = Base + "/identity/getUserByEmail/{email}";
         }
-
-
     }
 }
