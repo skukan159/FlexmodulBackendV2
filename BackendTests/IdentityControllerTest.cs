@@ -13,7 +13,7 @@ namespace BackendTests
 {
     public class IdentityControllerTest : IntegrationTest
     {
-        [Fact]
+      /*  [Fact]
         public async Task GetAll_WithoutAnyCustomers_ReturnsEmptyResponse()
         {
             // Arrange
@@ -25,6 +25,6 @@ namespace BackendTests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             (await response.Content.ReadAsAsync<List<Customer>>()).Should().BeEmpty();
-        }
+        }*/
     }
 }

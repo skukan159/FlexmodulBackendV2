@@ -93,6 +93,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             }
 
             Domain.AuthenticationResult authResponse;
+
             //Throw this out later in the project - this is only for testing purposes
             if (request.SecretPassword == "SuperSecretPassword")
             { 
