@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FlexmodulBackendV2;
@@ -14,9 +15,10 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BackendTests
 {
-    public class IntegrationTest
+    public class IntegrationTest : IDisposable
     {
         protected readonly HttpClient testClient;
+        private readonly IServiceProvider _serviceProvider;
 
         protected IntegrationTest()
         {
@@ -33,7 +35,7 @@ namespace BackendTests
 
                     });
                 });
-
+            _serviceProvider = appFactory.Services;
             testClient = appFactory.CreateClient();
         }
 
@@ -59,6 +61,13 @@ namespace BackendTests
         {
             var response = await testClient.PostAsJsonAsync(ApiRoutes.Customers.Create, request);
             return await response.Content.ReadAsAsync<CustomerResponse>();
+        }
+
+        public void Dispose()
+        {
+            using var serviceScope = _serviceProvider.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            context.Database.EnsureDeleted();
         }
     }
 }

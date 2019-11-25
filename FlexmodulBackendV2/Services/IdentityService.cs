@@ -154,13 +154,14 @@ namespace FlexmodulBackendV2.Services
             return await GenerateAuthenticationResultForUserAsync(user);
         }
 
-        public async Task<UserRoles> UpdateUserRoles(string userId,List<string> roleNames)
+        public async Task<bool> UpdateUserRoles(string userId,List<string> roleNames)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                return new UserRoles {Errors = new[] {$"User with Id = {userId} cannot be found"}};
+                return false;
+                //return new UserRoles {Errors = new[] {$"User with Id = {userId} cannot be found"}};
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -168,27 +169,29 @@ namespace FlexmodulBackendV2.Services
 
             if (!result.Succeeded)
             {
-                return new UserRoles { Errors = new[] { "Cannot remove user existing roles" } };
+                return false;
+                //return new UserRoles { Errors = new[] { "Cannot remove user existing roles" } };
             }
 
             result = await _userManager.AddToRolesAsync(user,roleNames);
 
             if (!result.Succeeded)
             {
-                return new UserRoles { Errors = new[] { "Cannot add selected roles to user" } };
+                return false;
+                //return new UserRoles { Errors = new[] { "Cannot add selected roles to user" } };
             }
 
-            return new UserRoles();
+            return true;
         }
 
         public async Task<List<UserRoles>> GetUserRoles(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null)
+            /*if (user == null)
             {
                 return new List<UserRoles> { new  UserRoles { Errors = new[] { $"User with Id = {userId} cannot be found" } }};
-            }
+            }*/
 
             var returnedRoles = new List<UserRoles>();
 

@@ -28,9 +28,9 @@ namespace FlexmodulBackendV2.Controllers.V1
             var roles = new List<string>{roleId};
             var result = await _identityService.UpdateUserRoles(userId,roles);
 
-            if (result == null)
+            if (result == false)
                 return NotFound();
-            return Ok(result);
+            return Ok(true);
         }
 
         //Todo: Uncomment
@@ -166,9 +166,9 @@ namespace FlexmodulBackendV2.Controllers.V1
             var roles = new List<string> { roleId };
             var result = await _identityService.UpdateUserRoles(userId, roles);
 
-            if (result == null)
+            if (result == false)
                 return NotFound();
-            return Ok(result);
+            return Ok(true);
         }
     }
 }

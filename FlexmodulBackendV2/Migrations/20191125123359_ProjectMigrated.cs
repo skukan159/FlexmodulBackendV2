@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlexmodulBackendV2.Migrations
 {
-    public partial class UpdatedMaterialOnHouseType : Migration
+    public partial class ProjectMigrated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -110,24 +109,11 @@ namespace FlexmodulBackendV2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Username = table.Column<string>(nullable: false),
-                    AuthenticationLevel = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -148,7 +134,7 @@ namespace FlexmodulBackendV2.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -315,7 +301,7 @@ namespace FlexmodulBackendV2.Migrations
                     Note = table.Column<string>(nullable: true),
                     ProductionPrice = table.Column<int>(nullable: false),
                     ProductionDate = table.Column<DateTime>(nullable: false),
-                    LastUpdatedById = table.Column<Guid>(nullable: false),
+                    LastUpdatedById = table.Column<string>(nullable: false),
                     LastUpdatedDate = table.Column<DateTime>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     RentalOverviewId = table.Column<Guid>(nullable: true)
@@ -336,9 +322,9 @@ namespace FlexmodulBackendV2.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductionInformations_User_LastUpdatedById",
+                        name: "FK_ProductionInformations_AspNetUsers_LastUpdatedById",
                         column: x => x.LastUpdatedById,
-                        principalTable: "User",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -523,9 +509,6 @@ namespace FlexmodulBackendV2.Migrations
                 name: "Materials");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "ProductionInformations");
 
             migrationBuilder.DropTable(
@@ -535,7 +518,7 @@ namespace FlexmodulBackendV2.Migrations
                 name: "FmHouses");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "FmHouseTypes");
