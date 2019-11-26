@@ -63,7 +63,7 @@ namespace BackendTests
             return await response.Content.ReadAsAsync<CustomerResponse>();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             using var serviceScope = _serviceProvider.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
