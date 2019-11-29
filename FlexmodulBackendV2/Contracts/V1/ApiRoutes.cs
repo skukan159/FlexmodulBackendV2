@@ -18,10 +18,11 @@
         public static class Customers
         {
             public const string GetAll = Base + "/customers";
-            public const string Get = Base + "/customers/{customerName}";
+            public const string Get = Base + "/customers/{customerId}";
+            public const string GetByName = Base + "/customers/name/{companyName}";
             public const string Create = Base + "/customers";
             public const string Update = Base + "/customers/{customerId}";
-            public const string Delete = Base + "/customers/{customerName}";
+            public const string Delete = Base + "/customers/{customerId}";
         }
 
         public static class Rents
@@ -105,6 +106,12 @@
             public const string SetRole = Base + "/identity/role/{userId}";
             public const string GetById = Base + "/identity/getUserById/{userId}";
             public const string GetByUsername = Base + "/identity/getUserByEmail/{email}";
+        }
+
+        public static class Values
+        {
+            public const string GetAll = Base + "/values";
+            public const string Get = Base + "/values/{id}";
         }
     }
 }

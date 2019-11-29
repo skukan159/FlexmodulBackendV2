@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FlexmodulBackendV2.Contracts.V1;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,22 +7,20 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     //[Authorize]
     [EnableCors]
-    [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public static ActionResult<IEnumerable<string>> Get()
+        [HttpGet(ApiRoutes.Values.GetAll)]
+        public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return base.Ok(new [] { "value1", "value2" });
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public static ActionResult<string> Get(int id)
+
+        [HttpGet(ApiRoutes.Values.Get)]
+        public ActionResult<string> Get([FromRoute] int id)
         {
-            return "value " + id;
+            return base.Ok("value " + id);
         }
     }
 }

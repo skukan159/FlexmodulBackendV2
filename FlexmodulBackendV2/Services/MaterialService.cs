@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
 {
-    public class MaterialsService : IMaterialsService
+    public class MaterialService : IMaterialsService
     {
         private readonly ApplicationDbContext _dataContext;
 
-        public MaterialsService(ApplicationDbContext dataContext)
+        public MaterialService(ApplicationDbContext dataContext)
         {
             _dataContext = dataContext;
         }

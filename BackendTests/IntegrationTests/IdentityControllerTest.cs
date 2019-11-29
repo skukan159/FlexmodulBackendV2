@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using FlexmodulBackendV2.Contracts.V1;
-using FlexmodulBackendV2.Domain;
-using FluentAssertions;
-using Xunit;
-
-namespace BackendTests
+﻿namespace BackendTests.IntegrationTests
 {
     public class IdentityControllerTest : IntegrationTest
     {

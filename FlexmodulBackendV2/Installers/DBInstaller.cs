@@ -25,12 +25,12 @@ namespace FlexmodulBackendV2.Installers
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IAdditionalCostsService, AdditionalCostsService>();
-            services.AddScoped<IFmHouseTypesService, FmHouseTypesService>();
-            services.AddScoped<IFmHousesService, FmHousesService>();
-            services.AddScoped<IMaterialsService, MaterialsService>();
-            services.AddScoped<IProductionInformationsService, ProductionInformationsService>();
-            services.AddScoped<IRentalOverviewsService, RentalOverviewsService>();
-            services.AddScoped<IRentsService, RentsService>();
+            services.AddScoped<IFmHouseTypesService, FmHouseTypeService>();
+            services.AddScoped<IFmHousesService, FmHouseService>();
+            services.AddScoped<IMaterialsService, MaterialService>();
+            services.AddScoped<IProductionInformationsService, ProductionInformationService>();
+            services.AddScoped<IRentalOverviewsService, RentalOverviewService>();
+            services.AddScoped<IRentsService, RentService>();
             services.AddScoped<IMaterialOnHouseTypesService, MaterialOnHouseTypesService>();
         }
     }

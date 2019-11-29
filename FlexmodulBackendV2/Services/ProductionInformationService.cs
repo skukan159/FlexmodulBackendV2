@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
 {
-    public class ProductionInformationsService : IProductionInformationsService
+    public class ProductionInformationService : IProductionInformationsService
     {
         private readonly ApplicationDbContext _dataContext;
 
-        public ProductionInformationsService(ApplicationDbContext dataContext)
+        public ProductionInformationService(ApplicationDbContext dataContext)
         {
             _dataContext = dataContext;
         }

@@ -36,6 +36,12 @@ namespace FlexmodulBackendV2.Services
                 .SingleOrDefaultAsync(c => c.Id == customerId);
         }
 
+        public async Task<Customer> GetCustomerByNameAsync(string companyName)
+        {
+            return await _dataContext.Customers
+                .SingleOrDefaultAsync(c => c.CompanyName == companyName);
+        }
+
         public async Task<bool> UpdateCustomerAsync(Customer customerToUpdate)
         {
             _dataContext.Customers.Update(customerToUpdate);

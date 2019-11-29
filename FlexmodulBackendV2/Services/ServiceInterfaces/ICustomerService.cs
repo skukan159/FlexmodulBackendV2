@@ -10,6 +10,7 @@ namespace FlexmodulBackendV2.Services.ServiceInterfaces
         Task<bool> CreateCustomerAsync(Customer customer);
         Task<List<Customer>> GetCustomersAsync();
         Task<Customer> GetCustomerByIdAsync(Guid customerId);
+        Task<Customer> GetCustomerByNameAsync(string companyName);
         Task<bool> UpdateCustomerAsync(Customer customerToUpdate);
         Task<bool> DeleteCustomerAsync(Guid customerId);
     }

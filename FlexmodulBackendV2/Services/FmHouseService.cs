@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
 {
-    public class FmHousesService : IFmHousesService
+    public class FmHouseService : IFmHousesService
     {
         private readonly ApplicationDbContext _dataContext;
 
-        public FmHousesService(ApplicationDbContext dataContext)
+        public FmHouseService(ApplicationDbContext dataContext)
         {
             _dataContext = dataContext;
         }

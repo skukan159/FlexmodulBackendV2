@@ -43,6 +43,16 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(CustomerToCustomerResponse(customer));
         }
 
+        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
+        [HttpGet(ApiRoutes.Customers.GetByName)]
+        public async Task<IActionResult> GetCustomer([FromRoute]string companyName)
+        {
+            var customer = await _customerService.GetCustomerByNameAsync(companyName);
+            if (customer == null)
+                return NotFound();
+            return base.Ok(CustomerToCustomerResponse(customer));
+        }
+
         [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.Customers.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid customerId, [FromBody]UpdateCustomerRequest request)

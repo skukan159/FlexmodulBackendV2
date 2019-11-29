@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
 {
-    public class RentalOverviewsService : IRentalOverviewsService
+    public class RentalOverviewService : IRentalOverviewsService
     {
         private readonly ApplicationDbContext _dataContext;
 
-        public RentalOverviewsService(ApplicationDbContext dataContext)
+        public RentalOverviewService(ApplicationDbContext dataContext)
         {
             _dataContext = dataContext;
         }
