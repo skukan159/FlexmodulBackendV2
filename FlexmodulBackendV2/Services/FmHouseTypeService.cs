@@ -33,7 +33,13 @@ namespace FlexmodulBackendV2.Services
         public async Task<FmHouseType> GetFmHouseTypeByIdAsync(Guid fmHouseTypeId)
         {
             return await _dataContext.FmHouseTypes
-                .SingleOrDefaultAsync(ac => ac.Id == fmHouseTypeId);
+                .SingleOrDefaultAsync(ht => ht.Id == fmHouseTypeId);
+        }
+
+        public async Task<FmHouseType> GetFmHouseTypeByTypeAsync(int houseType)
+        {
+            return await _dataContext.FmHouseTypes
+                .SingleOrDefaultAsync(ht => ht.HouseType == houseType);
         }
 
         public async Task<bool> UpdateFmHouseTypeAsync(FmHouseType fmHouseType)

@@ -12,5 +12,6 @@ namespace FlexmodulBackendV2.Services.ServiceInterfaces
         Task<FmHouseType> GetFmHouseTypeByIdAsync(Guid fmHouseTypeId);
         Task<bool> UpdateFmHouseTypeAsync(FmHouseType fmHouseTypeToUpdate);
         Task<bool> DeleteFmHouseTypeAsync(Guid fmHouseTypeId);
+        Task<FmHouseType> GetFmHouseTypeByTypeAsync(int houseType);
     }
 }

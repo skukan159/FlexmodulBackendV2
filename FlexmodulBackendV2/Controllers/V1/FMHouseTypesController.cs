@@ -48,6 +48,15 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(FmHouseTypeToFmHouseTypeResponse(fmHouseType));
         }
 
+        [HttpGet(ApiRoutes.FmHouseTypes.GetByType)]
+        public async Task<IActionResult> Get([FromRoute]int houseType)
+        {
+            var fmHouseType = await _fmHouseTypeService.GetFmHouseTypeByTypeAsync(houseType);
+            if (fmHouseType == null)
+                return NotFound();
+            return base.Ok(FmHouseTypeToFmHouseTypeResponse(fmHouseType));
+        }
+
         [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.FmHouseTypes.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid fmHouseTypeId, [FromBody]UpdateFmHouseTypeRequest request)

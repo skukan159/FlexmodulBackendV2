@@ -38,6 +38,7 @@
         {
             public const string GetAll = Base + "/fmhousetypes";
             public const string Get = Base + "/fmhousetypes/{fmHouseTypeId}";
+            public const string GetByType = Base + "/fmhousetypes/bytype/{houseType}";
             public const string Create = Base + "/fmhousetypes";
             public const string Update = Base + "/fmhousetypes/{fmHouseTypeId}";
             public const string Delete = Base + "/fmhousetypes/{fmHouseTypeId}";
