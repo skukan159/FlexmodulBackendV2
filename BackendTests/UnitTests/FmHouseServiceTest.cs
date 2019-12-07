@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace BackendTests.UnitTests
@@ -19,19 +17,19 @@ namespace BackendTests.UnitTests
             // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
-                var houseService = new FmHouseService(context);
+                var service = new FmHouseService(context);
 
                 var house = GenerateFmHouse(GenerateFmHouseType());
-                await houseService.CreateFmHouseAsync(house);
+                await service.CreateFmHouseAsync(house);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
             await using (var context = new ApplicationDbContext(options))
             {
-                var houseService = new FmHouseService(context);
+                var service = new FmHouseService(context);
                 
                 Assert.Equal(1, context.FmHouses.Count());
-                Assert.Equal(1, (await houseService.GetFmHousesAsync()).Single().HouseType.HouseType);
+                Assert.Equal(1, (await service.GetFmHousesAsync()).Single().HouseType.HouseType);
             }
         }
 
@@ -42,10 +40,10 @@ namespace BackendTests.UnitTests
 
             await using (var context = new ApplicationDbContext(options))
             {
-                var houseService = new FmHouseService(context);
+                var service = new FmHouseService(context);
 
                 var house = GenerateFmHouse(GenerateFmHouseType());
-                await houseService.CreateFmHouseAsync(house);
+                await service.CreateFmHouseAsync(house);
             }
 
 
@@ -67,10 +65,10 @@ namespace BackendTests.UnitTests
             // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
-                var houseService = new FmHouseService(context);
+                var service = new FmHouseService(context);
 
                 var fmHouses = GenerateManyFmHouses(5);
-                fmHouses.ForEach(async fmHouse => await houseService.CreateFmHouseAsync(fmHouse));
+                fmHouses.ForEach(async fmHouse => await service.CreateFmHouseAsync(fmHouse));
             }
 
 

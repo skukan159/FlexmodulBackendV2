@@ -11,38 +11,113 @@ namespace BackendTests.UnitTests
 {
     public class RentServiceTest : UnitTestBase
     {
-
-        /*
-        public static Rent GenerateTestRent(string id = "",
-            string companyName = "TestCompany",
-            string postalCode = "99999",
-            string street = "TestStreet",
-            string town = "TestTown",
-            string contactNumber = "123456789",
-            string contactPerson = "TestPerson")
+       [Fact]
+        public async Task Create_Rent()
         {
-            return new Rent
-            {
-                EndDate = new DateTime(2020,11,18),
-                InsurancePrice = 10000,
-                //ProductionInformation = ,
-                //ProductionInformationId = ,
-                //RentPrice = ,
-                //StartDate = 
-            };
-        }
+            var options = CreateInMemoryDbOptions("Create_Rent");
 
-        public static List<Customer> GenerateManyTestCustomers(int count)
-        {
-            var customers = new List<Customer>();
-
-            for (var i = 1; i <= count; i++)
+            // Run the test against one instance of the context
+            await using (var context = new ApplicationDbContext(options))
             {
-                customers.Add(GenerateTestRent(i.ToString()));
+                var service = new RentService(context);
+                var rent = GenerateTestRent();
+                await service.CreateRentAsync(rent);
             }
 
-            return customers;
-        }*/
-    }
+            // Use a separate instance of the context to verify correct data was saved to database
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+                Assert.Equal(1, context.Rents.Count());
+                Assert.Equal(10000,
+                    (await service.GetRentsAsync())
+                    .Single().RentPrice);
+            }
+        }
 
+        [Fact]
+        public async Task GetRentById()
+        {
+            var options = CreateInMemoryDbOptions("GetRentById");
+
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+
+                var rent = GenerateTestRent();
+                await service.CreateRentAsync(rent);
+            }
+
+
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+                var rent1 = context.Rents.Single();
+                var rent2 = await service.GetRentByIdAsync(rent1.Id);
+                Assert.Equal(rent2.ToString(), rent1.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task DeletingRent()
+        {
+            var options = CreateInMemoryDbOptions("DeletingRent");
+
+            // Run the test against one instance of the context
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+
+                var rents = GenerateManyTestRents(5);
+                rents.ForEach(async r => await service.CreateRentAsync(r));
+            }
+
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+                var rents = await service.GetRentsAsync();
+                Assert.Equal(5, rents.Count);
+            }
+
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+                var rent = context.Rents.FirstOrDefault();
+                var success = await service.DeleteRentAsync(rent.Id);
+                Assert.True(success);
+                var rents = await service.GetRentsAsync();
+                Assert.Equal(4, rents.Count);
+            }
+        }
+
+        [Fact]
+        public async Task Updating_Rent()
+        {
+            var options = CreateInMemoryDbOptions("Updating_Rent");
+
+            // Run the test against one instance of the context
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+
+                var rents = GenerateManyTestRents(5);
+                rents.ForEach(async r => await service.CreateRentAsync(r));
+            }
+
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new RentService(context);
+                var newRentPrice = 20000f;
+
+                var rent = context.Rents.FirstOrDefault();
+                rent.RentPrice = newRentPrice;
+
+                var success = await service.UpdateRentAsync(rent);
+                Assert.True(success);
+                var updatedRent = await service.GetRentByIdAsync(rent.Id);
+                Assert.Equal(rent.Id, updatedRent.Id);
+                Assert.Equal(20000f, updatedRent.RentPrice);
+            }
+        }
+    }
 }

@@ -264,8 +264,7 @@ namespace FlexmodulBackendV2.Data
             var rentalOverviews = new[]
            {
                 new RentalOverview {
-                    RentedHouses = fmHouses.Where( h => h == houseType1).ToList(),
-                    ProductionInformation = productionInformations.Where( pi => pi.House == houseType1).ToList(),
+                    ProductionInformations = productionInformations.Where( pi => pi.House == houseType1).ToList(),
                     PurchaseStatus = RentalOverview.PurchaseStatuses.ContractNotInitiated,
                     SetupAddressTown = "Horsens",
                     SetupAddressStreet = "SomeStreet 23",
@@ -273,16 +272,14 @@ namespace FlexmodulBackendV2.Data
                     EstimatedPrice = 12000f,
                 },
                 new RentalOverview {
-                    RentedHouses = fmHouses.Where( h => h == houseType2).ToList(),
-                    ProductionInformation = productionInformations.Where( pi => pi.House == houseType2).ToList(),
+                    ProductionInformations = productionInformations.Where( pi => pi.House == houseType2).ToList(),
                     PurchaseStatus = RentalOverview.PurchaseStatuses.Leased,
                     SetupAddressTown = "Vejle",
                     SetupAddressStreet = "SomeStreet 44",
                     SetupAddressPostalCode = 8600,
                 },
                 new RentalOverview {
-                    RentedHouses = fmHouses.Where( h => h == houseType3).ToList(),
-                    ProductionInformation = productionInformations.Where( pi => pi.House == houseType3).ToList(),
+                    ProductionInformations = productionInformations.Where( pi => pi.House == houseType3).ToList(),
                     PurchaseStatus = RentalOverview.PurchaseStatuses.Terminated,
                     SetupAddressTown = "Horsens",
                     SetupAddressStreet = "SomeStreet 55",

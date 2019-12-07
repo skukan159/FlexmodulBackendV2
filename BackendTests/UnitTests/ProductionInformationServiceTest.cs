@@ -19,18 +19,18 @@ namespace BackendTests.UnitTests
             // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
-                var productionInformationService = new ProductionInformationService(context);
+                var service = new ProductionInformationService(context);
                 var productionInformation = GenerateProductionInformation();
-                await productionInformationService.CreateProductionInformationAsync(productionInformation);
+                await service.CreateProductionInformationAsync(productionInformation);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
             await using (var context = new ApplicationDbContext(options))
             {
-                var productionService = new ProductionInformationService(context);
+                var service = new ProductionInformationService(context);
                 Assert.Equal(1, context.ProductionInformations.Count());
-                Assert.Equal("TestCompany", 
-                    (await productionService.GetProductionInformationsAsync())
+                Assert.Equal("TestCompany0", 
+                    (await service.GetProductionInformationsAsync())
                     .Single().Customer.CompanyName);
             }
         }
@@ -42,10 +42,10 @@ namespace BackendTests.UnitTests
 
             await using (var context = new ApplicationDbContext(options))
             {
-                var productionService = new ProductionInformationService(context);
+                var service = new ProductionInformationService(context);
 
                 var pi = GenerateProductionInformation();
-                await productionService.CreateProductionInformationAsync(pi);
+                await service.CreateProductionInformationAsync(pi);
             }
 
 
@@ -110,16 +110,13 @@ namespace BackendTests.UnitTests
                 var newCustomer = GenerateTestCustomer("8");
 
                 var productionInformation = context.ProductionInformations.FirstOrDefault();
-                var updatedProductionInformation = new ProductionInformation
-                {
-                    Id = productionInformation.Id,
-                    Customer = newCustomer
-                };
-                var success = await service.UpdateProductionInformationAsync(updatedProductionInformation);
+                productionInformation.Customer = newCustomer;
+
+                var success = await service.UpdateProductionInformationAsync(productionInformation);
                 Assert.True(success);
-                updatedProductionInformation = await service.GetFmHouseByIdAsync(fmHouse.Id);
-                Assert.Equal(fmHouse.Id, updatedHouse.Id);
-                Assert.Equal(8, updatedHouse.HouseType.HouseType);
+                var updatedProductionInformation = await service.GetProductionInformationByIdAsync(productionInformation.Id);
+                Assert.Equal(productionInformation.Id, updatedProductionInformation.Id);
+                Assert.Equal("TestCompany8", updatedProductionInformation.Customer.CompanyName);
             }
         }
     }

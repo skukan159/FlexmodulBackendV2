@@ -7,7 +7,6 @@ namespace FlexmodulBackendV2.Contracts.V1.Responses
     public class RentalOverviewResponse
     {
         public Guid Id { get; set; }
-        public ICollection<FmHouse> RentedHouses { get; set; }
         public ICollection<ProductionInformation> ProductionInformation { get; set; }
         public RentalOverview.PurchaseStatuses PurchaseStatus { get; set; }
         public string SetupAddressTown { get; set; }

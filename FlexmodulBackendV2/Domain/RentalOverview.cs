@@ -16,8 +16,7 @@ namespace FlexmodulBackendV2.Domain
         }
         [Key]
         public Guid Id { get; set; }
-        public ICollection<FmHouse> RentedHouses { get; set; }
-        public ICollection<ProductionInformation> ProductionInformation { get; set; }
+        public ICollection<ProductionInformation> ProductionInformations { get; set; }
         public PurchaseStatuses PurchaseStatus { get; set; }
         public string SetupAddressTown { get; set; }
         public string SetupAddressStreet { get; set; }

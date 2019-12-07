@@ -122,16 +122,6 @@ namespace BackendTests.UnitTests
             return GenerateProductionInformation(customer, fmHouse, user, date);
         }
 
-        public static List<ProductionInformation> GenerateManyProductionInformations(int count)
-        {
-            var productionInformations = new List<ProductionInformation>();
-            for (var i = 0; i < count; i++)
-            {
-                productionInformations.Add(GenerateProductionInformation(i));
-            }
-
-            return productionInformations;
-        }
         public static ProductionInformation GenerateProductionInformation(
             Customer customer, FmHouse house, IdentityUser updatedBy,
             DateTime productionDate, float productionPrice = 100000f, bool isActive = true)
@@ -147,5 +137,162 @@ namespace BackendTests.UnitTests
                 IsActive = isActive
             };
         }
+
+        public static List<ProductionInformation> GenerateManyProductionInformations(int count)
+        {
+            var productionInformations = new List<ProductionInformation>();
+            for (var i = 0; i < count; i++)
+            {
+                productionInformations.Add(GenerateProductionInformation(i));
+            }
+
+            return productionInformations;
+        }
+
+        public static Rent GenerateTestRent(int index = 0)
+        {
+            var productionInfo = GenerateProductionInformation(index);
+            var startDate = DateTime.Now;
+            var endDate = DateTime.Now;
+            var rentPrice = 10000 + 10 * index;
+            var insurancePrice = 5000 + 10 * index;
+
+            return GenerateTestRent(productionInfo, startDate, endDate, rentPrice, insurancePrice);
+        }
+        public static Rent GenerateTestRent
+            (ProductionInformation productionInformation, DateTime startDate, DateTime endDate, float rentPrice = 10000, float insurancePrice = 5000)
+        {
+            return new Rent
+            {
+                ProductionInformation = productionInformation,
+                RentPrice = rentPrice,
+                InsurancePrice = insurancePrice,
+                StartDate = startDate,
+                EndDate = endDate,
+            };
+        }
+
+        public static List<Rent> GenerateManyTestRents(int count)
+        {
+            var rents = new List<Rent>();
+            for (var i = 0; i < count; i++)
+            {
+                rents.Add(GenerateTestRent(i));
+            }
+
+            return rents;
+        }
+
+        public static Material GenerateMaterial(int index)
+        {
+
+            var category = "testCategory" + index;
+            var houseSection = Material.HouseSections.Floor;
+            var name = "testName" + index;
+            var pricePerUnit = 100 + index;
+            var supplier = "testSupplier" + index;
+            var units = "testUnit" + index;
+
+            return GenerateMaterial(category, houseSection, name, pricePerUnit, supplier, units);
+        }
+
+        public static Material GenerateMaterial
+            (string category = "testCategory", Material.HouseSections houseSection = Material.HouseSections.Floor,
+            string name = "testName", float pricePerUnit = 100, string supplier = "testSupplier", string units = "testUnit")
+        {
+            return new Material
+            {
+                Category = category,
+                HouseSection = houseSection,
+                Name = name,
+                PricePerUnit = pricePerUnit,
+                Supplier = supplier,
+                Units = units
+            };
+        }
+
+        public static List<Material> GenerateManyMaterials(int count)
+        {
+            var materials = new List<Material>();
+            for (var i = 0; i < count; i++)
+            {
+                materials.Add(GenerateMaterial(i));
+            }
+
+            return materials;
+        }
+
+        public static MaterialOnHouseType GenerateMaterialOnHouseType(int index = 0)
+        {
+            var houseType = GenerateFmHouseType(index);
+            var material = GenerateMaterial(index);
+            var amount = index + 1;
+
+            return GenerateMaterialOnHouseType(houseType, material, amount);
+
+        }
+
+        public static MaterialOnHouseType GenerateMaterialOnHouseType(FmHouseType houseType, Material material, int amount = 10)
+        {
+            return new MaterialOnHouseType
+            {
+                FmHouseType = houseType,
+                Material = material,
+                MaterialAmount = amount
+            };
+        }
+
+        public static List<MaterialOnHouseType> GenerateManyMaterialOnHouseTypes(int count)
+        {
+            var materialsOnHouseTypes = new List<MaterialOnHouseType>();
+            for (var i = 0; i < count; i++)
+            {
+                materialsOnHouseTypes.Add(GenerateMaterialOnHouseType(i));
+            }
+
+            return materialsOnHouseTypes;
+        }
+
+        public static RentalOverview GenerateRentalOverview(int index = 0)
+        {
+            var productionInformations = GenerateManyProductionInformations(index+1);
+            var estimatedPrice = 40000f + 10000.5f * index;
+            var purchaseStatus = RentalOverview.PurchaseStatuses.Stock;
+            int setupAddressPostalCode = 1000 + index;
+            string setupAddressStreet = "TestStreet" + index;
+            string setupAddressTown = "TestTown" + index;
+
+
+            return GenerateRentalOverview(productionInformations,estimatedPrice,purchaseStatus,setupAddressPostalCode,setupAddressStreet,setupAddressTown);
+
+        }
+
+        public static RentalOverview GenerateRentalOverview
+            (ICollection<ProductionInformation> productionInformations, float estimatedPrice, 
+            RentalOverview.PurchaseStatuses purchaseStatus,
+            int setupAddressPostalCode, string setupAddressStreet, string setupAddressTown)
+        {
+            return new RentalOverview
+            {
+                ProductionInformations = productionInformations,
+                EstimatedPrice = estimatedPrice,
+                PurchaseStatus = purchaseStatus,
+                SetupAddressPostalCode = setupAddressPostalCode,
+                SetupAddressStreet = setupAddressStreet,
+                SetupAddressTown = setupAddressTown
+            };
+        }
+
+        public static List<RentalOverview> GenerateManyRentalOverviews(int count)
+        {
+            var rentalOverviews = new List<RentalOverview>();
+            for (var i = 0; i < count; i++)
+            {
+                rentalOverviews.Add(GenerateRentalOverview(i));
+            }
+
+            return rentalOverviews;
+        }
+
     }
 }

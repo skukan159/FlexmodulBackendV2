@@ -48,9 +48,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         {
             var rentalOverview = await _rentalOverviewsService.GetRentalOverviewByIdAsync(rentalOverviewId);
             rentalOverview.EstimatedPrice = request.EstimatedPrice;
-            rentalOverview.ProductionInformation = request.ProductionInformation;
+            rentalOverview.ProductionInformations = request.ProductionInformations;
             rentalOverview.PurchaseStatus = request.PurchaseStatus;
-            rentalOverview.RentedHouses = request.RentedHouses;
             rentalOverview.SetupAddressPostalCode = request.SetupAddressPostalCode;
             rentalOverview.SetupAddressStreet = request.SetupAddressStreet;
             rentalOverview.SetupAddressTown = request.SetupAddressTown;
@@ -69,10 +68,9 @@ namespace FlexmodulBackendV2.Controllers.V1
         {
             var rentalOverview = new RentalOverview
             {
-                ProductionInformation = rentalOverviewRequest.ProductionInformation,
+                ProductionInformations = rentalOverviewRequest.ProductionInformation,
                 EstimatedPrice = rentalOverviewRequest.EstimatedPrice,
                 PurchaseStatus = rentalOverviewRequest.PurchaseStatus,
-                RentedHouses = rentalOverviewRequest.RentedHouses,
                 SetupAddressPostalCode = rentalOverviewRequest.SetupAddressPostalCode,
                 SetupAddressStreet = rentalOverviewRequest.SetupAddressStreet,
                 SetupAddressTown = rentalOverviewRequest.SetupAddressTown
@@ -104,9 +102,8 @@ namespace FlexmodulBackendV2.Controllers.V1
             {
                 Id = rentalOverview.Id,
                 EstimatedPrice = rentalOverview.EstimatedPrice,
-                ProductionInformation = rentalOverview.ProductionInformation,
+                ProductionInformation = rentalOverview.ProductionInformations,
                 PurchaseStatus = rentalOverview.PurchaseStatus,
-                RentedHouses = rentalOverview.RentedHouses,
                 SetupAddressPostalCode = rentalOverview.SetupAddressPostalCode,
                 SetupAddressStreet = rentalOverview.SetupAddressStreet,
                 SetupAddressTown = rentalOverview.SetupAddressTown
