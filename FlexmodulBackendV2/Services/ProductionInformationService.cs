@@ -27,12 +27,19 @@ namespace FlexmodulBackendV2.Services
 
         public async Task<List<ProductionInformation>> GetProductionInformationsAsync()
         {
-            return await _dataContext.ProductionInformations.ToListAsync();
+            return await _dataContext.ProductionInformations
+                .Include(pi => pi.Customer)
+                .Include(pi => pi.House)
+                .Include(pi => pi.AdditionalCosts)
+                .ToListAsync();
         }
 
         public async Task<ProductionInformation> GetProductionInformationByIdAsync(Guid productionInformationId)
         {
             return await _dataContext.ProductionInformations
+                .Include(pi => pi.Customer)
+                .Include(pi => pi.House)
+                .Include(pi => pi.AdditionalCosts)
                 .SingleOrDefaultAsync(pi => pi.Id == productionInformationId);
         }
 

@@ -7,12 +7,8 @@ namespace FlexmodulBackendV2.Domain
     {   
         [Key]
         public Guid Id { get; set; }
-
         public Guid HouseTypeId { get; set; }  
         public FmHouseType HouseType { get; set; }
-
         public int SquareMeters { get; set; }
-        //public ProductionInformation CurrentProductionInfo { get; set; }
-        //public ICollection<Rent> HouseRents { get; set; }
     }
 }

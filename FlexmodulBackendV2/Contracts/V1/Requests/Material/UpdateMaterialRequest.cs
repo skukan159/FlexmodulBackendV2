@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FlexmodulBackendV2.Contracts.V1.Requests.Material
+﻿namespace FlexmodulBackendV2.Contracts.V1.Requests.Material
 {
     public class UpdateMaterialRequest
     {

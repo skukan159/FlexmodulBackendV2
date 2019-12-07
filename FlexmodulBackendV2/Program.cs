@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -60,12 +56,14 @@ namespace FlexmodulBackendV2
                     await roleManager.CreateAsync(employeeRole);
                 }
 
+                //Delete this later in the project
                 var newUser = new IdentityUser
                 {
                     Email = "admin@admin.com",
                     UserName = "admin@admin.com"
                 };
                 var password = "Admin123!";
+
                 var existingUser = await userManager.FindByEmailAsync(newUser.Email);
                 if (existingUser == null)
                 {

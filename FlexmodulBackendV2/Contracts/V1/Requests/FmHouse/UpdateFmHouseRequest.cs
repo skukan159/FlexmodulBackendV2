@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FlexmodulBackendV2.Contracts.V1.Requests.FmHouse
+﻿namespace FlexmodulBackendV2.Contracts.V1.Requests.FmHouse
 {
     public class UpdateFmHouseRequest
     {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using FlexmodulBackendV2.Options;
 using FlexmodulBackendV2.Services;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
@@ -12,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace FlexmodulBackendV2.Installers
 {
@@ -57,7 +53,6 @@ namespace FlexmodulBackendV2.Installers
 
             services.AddSwaggerGen(x =>
             {
-                //new Info { Title = "Proper Rest API", Version = "v1" }
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "Proper Rest API", Version = "v1" });
 
                 x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

@@ -104,6 +104,34 @@ namespace BackendTests.UnitTests
             return await service.GetUserByEmail(username);
         }
 
+        public static IdentityUser GenerateIdentityUser(string username = "testUser")
+        {
+            return new IdentityUser
+            {
+                Email = username
+            };
+        }
+
+        public static ProductionInformation GenerateProductionInformation(int id = 0)
+        {
+            var customer = GenerateTestCustomer(index:id.ToString());
+            var fmHouse = GenerateFmHouse(GenerateFmHouseType(houseType:id));
+            var user = GenerateIdentityUser("testUser" + id);
+            var date = DateTime.Now;
+
+            return GenerateProductionInformation(customer, fmHouse, user, date);
+        }
+
+        public static List<ProductionInformation> GenerateManyProductionInformations(int count)
+        {
+            var productionInformations = new List<ProductionInformation>();
+            for (var i = 0; i < count; i++)
+            {
+                productionInformations.Add(GenerateProductionInformation(i));
+            }
+
+            return productionInformations;
+        }
         public static ProductionInformation GenerateProductionInformation(
             Customer customer, FmHouse house, IdentityUser updatedBy,
             DateTime productionDate, float productionPrice = 100000f, bool isActive = true)

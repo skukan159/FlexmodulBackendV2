@@ -22,11 +22,6 @@ namespace FlexmodulBackendV2.Data
                 UserName = "admin@test.com"
             };
 
-            /*context.Users.Add(newUser);
-
-            context.SaveChanges();*/
-
-
             var customers = new[]
             {
                 new Customer {
@@ -78,8 +73,6 @@ namespace FlexmodulBackendV2.Data
             }
             context.SaveChanges();
 
-           
-            
             var materials = new[]
             {
                 new Material { 
