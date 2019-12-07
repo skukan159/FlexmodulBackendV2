@@ -21,7 +21,6 @@ namespace BackendTests.UnitTests
             {
                 var service = new FmHouseTypeService(context);
                 await service.CreateFmHouseTypeAsync(GenerateFmHouseType());
-                context.SaveChanges();
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
@@ -32,8 +31,6 @@ namespace BackendTests.UnitTests
             }
         }
 
-
-
         [Fact]
         public async Task Get_fmHouseType()
         {
@@ -43,9 +40,7 @@ namespace BackendTests.UnitTests
             {
                 var service = new FmHouseTypeService(context);
                 await service.CreateFmHouseTypeAsync(GenerateFmHouseType());
-                context.SaveChanges();
             }
-
 
             await using (var context = new ApplicationDbContext(options))
             {
@@ -69,7 +64,6 @@ namespace BackendTests.UnitTests
                 var service = new FmHouseTypeService(context);
                 var fmHouseTypes = GenerateManyFmHouseTypes(5);
                 fmHouseTypes.ForEach(async fmHouseType => await service.CreateFmHouseTypeAsync(fmHouseType));
-                context.SaveChanges();
             }
 
 
@@ -102,7 +96,6 @@ namespace BackendTests.UnitTests
                 var service = new FmHouseTypeService(context);
                 var fmHouseTypes = GenerateManyFmHouseTypes(5);
                 fmHouseTypes.ForEach(async fmHouseType => await service.CreateFmHouseTypeAsync(fmHouseType));
-                context.SaveChanges();
             }
 
             await using (var context = new ApplicationDbContext(options))
@@ -116,12 +109,9 @@ namespace BackendTests.UnitTests
                 };
                 var success = await service.UpdateFmHouseTypeAsync(updatedHouseType);
                 Assert.True(success);
-                updatedHouseType = await service.GetFmHouseTypeByTypeAsync(2);
                 Assert.Equal(fmHouseType.Id, updatedHouseType.Id);
                 Assert.Equal(2, updatedHouseType.HouseType);
             }
         }
-
-
     }
 }

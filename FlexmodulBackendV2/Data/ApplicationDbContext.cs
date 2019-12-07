@@ -37,12 +37,22 @@ namespace FlexmodulBackendV2.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            /*modelBuilder.Entity<FMHouse>().HasOne(h => h.CurrentProductionInfoId)
-                .WithOne(pi => pi.House).HasForeignKey<ProductionInformation>(pi => pi.HouseId);*/
+
             modelBuilder.Entity<Rent>()
                 .HasOne(r => r.ProductionInformation)
                 .WithMany(pi => pi.Rents)
                 .HasForeignKey(r => r.ProductionInformationId);
+
+
+            // configures one-to-many relationship
+            modelBuilder.Entity<FmHouse>()
+                .HasOne(h => h.HouseType)
+                .WithMany(ht => ht.Houses)
+                .HasForeignKey(h => h.HouseTypeId);
+
+
+            /*modelBuilder.Entity<FMHouse>().HasOne(h => h.CurrentProductionInfoId)
+                .WithOne(pi => pi.House).HasForeignKey<ProductionInformation>(pi => pi.HouseId);*/
             //modelBuilder.Entity<MaterialOnHouseType>().HasKey(sc => new { FMHouseTypeId = sc.FmHouseTypeId, sc.MaterialId });
         }
     }

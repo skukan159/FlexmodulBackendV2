@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace BackendTests.UnitTests
@@ -13,29 +14,26 @@ namespace BackendTests.UnitTests
         [Fact]
         public async Task Create_fmHouse()
         {
-            var options = CreateInMemoryDbOptions("Create_fmHouse");
+            var options = CreateInMemoryDbOptions("Create_fmHouse2");
 
             // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
                 var houseService = new FmHouseService(context);
-                var houseTypeService = new FmHouseTypeService(context);
 
-                await houseTypeService.CreateFmHouseTypeAsync(GenerateFmHouseType(1));
-                var houseType = await houseTypeService.GetFmHouseTypeByTypeAsync(1);
-                await houseService.CreateFmHouseAsync(GenerateFmHouse(houseType,10));
-                context.SaveChanges();
+                var house = GenerateFmHouse(GenerateFmHouseType());
+                await houseService.CreateFmHouseAsync(house);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
             await using (var context = new ApplicationDbContext(options))
             {
+                var houseService = new FmHouseService(context);
+                
                 Assert.Equal(1, context.FmHouses.Count());
-                Assert.Equal(1, context.FmHouses.Single().HouseType.HouseType);
+                Assert.Equal(1, (await houseService.GetFmHousesAsync()).Single().HouseType.HouseType);
             }
         }
-
-
 
         [Fact]
         public async Task Get_fmHouse()
@@ -45,11 +43,9 @@ namespace BackendTests.UnitTests
             await using (var context = new ApplicationDbContext(options))
             {
                 var houseService = new FmHouseService(context);
-                var houseTypeService = new FmHouseTypeService(context);
 
-                await houseTypeService.CreateFmHouseTypeAsync(GenerateFmHouseType(1));
-                var houseType = await houseTypeService.GetFmHouseTypeByTypeAsync(1);
-                await houseService.CreateFmHouseAsync(GenerateFmHouse(houseType, 10));
+                var house = GenerateFmHouse(GenerateFmHouseType());
+                await houseService.CreateFmHouseAsync(house);
             }
 
 
@@ -72,9 +68,8 @@ namespace BackendTests.UnitTests
             await using (var context = new ApplicationDbContext(options))
             {
                 var houseService = new FmHouseService(context);
-                var houseTypeService = new FmHouseTypeService(context);
 
-                var fmHouses = await GenerateManyFmHouses(5, context, houseTypeService);
+                var fmHouses = GenerateManyFmHouses(5);
                 fmHouses.ForEach(async fmHouse => await houseService.CreateFmHouseAsync(fmHouse));
             }
 
@@ -89,7 +84,7 @@ namespace BackendTests.UnitTests
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new FmHouseService(context);
-                var fmHouse =  context.FmHouses.Single();
+                var fmHouse =  context.FmHouses.FirstOrDefault();
                 var success = await service.DeleteFmHouseAsync(fmHouse.Id);
                 Assert.True(success);
                 var fmHouseTypes = await service.GetFmHousesAsync();
@@ -106,20 +101,17 @@ namespace BackendTests.UnitTests
             await using (var context = new ApplicationDbContext(options))
             {
                 var houseService = new FmHouseService(context);
-                var houseTypeService = new FmHouseTypeService(context);
 
-                var fmHouses = await GenerateManyFmHouses(5, context, houseTypeService);
-                fmHouses.ForEach(async fmHouse=> await houseService.CreateFmHouseAsync(fmHouse));
+                var fmHouses = GenerateManyFmHouses(5);
+                fmHouses.ForEach(async fmHouse => await houseService.CreateFmHouseAsync(fmHouse));
             }
 
             await using (var context = new ApplicationDbContext(options))
             {
                 var houseService = new FmHouseService(context);
-                var houseTypeService = new FmHouseTypeService(context);
                 var newHouseType = GenerateFmHouseType(8);
-                await houseTypeService.CreateFmHouseTypeAsync(newHouseType);
 
-                var fmHouse = context.FmHouses.Single();
+                var fmHouse = context.FmHouses.FirstOrDefault();
                 var updatedHouse = new FmHouse
                 {
                     Id = fmHouse.Id,
@@ -132,19 +124,7 @@ namespace BackendTests.UnitTests
                 Assert.Equal(8, updatedHouse.HouseType.HouseType);
             }
         }
-        public static async Task<List<FmHouse>> GenerateManyFmHouses(int count, ApplicationDbContext context, FmHouseTypeService service)
-        {
-            var fmHouses = new List<FmHouse>();
 
-            for (var i = 1; i <= count; i++)
-            {
-                var houseType = GenerateFmHouseType(i);
-                await service.CreateFmHouseTypeAsync(houseType);
-                fmHouses.Add(GenerateFmHouse(houseType, i));
-            }
-
-            return fmHouses;
-        }
 
     }
 

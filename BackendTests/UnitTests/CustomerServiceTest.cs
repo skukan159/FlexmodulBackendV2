@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace BackendTests.UnitTests
@@ -23,8 +18,8 @@ namespace BackendTests.UnitTests
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new CustomerService(context);
-                await service.CreateCustomerAsync(GenerateTestCustomer());
-                context.SaveChanges();
+                var customer = GenerateTestCustomer();
+                await service.CreateCustomerAsync(customer);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
@@ -35,8 +30,6 @@ namespace BackendTests.UnitTests
             }
         }
 
-
-
         [Fact]
         public async Task Get_customer_by_name_and_get_customer_by_id()
         {
@@ -45,10 +38,9 @@ namespace BackendTests.UnitTests
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new CustomerService(context);
-                await service.CreateCustomerAsync(GenerateTestCustomer());
-                context.SaveChanges();
+                var customer = GenerateTestCustomer();
+                await service.CreateCustomerAsync(customer);
             }
-
 
             await using (var context = new ApplicationDbContext(options))
             {
@@ -72,9 +64,7 @@ namespace BackendTests.UnitTests
                 var service = new CustomerService(context);
                 var customers = GenerateManyTestCustomers(5);
                 customers.ForEach(async customer => await service.CreateCustomerAsync(customer));
-                context.SaveChanges();
             }
-
 
             await using (var context = new ApplicationDbContext(options))
             {
@@ -105,7 +95,6 @@ namespace BackendTests.UnitTests
                 var service = new CustomerService(context);
                 var customers = GenerateManyTestCustomers(5);
                 customers.ForEach(async customer => await service.CreateCustomerAsync(customer));
-                context.SaveChanges();
             }
 
             await using (var context = new ApplicationDbContext(options))

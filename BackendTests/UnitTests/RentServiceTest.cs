@@ -13,7 +13,6 @@ namespace BackendTests.UnitTests
     {
 
         /*
-
         public static Rent GenerateTestRent(string id = "",
             string companyName = "TestCompany",
             string postalCode = "99999",

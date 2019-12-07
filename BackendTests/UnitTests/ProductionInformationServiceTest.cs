@@ -11,136 +11,123 @@ namespace BackendTests.UnitTests
 {
     public class ProductionInformationServiceTest : UnitTestBase
     {
-        /*[Fact]
-        public async Task Create_production_information()
+     /*   [Fact]
+        public async Task Create_ProductionInformation()
         {
-            var options = CreateInMemoryDbOptions("Create_production_information");
+            var options = CreateInMemoryDbOptions("Create_ProductionInformation");
 
             // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
-                var service = new ProductionInformationService(context);
-                await service.CreateProductionInformationAsync(GenerateTestCustomer());
-                context.SaveChanges();
+                var productionInformationService = new ProductionInformation();
+
+                var customer = GenerateTestCustomer();
+                var fmHouse = GenerateFmHouse(GenerateFmHouseType());
+
+                var productionInformation = GenerateProductionInformation(customer,fmHouse,);
+                await houseService.CreateFmHouseAsync(house);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
             await using (var context = new ApplicationDbContext(options))
             {
-                Assert.Equal(1, context.Customers.Count());
-                Assert.Equal("TestCompany", context.Customers.Single().CompanyName);
-            }
-        }
+                var houseService = new FmHouseService(context);
 
-
-
-        [Fact]
-        public async Task Get_customer_by_name_and_get_customer_by_id()
-        {
-            var options = CreateInMemoryDbOptions("Get_customer_by_name_and_get_customer_by_id");
-
-            await using (var context = new ApplicationDbContext(options))
-            {
-                var service = new ProductionInformationService(context);
-                await service.CreateCustomerAsync(GenerateTestCustomer());
-                context.SaveChanges();
-            }
-
-
-            await using (var context = new ApplicationDbContext(options))
-            {
-                Assert.Equal(1, context.Customers.Count());
-                Assert.Equal("TestCompany", context.Customers.Single().CompanyName);
-            }
-
-            await using (var context = new ApplicationDbContext(options))
-            {
-                var service = new ProductionInformationService(context);
-                var customer = await service.GetCustomerByNameAsync("TestCompany");
-                var customer2 = await service.GetCustomerByIdAsync(customer.Id);
-                Assert.Equal("TestTown", customer.CompanyTown);
-                Assert.Equal("TestCompany", customer.CompanyName);
-                Assert.Equal(customer.ToString(), customer2.ToString());
+                Assert.Equal(1, context.FmHouses.Count());
+                Assert.Equal(1, (await houseService.GetFmHousesAsync()).Single().HouseType.HouseType);
             }
         }
 
         [Fact]
-        public async Task Getting_many_and_deleting_customers()
+        public async Task Get_fmHouse()
         {
-            var options = CreateInMemoryDbOptions("Getting_many_and_deleting_customers");
+            var options = CreateInMemoryDbOptions("Get_fmHouse");
+
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var houseService = new FmHouseService(context);
+
+                var house = GenerateFmHouse(GenerateFmHouseType());
+                await houseService.CreateFmHouseAsync(house);
+            }
+
+
+            await using (var context = new ApplicationDbContext(options))
+            {
+                var service = new FmHouseService(context);
+                var fmHouse = context.FmHouses.Single();
+                var fmHouse2 = await service.GetFmHouseByIdAsync(fmHouse.Id);
+                Assert.Equal(1, fmHouse2.HouseType.HouseType);
+                Assert.Equal(fmHouse2.ToString(), fmHouse.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task Getting_many_and_deleting_fmHouses()
+        {
+            var options = CreateInMemoryDbOptions("Getting_many_and_deleting_fmHouses");
 
             // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
-                var service = new ProductionInformationService(context);
-                var customers = GenerateManyTestCustomers(5);
-                customers.ForEach(async customer => await service.CreateCustomerAsync(customer));
-                context.SaveChanges();
+                var houseService = new FmHouseService(context);
+
+                var fmHouses = GenerateManyFmHouses(5);
+                fmHouses.ForEach(async fmHouse => await houseService.CreateFmHouseAsync(fmHouse));
             }
 
 
             await using (var context = new ApplicationDbContext(options))
             {
-                var service = new ProductionInformationService(context);
-                var customers = await service.GetCustomersAsync();
-                Assert.Equal(5, customers.Count);
+                var service = new FmHouseService(context);
+                var fmHouses = await service.GetFmHousesAsync();
+                Assert.Equal(5, fmHouses.Count);
             }
 
             await using (var context = new ApplicationDbContext(options))
             {
-                var service = new ProductionInformationService(context);
-                var customer = await service.GetCustomerByNameAsync("TestCompany1");
-                var success = await service.DeleteCustomerAsync(customer.Id);
+                var service = new FmHouseService(context);
+                var fmHouse = context.FmHouses.FirstOrDefault();
+                var success = await service.DeleteFmHouseAsync(fmHouse.Id);
                 Assert.True(success);
-                var customers = await service.GetCustomersAsync();
-                Assert.Equal(4, customers.Count);
+                var fmHouseTypes = await service.GetFmHousesAsync();
+                Assert.Equal(4, fmHouseTypes.Count);
             }
         }
 
         [Fact]
-        public async Task Updating_customer()
+        public async Task Updating_fmHouse()
         {
-            var options = CreateInMemoryDbOptions("Updating_customer");
+            var options = CreateInMemoryDbOptions("Updating_fmHouse");
 
             // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
-                var service = new ProductionInformationService(context);
-                var customers = GenerateManyTestCustomers(5);
-                customers.ForEach(async customer => await service.CreateCustomerAsync(customer));
-                context.SaveChanges();
-            }
+                var houseService = new FmHouseService(context);
 
-
-            await using (var context = new ApplicationDbContext(options))
-            {
-                var service = new ProductionInformationService(context);
-                var customers = await service.GetCustomersAsync();
-                Assert.Equal(5, customers.Count);
+                var fmHouses = GenerateManyFmHouses(5);
+                fmHouses.ForEach(async fmHouse => await houseService.CreateFmHouseAsync(fmHouse));
             }
 
             await using (var context = new ApplicationDbContext(options))
             {
-                var service = new ProductionInformationService(context);
-                var customer = await service.GetCustomerByNameAsync("TestCompany1");
-                var updatedCustomer = new Customer
+                var houseService = new FmHouseService(context);
+                var newHouseType = GenerateFmHouseType(8);
+
+                var fmHouse = context.FmHouses.FirstOrDefault();
+                var updatedHouse = new FmHouse
                 {
-                    Id = customer.Id,
-                    CompanyName = "UpdatedCompany",
-                    CompanyTown = "UpdatedTown",
-                    CompanyPostalCode = "1234",
-                    ContactPerson = customer.ContactPerson,
-                    CompanyStreet = customer.CompanyStreet,
-                    ContactNumber = customer.ContactNumber
+                    Id = fmHouse.Id,
+                    HouseType = newHouseType
                 };
-                var success = await service.UpdateCustomerAsync(updatedCustomer);
+                var success = await houseService.UpdateFmHouseAsync(updatedHouse);
                 Assert.True(success);
-                updatedCustomer = await service.GetCustomerByNameAsync("UpdatedCompany");
-                Assert.Equal(customer.Id, updatedCustomer.Id);
-                Assert.Equal("UpdatedCompany", updatedCustomer.CompanyName);
-                Assert.Equal("UpdatedTown", updatedCustomer.CompanyTown);
-                Assert.Equal("1234", updatedCustomer.CompanyPostalCode);
+                updatedHouse = await houseService.GetFmHouseByIdAsync(fmHouse.Id);
+                Assert.Equal(fmHouse.Id, updatedHouse.Id);
+                Assert.Equal(8, updatedHouse.HouseType.HouseType);
             }
-        }*/
+        }
+
+    */
     }
 }

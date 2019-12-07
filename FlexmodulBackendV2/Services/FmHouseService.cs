@@ -27,12 +27,15 @@ namespace FlexmodulBackendV2.Services
 
         public async Task<List<FmHouse>> GetFmHousesAsync()
         {
-            return await _dataContext.FmHouses.ToListAsync();
+            return await _dataContext.FmHouses
+                .Include(house => house.HouseType)
+                .ToListAsync();
         }
 
         public async Task<FmHouse> GetFmHouseByIdAsync(Guid fmHouseId)
         {
             return await _dataContext.FmHouses
+                .Include(house => house.HouseType)
                 .SingleOrDefaultAsync(h => h.Id == fmHouseId);
         }
 

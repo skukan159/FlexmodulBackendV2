@@ -9,10 +9,13 @@ using FlexmodulBackendV2.Services;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
+    [EnableCors]
+    [ApiController]
     public class IdentityController : Controller
     {
         private readonly IIdentityService _identityService;
@@ -33,8 +36,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Ok(true);
         }
 
-        //Todo: Uncomment
-        //[Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet(ApiRoutes.Identity.GetRoles)]
         public async Task<IActionResult> GetUserRoles([FromRoute] string userId)
         {

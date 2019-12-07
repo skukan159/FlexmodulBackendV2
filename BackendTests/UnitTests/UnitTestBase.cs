@@ -8,6 +8,7 @@ using FlexmodulBackendV2.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace BackendTests.UnitTests
 {
@@ -19,6 +20,7 @@ namespace BackendTests.UnitTests
             return new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: dbName)
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .EnableSensitiveDataLogging() //debugging purpose
                 .Options;
         }
 
@@ -82,34 +84,40 @@ namespace BackendTests.UnitTests
             };
         }
 
-        public static async Task<IdentityUser> RegisterUser(string username, string password, IdentityService service)
+        public static List<FmHouse> GenerateManyFmHouses(int count)
+        {
+            var fmHouses = new List<FmHouse>();
+
+            for (var i = 1; i <= count; i++)
+            {
+
+                fmHouses.Add(GenerateFmHouse(GenerateFmHouseType(i), i * 10));
+            }
+
+            return fmHouses;
+        }
+
+        public static async Task<IdentityUser> RegisterUser
+            (IdentityService service, string username = "testUser", string password = "testPassword")
         {
             await service.RegisterAsync(username,password);
             return await service.GetUserByEmail(username);
         }
 
-        /*public static ProductionInformation GenerateTestProductionInformation(
-            Customer customer,
-            List<AdditionalCost> additionalCosts,
-            FmHouse house,
-            )
-            
+        public static ProductionInformation GenerateProductionInformation(
+            Customer customer, FmHouse house, IdentityUser updatedBy,
+            DateTime productionDate, float productionPrice = 100000f, bool isActive = true)
         {
             return new ProductionInformation
             {
                 Customer = customer,
                 House = house,
-                AdditionalCosts = additionalCost,
-
-                IsActive = true,
-                LastUpdatedDate = ,
-                LastUpdatedBy = ,
-                Ventilation = ,
-                Note = ,
-                ExteriorWalls = ,
-                ProductionPrice = ,
-                ProductionDate =
+                LastUpdatedDate = DateTime.Now,
+                LastUpdatedBy = updatedBy,
+                ProductionPrice = productionPrice,
+                ProductionDate = productionDate,
+                IsActive = isActive
             };
-        }*/
+        }
     }
 }

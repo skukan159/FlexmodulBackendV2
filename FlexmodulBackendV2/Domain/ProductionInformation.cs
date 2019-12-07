@@ -18,7 +18,7 @@ namespace FlexmodulBackendV2.Domain
         public int? Ventilation { get; set; }
         public string Note { get; set; }
         [Required]
-        public int ProductionPrice { get; set; }
+        public float ProductionPrice { get; set; }
         [Required]
         public DateTime ProductionDate { get; set; }
         public ICollection<AdditionalCost> AdditionalCosts { get; set; }
