@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
@@ -14,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
-    [EnableCors]
     [ApiController]
     public class IdentityController : Controller
     {
@@ -126,6 +126,9 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPost(ApiRoutes.Identity.Login)]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
+            Console.WriteLine("Login attempted");
+            Debug.WriteLine("Login attempted");
+
             var authResponse = await _identityService.LoginAsync(request.Email, request.Password);
 
             if (!authResponse.Success)
