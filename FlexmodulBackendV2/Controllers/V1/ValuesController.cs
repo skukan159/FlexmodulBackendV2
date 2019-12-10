@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FlexmodulBackendV2.Controllers.V1
 {
     //[Authorize]
-    [EnableCors]
+    [EnableCors("MyPolicy")]
     [ApiController]
     public class ValuesController : Controller
     {

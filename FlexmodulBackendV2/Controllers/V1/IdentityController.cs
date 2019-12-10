@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.Requests;
 using FlexmodulBackendV2.Contracts.V1.Responses;
-using FlexmodulBackendV2.Services;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
+    [EnableCors("MyPolicy")]
     [ApiController]
     public class IdentityController : Controller
     {

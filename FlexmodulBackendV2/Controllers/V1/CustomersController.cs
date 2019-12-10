@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
-    [EnableCors]
+    [EnableCors("MyPolicy")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CustomersController : Controller
     {

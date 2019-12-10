@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
-    [EnableCors]
+    [EnableCors("MyPolicy")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class FmHouseTypesController : Controller
