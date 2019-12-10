@@ -52,7 +52,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         {
             var result = await _identityService.GetUserById(userId);
             if (result == null)
-                return NotFound();
+                return NotFound("Cannot find user with this ID");
 
             var responseObj = new UserResponse()
             {
@@ -96,7 +96,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
             Domain.AuthenticationResult authResponse;
 
-            //Throw this out later in the project - this is only for testing purposes
+            // TODO: Throw this out later in the project - this is only for testing purposes
             if (request.SecretPassword == "SuperSecretPassword")
             { 
                 authResponse = await _identityService.RegisterAndAddSuperAdminRole(request.Email, request.Password);

@@ -62,7 +62,6 @@ namespace BackendTests.UnitTests
         {
             var options = CreateInMemoryDbOptions("Getting_many_and_deleting_fmHouses");
 
-            // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new FmHouseService(context);
@@ -95,7 +94,6 @@ namespace BackendTests.UnitTests
         {
             var options = CreateInMemoryDbOptions("Updating_fmHouse");
 
-            // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
                 var houseService = new FmHouseService(context);
@@ -122,8 +120,6 @@ namespace BackendTests.UnitTests
                 Assert.Equal(8, updatedHouse.HouseType.HouseType);
             }
         }
-
-
     }
 
 }

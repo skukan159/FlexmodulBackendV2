@@ -21,6 +21,7 @@ namespace BackendTests.IntegrationTests
         protected readonly HttpClient testClient;
         private readonly IServiceProvider _serviceProvider;
         private UserManager<IdentityUser> _userManager;
+        private RoleManager<IdentityUser> _roleManager;
 
         protected IntegrationTest()
         {
@@ -47,6 +48,11 @@ namespace BackendTests.IntegrationTests
                 });
             _serviceProvider = appFactory.Services;
             testClient = appFactory.CreateClient();
+
+           /* _userManager = new UserManager<IdentityUser>();
+            //_userManager = MockUserManager.GetUserManager<IdentityUser>().Object;
+            var user = new IdentityUser() { UserName = "ancon1", Email = "ancon@mail.com", RoleType = RoleTypes.Anonymous };*/
+
         }
 
         protected async Task AuthenticateAsync()
@@ -79,6 +85,8 @@ namespace BackendTests.IntegrationTests
             var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
             context.Database.EnsureDeleted();
         }
+
+
 
 
         /*private ApplicationDbContext GetContextWithData()

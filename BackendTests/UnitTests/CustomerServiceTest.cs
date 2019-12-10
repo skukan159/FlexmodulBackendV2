@@ -58,7 +58,6 @@ namespace BackendTests.UnitTests
         {
             var options = CreateInMemoryDbOptions("Getting_many_and_deleting_customers");
 
-            // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new CustomerService(context);
@@ -89,7 +88,6 @@ namespace BackendTests.UnitTests
         {
             var options = CreateInMemoryDbOptions("Updating_customer");
 
-            // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new CustomerService(context);
@@ -120,7 +118,5 @@ namespace BackendTests.UnitTests
                 Assert.Equal("1234", updatedCustomer.CompanyPostalCode);
             }
         }
-
-
     }
 }

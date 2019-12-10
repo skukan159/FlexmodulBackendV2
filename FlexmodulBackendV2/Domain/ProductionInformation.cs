@@ -14,8 +14,8 @@ namespace FlexmodulBackendV2.Domain
         public List<Rent> Rents { get; set; }
         [Required]
         public Customer Customer { get; set; }
-        public int? ExteriorWalls { get; set; }
-        public int? Ventilation { get; set; }
+        public int ExteriorWalls { get; set; }
+        public int Ventilation { get; set; }
         public string Note { get; set; }
         [Required]
         public float ProductionPrice { get; set; }

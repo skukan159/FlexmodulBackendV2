@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
@@ -58,7 +56,6 @@ namespace BackendTests.UnitTests
         {
             var options = CreateInMemoryDbOptions("Getting_many_and_deleting_fmHouseTypes");
 
-            // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new FmHouseTypeService(context);
@@ -90,7 +87,6 @@ namespace BackendTests.UnitTests
         {
             var options = CreateInMemoryDbOptions("Updating_fmHouseType");
 
-            // Run the test against one instance of the context
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new FmHouseTypeService(context);

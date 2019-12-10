@@ -14,7 +14,7 @@ namespace FlexmodulBackendV2
     {
         public static async Task Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args)/*.ConfigureKestrel(o => { o.Limits.KeepAliveTimeout = TimeSpan.FromMilliseconds(1); })*/.Build();
 
             using (var serviceScope = host.Services.CreateScope())
             {
