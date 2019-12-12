@@ -1,9 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace FlexmodulBackendV2.Domain
+﻿namespace FlexmodulBackendV2.Contracts.V1.RequestDTO.Customer
 {
-    public class Customer : EntityBase
+    public class CreateCustomerRequest
     {
         public string CompanyName { get; set; }
         public string CompanyTown { get; set; }

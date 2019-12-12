@@ -1,28 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using FlexmodulBackendV2.Domain;
 using Microsoft.AspNetCore.Identity;
 
-namespace FlexmodulBackendV2.Domain
+namespace FlexmodulBackendV2.Contracts.V1.ResponseDTO
 {
-    public class ProductionInformation : EntityBase
+    public class ProductionInformationResponse
     {
-        public Guid HouseId { get; set; }
+        public Guid Id { get; set; }
         public FmHouse House { get; set; }
         public List<Rent> Rents { get; set; }
-        [Required]
         public Customer Customer { get; set; }
-        public int ExteriorWalls { get; set; }
-        public int Ventilation { get; set; }
+        public int? ExteriorWalls { get; set; }
+        public int? Ventilation { get; set; }
         public string Note { get; set; }
-        [Required]
-        public float ProductionPrice { get; set; }
-        [Required]
+        public int ProductionPrice { get; set; }
         public DateTime ProductionDate { get; set; }
         public ICollection<AdditionalCost> AdditionalCosts { get; set; }
-        [Required]
         public IdentityUser LastUpdatedBy { get; set; }
-        [Required]
         public DateTime LastUpdatedDate { get; set; }
         public bool IsActive { get; set; }
     }

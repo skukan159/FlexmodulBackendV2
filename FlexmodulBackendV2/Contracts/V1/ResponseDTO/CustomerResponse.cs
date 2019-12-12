@@ -1,10 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace FlexmodulBackendV2.Domain
+namespace FlexmodulBackendV2.Contracts.V1.ResponseDTO
 {
-    public class Customer : EntityBase
+    public class CustomerResponse
     {
+        public Guid Id { get; set; }
         public string CompanyName { get; set; }
         public string CompanyTown { get; set; }
         public string CompanyStreet { get; set; }

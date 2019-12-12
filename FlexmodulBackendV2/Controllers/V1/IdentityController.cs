@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
-using FlexmodulBackendV2.Contracts.V1.Requests;
-using FlexmodulBackendV2.Contracts.V1.Responses;
+using FlexmodulBackendV2.Contracts.V1.RequestDTO;
+using FlexmodulBackendV2.Contracts.V1.ResponseDTO;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;

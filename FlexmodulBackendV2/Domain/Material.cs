@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 
 namespace FlexmodulBackendV2.Domain
 {
-    public class Material
+    public class Material : EntityBase
     {
         public enum HouseSections
         {
@@ -17,8 +15,6 @@ namespace FlexmodulBackendV2.Domain
             RoofCeiling
         }
 
-        [Key]
-        public Guid Id { get; set; }
         public HouseSections HouseSection { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }

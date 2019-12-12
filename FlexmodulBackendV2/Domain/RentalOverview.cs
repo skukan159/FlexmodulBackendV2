@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FlexmodulBackendV2.Domain
 {
-    public class RentalOverview
+    public class RentalOverview : EntityBase
     {
         public enum PurchaseStatuses
         {
@@ -14,8 +14,6 @@ namespace FlexmodulBackendV2.Domain
             Stock,
             SoldOut
         }
-        [Key]
-        public Guid Id { get; set; }
         public ICollection<ProductionInformation> ProductionInformations { get; set; }
         public PurchaseStatuses PurchaseStatus { get; set; }
         public string SetupAddressTown { get; set; }

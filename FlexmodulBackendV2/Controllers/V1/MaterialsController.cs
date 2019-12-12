@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
-using FlexmodulBackendV2.Contracts.V1.Requests.Material;
-using FlexmodulBackendV2.Contracts.V1.Responses;
+using FlexmodulBackendV2.Contracts.V1.RequestDTO.Material;
+using FlexmodulBackendV2.Contracts.V1.ResponseDTO;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

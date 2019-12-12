@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FlexmodulBackendV2.Domain
 {
-    public class FmHouseType
+    public class FmHouseType : EntityBase
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         public int HouseType { get; set; }
         public ICollection<MaterialOnHouseType> MaterialsOnHouse { get; set; }
