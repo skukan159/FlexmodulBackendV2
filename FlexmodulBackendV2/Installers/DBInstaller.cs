@@ -1,4 +1,5 @@
 ﻿using FlexmodulBackendV2.Data;
+using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Identity;
@@ -22,12 +23,12 @@ namespace FlexmodulBackendV2.Installers
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IAdditionalCostsService, AdditionalCostsService>();
             services.AddScoped<IFmHouseTypesService, FmHouseTypeService>();
-            services.AddScoped<IFmHousesService, FmHouseService>();
-            services.AddScoped<IMaterialsService, MaterialService>();
-            services.AddScoped<IProductionInformationsService, ProductionInformationService>();
-            services.AddScoped<IRentalOverviewsService, RentalOverviewService>();
-            services.AddScoped<IRentsService, RentService>();
-            services.AddScoped<IMaterialOnHouseTypesService, MaterialOnHouseTypesService>();
+            services.AddScoped<IRepository<FmHouse>, Repository<FmHouse>>();
+            services.AddScoped<IRepository<Material>, Repository<Material>>();
+            services.AddScoped<IRepository<ProductionInformation>, ProductionInformationService>();
+            services.AddScoped<IRepository<RentalOverview>, Repository<RentalOverview>>();
+            services.AddScoped<IRepository<Rent>, Repository<Rent>>();
+            services.AddScoped<IRepository<MaterialOnHouseType>, Repository<MaterialOnHouseType>>();
         }
     }
 }

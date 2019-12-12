@@ -12,51 +12,53 @@ namespace FlexmodulBackendV2.Services
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly ApplicationDbContext _dbContext;
+        protected readonly ApplicationDbContext DbContext;
 
         public Repository(ApplicationDbContext dbContext)
         {
-            _dbContext = dbContext;
+            DbContext = dbContext;
         }
 
-        public virtual async Task<T> GetById(int id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
             /*return await _dataContext.Customers
                 .SingleOrDefaultAsync(c => c.Id == customerId);*/
-            return await _dbContext.Set<T>().FindAsync(id);
+            return await DbContext.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<List<T>> Get()
+        public virtual async Task<List<T>> GetAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await DbContext.Set<T>().ToListAsync();
         }
 
-        public virtual async Task<List<T>> Get(Expression<Func<T, bool>> predicate)
+        public virtual async Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbContext.Set<T>()
+            return await DbContext.Set<T>()
                 .Where(predicate)
                 .ToListAsync();
         }
 
-        public virtual async Task<bool> Create(T entity)
+        public virtual async Task<bool> CreateAsync(T entity)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
-            var created = await _dbContext.SaveChangesAsync();
+            await DbContext.Set<T>().AddAsync(entity);
+            var created = await DbContext.SaveChangesAsync();
             return created > 0;
 
         }
 
-        public virtual async Task<bool> Update(T entity)
+        public virtual async Task<bool> UpdateAsync(T entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            var updated = await _dbContext.SaveChangesAsync();
+            //DbContext.Entry(entity).State = EntityState.Modified;
+
+            DbContext.Set<T>().Update(entity);
+            var updated = await DbContext.SaveChangesAsync();
             return updated > 0;
         }
 
-        public async Task<bool> Delete(T entity)
+        public async Task<bool> DeleteAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
-            var deleted = await _dbContext.SaveChangesAsync();
+            DbContext.Set<T>().Remove(entity);
+            var deleted = await DbContext.SaveChangesAsync();
             return deleted > 0;
         }
     }

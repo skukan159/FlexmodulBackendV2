@@ -18,9 +18,9 @@ namespace FlexmodulBackendV2.Controllers.V1
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class RentalOverviewsController : Controller
     {
-        private readonly IRentalOverviewsService _rentalOverviewsService;
+        private readonly IRepository<RentalOverview> _rentalOverviewsService;
 
-        public RentalOverviewsController(IRentalOverviewsService rentalOverviewsService)
+        public RentalOverviewsController(IRepository<RentalOverview> rentalOverviewsService)
         {
             _rentalOverviewsService = rentalOverviewsService;
         }
@@ -28,7 +28,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.RentalOverviews.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var rentalOverviews = await _rentalOverviewsService.GetRentalOverviewsAsync();
+            var rentalOverviews = await _rentalOverviewsService.GetAsync();
             var rentalOverviewResponses = rentalOverviews.Select(RentalOverviewToResponse).ToList();
             return Ok(rentalOverviewResponses);
         }
@@ -36,7 +36,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.RentalOverviews.Get)]
         public async Task<IActionResult> Get([FromRoute] Guid rentalOverviewId)
         {
-            var rentalOverview = await _rentalOverviewsService.GetRentalOverviewByIdAsync(rentalOverviewId);
+            var rentalOverview = await _rentalOverviewsService.GetByIdAsync(rentalOverviewId);
             if (rentalOverview == null)
                 return NotFound();
             return base.Ok(RentalOverviewToResponse(rentalOverview));
@@ -46,7 +46,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.RentalOverviews.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid rentalOverviewId, [FromBody] UpdateRentalOverviewRequest request)
         {
-            var rentalOverview = await _rentalOverviewsService.GetRentalOverviewByIdAsync(rentalOverviewId);
+            var rentalOverview = await _rentalOverviewsService.GetByIdAsync(rentalOverviewId);
             rentalOverview.EstimatedPrice = request.EstimatedPrice;
             rentalOverview.ProductionInformations = request.ProductionInformations;
             rentalOverview.PurchaseStatus = request.PurchaseStatus;
@@ -55,7 +55,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             rentalOverview.SetupAddressTown = request.SetupAddressTown;
 
 
-            var updated = await _rentalOverviewsService.UpdateRentalOverviewAsync(rentalOverview);
+            var updated = await _rentalOverviewsService.UpdateAsync(rentalOverview);
             if (updated)
                 return Ok(RentalOverviewToResponse(rentalOverview));
             return NotFound();
@@ -76,7 +76,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 SetupAddressTown = rentalOverviewRequest.SetupAddressTown
             };
 
-            await _rentalOverviewsService.CreateRentalOverviewAsync(rentalOverview);
+            await _rentalOverviewsService.CreateAsync(rentalOverview);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.RentalOverviews.Get.Replace("{rentalOverviewId}", rentalOverview.Id.ToString());
@@ -89,7 +89,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.RentalOverviews.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid rentalOverviewId)
         {
-            var deleted = await _rentalOverviewsService.DeleteRentalOverviewAsync(rentalOverviewId);
+            var deleted = await _rentalOverviewsService
+                .DeleteAsync(await _rentalOverviewsService.GetByIdAsync(rentalOverviewId));
             if (deleted)
                 return NoContent();
 

@@ -17,9 +17,9 @@ namespace FlexmodulBackendV2.Controllers.V1
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class ProductionInformationsController : Controller
     {
-        private readonly IProductionInformationsService _productionInformationsService;
+        private readonly IRepository<ProductionInformation> _productionInformationsService;
 
-        public ProductionInformationsController(IProductionInformationsService productionInformationsService)
+        public ProductionInformationsController(IRepository<ProductionInformation> productionInformationsService)
         {
             _productionInformationsService = productionInformationsService;
         }
@@ -27,7 +27,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.ProductionInformations.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var productionInformations = await _productionInformationsService.GetProductionInformationsAsync();
+            var productionInformations = await _productionInformationsService.GetAsync();
             var productionInformationResponse = productionInformations.Select(ProdInfoToProdInfoResponse).ToList();
             return Ok(productionInformationResponse);
         }
@@ -35,7 +35,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.ProductionInformations.Get)]
         public async Task<IActionResult> GetCustomer([FromRoute] Guid productionInformationId)
         {
-            var productionInformation = await _productionInformationsService.GetProductionInformationByIdAsync(productionInformationId);
+            var productionInformation = await _productionInformationsService.GetByIdAsync(productionInformationId);
             if (productionInformation == null)
                 return NotFound();
             return base.Ok(ProdInfoToProdInfoResponse(productionInformation));
@@ -45,7 +45,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.ProductionInformations.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid productionInformationId, [FromBody] UpdateProductionInformationRequest request)
         {
-            var productionInformation = await _productionInformationsService.GetProductionInformationByIdAsync(productionInformationId);
+            var productionInformation = await _productionInformationsService.GetByIdAsync(productionInformationId);
             productionInformation.House = request.House;
             productionInformation.Rents = request.Rents;
             productionInformation.Customer = request.Customer;
@@ -58,7 +58,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             productionInformation.LastUpdatedDate = request.LastUpdatedDate;
             productionInformation.IsActive = request.IsActive;
 
-            var updated = await _productionInformationsService.UpdateProductionInformationAsync(productionInformation);
+            var updated = await _productionInformationsService.UpdateAsync(productionInformation);
             if (updated)
                 return Ok(ProdInfoToProdInfoResponse(productionInformation));
             return NotFound();
@@ -83,7 +83,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 IsActive = productionInformationRequest.IsActive
             };
 
-            await _productionInformationsService.CreateProductionInformationAsync(productionInformation);
+            await _productionInformationsService.CreateAsync(productionInformation);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.ProductionInformations.Get.Replace("{productionInformationId}", productionInformation.Id.ToString());
@@ -94,9 +94,9 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete(ApiRoutes.ProductionInformations.Delete)]
-        public async Task<ActionResult> Delete([FromRoute] Guid productionInformationId)
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            var deleted = await _productionInformationsService.DeleteProductionInformationAsync(productionInformationId);
+            var deleted = await _productionInformationsService.DeleteAsync(await _productionInformationsService.GetByIdAsync(id));
             if (deleted)
                 return NoContent();
 

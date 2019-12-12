@@ -19,7 +19,7 @@ namespace BackendTests.UnitTests
             {
                 var service = new CustomerService(context);
                 var customer = GenerateTestCustomer();
-                await service.CreateCustomerAsync(customer);
+                await service.CreateAsync(customer);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
@@ -39,14 +39,14 @@ namespace BackendTests.UnitTests
             {
                 var service = new CustomerService(context);
                 var customer = GenerateTestCustomer();
-                await service.CreateCustomerAsync(customer);
+                await service.CreateAsync(customer);
             }
 
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new CustomerService(context);
                 var customer = await service.GetCustomerByNameAsync("TestCompany");
-                var customer2 = await service.GetCustomerByIdAsync(customer.Id);
+                var customer2 = await service.GetByIdAsync(customer.Id);
                 Assert.Equal("TestTown", customer.CompanyTown);
                 Assert.Equal("TestCompany", customer.CompanyName);
                 Assert.Equal(customer.ToString(),customer2.ToString());
@@ -62,13 +62,13 @@ namespace BackendTests.UnitTests
             {
                 var service = new CustomerService(context);
                 var customers = GenerateManyTestCustomers(5);
-                customers.ForEach(async customer => await service.CreateCustomerAsync(customer));
+                customers.ForEach(async customer => await service.CreateAsync(customer));
             }
 
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new CustomerService(context);
-                var customers = await service.GetCustomersAsync();
+                var customers = await service.GetAsync();
                 Assert.Equal(5, customers.Count);
             }
 
@@ -76,9 +76,9 @@ namespace BackendTests.UnitTests
             {
                 var service = new CustomerService(context);
                 var customer = await service.GetCustomerByNameAsync("TestCompany1");
-                var success = await service.DeleteCustomerAsync(customer.Id);
+                var success = await service.DeleteAsync(customer);
                 Assert.True(success);
-                var customers = await service.GetCustomersAsync();
+                var customers = await service.GetAsync();
                 Assert.Equal(4, customers.Count);
             }
         }
@@ -92,7 +92,7 @@ namespace BackendTests.UnitTests
             {
                 var service = new CustomerService(context);
                 var customers = GenerateManyTestCustomers(5);
-                customers.ForEach(async customer => await service.CreateCustomerAsync(customer));
+                customers.ForEach(async customer => await service.CreateAsync(customer));
             }
 
             await using (var context = new ApplicationDbContext(options))
@@ -109,7 +109,7 @@ namespace BackendTests.UnitTests
                     CompanyStreet = customer.CompanyStreet,
                     ContactNumber = customer.ContactNumber
                 };
-                var success = await service.UpdateCustomerAsync(updatedCustomer);
+                var success = await service.UpdateAsync(updatedCustomer);
                 Assert.True(success);
                 updatedCustomer = await service.GetCustomerByNameAsync("UpdatedCompany");
                 Assert.Equal(customer.Id, updatedCustomer.Id);

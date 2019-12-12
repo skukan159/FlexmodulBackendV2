@@ -18,9 +18,9 @@ namespace FlexmodulBackendV2.Controllers.V1
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class MaterialsController : Controller
     {
-        private readonly IMaterialsService _materialsService;
+        private readonly IRepository<Material> _materialsService;
 
-        public MaterialsController(IMaterialsService materialsService)
+        public MaterialsController(IRepository<Material> materialsService)
         {
             _materialsService = materialsService;
         }
@@ -28,7 +28,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.Materials.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var materials = await _materialsService.GetMaterialsAsync();
+            var materials = await _materialsService.GetAsync();
             var materialResponses = materials.Select(MaterialToMaterialResponse).ToList();
             return Ok(materialResponses);
         }
@@ -36,7 +36,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.Materials.Get)]
         public async Task<IActionResult> GetCustomer([FromRoute] Guid materialId)
         {
-            var material = await _materialsService.GetMaterialByIdAsync(materialId);
+            var material = await _materialsService.GetByIdAsync(materialId);
             if (material == null)
                 return NotFound();
             return base.Ok(MaterialToMaterialResponse(material));
@@ -46,7 +46,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.Materials.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid materialId, [FromBody] UpdateMaterialRequest request)
         {
-            var material = await _materialsService.GetMaterialByIdAsync(materialId);
+            var material = await _materialsService.GetByIdAsync(materialId);
             material.Category = request.Category;
             material.HouseSection = request.HouseSection;
             material.Name = request.Name;
@@ -54,7 +54,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             material.Supplier = request.Supplier;
             material.Units = request.Units;
 
-            var updated = await _materialsService.UpdateMaterialAsync(material);
+            var updated = await _materialsService.UpdateAsync(material);
             if (updated)
                 return Ok(MaterialToMaterialResponse(material));
             return NotFound();
@@ -74,7 +74,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 Units = materialRequest.Units
             };
 
-            await _materialsService.CreateMaterialAsync(material);
+            await _materialsService.CreateAsync(material);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.Materials.Get.Replace("{materialId}", material.Id.ToString());
@@ -87,7 +87,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.Materials.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid materialId)
         {
-            var deleted = await _materialsService.DeleteMaterialAsync(materialId);
+            var deleted = await _materialsService
+                .DeleteAsync(await _materialsService.GetByIdAsync(materialId));
             if (deleted)
                 return NoContent();
 

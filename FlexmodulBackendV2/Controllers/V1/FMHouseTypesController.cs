@@ -33,7 +33,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.FmHouseTypes.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var fmHouseTypes = await _fmHouseTypeService.GetFmHouseTypesAsync();
+            var fmHouseTypes = await _fmHouseTypeService.GetAsync();
             var fmHouseTypesResponse = fmHouseTypes.Select(FmHouseTypeToFmHouseTypeResponse).ToList();
             return Ok(fmHouseTypesResponse);
         }
@@ -41,7 +41,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.FmHouseTypes.Get)]
         public async Task<IActionResult> Get([FromRoute]Guid fmHouseId)
         {
-            var fmHouseType = await _fmHouseTypeService.GetFmHouseTypeByIdAsync(fmHouseId);
+            var fmHouseType = await _fmHouseTypeService.GetByIdAsync(fmHouseId);
             if (fmHouseType == null)
                 return NotFound();
             return base.Ok(FmHouseTypeToFmHouseTypeResponse(fmHouseType));
@@ -60,11 +60,11 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.FmHouseTypes.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid fmHouseTypeId, [FromBody]UpdateFmHouseTypeRequest request)
         {
-            var fmHouseType = await _fmHouseTypeService.GetFmHouseTypeByIdAsync(fmHouseTypeId);
+            var fmHouseType = await _fmHouseTypeService.GetByIdAsync(fmHouseTypeId);
             fmHouseType.HouseType = request.HouseType;
             fmHouseType.MaterialsOnHouse = request.MaterialsOnHouse;
 
-            var updated = await _fmHouseTypeService.UpdateFmHouseTypeAsync(fmHouseType);
+            var updated = await _fmHouseTypeService.UpdateAsync(fmHouseType);
             if (updated)
                 return Ok(FmHouseTypeToFmHouseTypeResponse(fmHouseType));
             return NotFound();
@@ -80,7 +80,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 HouseType = fmHouseRequest.HouseType
             };
 
-            await _fmHouseTypeService.CreateFmHouseTypeAsync(fmHouseType);
+            await _fmHouseTypeService.CreateAsync(fmHouseType);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.FmHouseTypes.Get.Replace("{fmHouseTypeId}", fmHouseType.Id.ToString());
@@ -93,7 +93,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.FmHouseTypes.Delete)]
         public async Task<ActionResult> Delete([FromRoute]Guid fmHouseId)
         {
-            var deleted = await _fmHouseTypeService.DeleteFmHouseTypeAsync(fmHouseId);
+            var fmHouse = await _fmHouseTypeService.GetByIdAsync(fmHouseId);
+            var deleted = await _fmHouseTypeService.DeleteAsync(fmHouse);
             if (deleted)
                 return NoContent();
 

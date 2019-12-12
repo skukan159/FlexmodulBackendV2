@@ -18,9 +18,9 @@ namespace FlexmodulBackendV2.Controllers.V1
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class RentsController : Controller
     {
-        private readonly IRentsService _rentsService;
+        private readonly IRepository<Rent> _rentsService;
 
-        public RentsController(IRentsService rentsService)
+        public RentsController(IRepository<Rent> rentsService)
         {
             _rentsService = rentsService;
         }
@@ -28,7 +28,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.Rents.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var rent = await _rentsService.GetRentsAsync();
+            var rent = await _rentsService.GetAsync();
             var rentResponses = rent.Select(RentToRentResponse).ToList();
             return Ok(rentResponses);
         }
@@ -36,7 +36,7 @@ namespace FlexmodulBackendV2.Controllers.V1
          [HttpGet(ApiRoutes.Rents.Get)]
          public async Task<IActionResult> GetRent([FromRoute] Guid rentId)
          {
-             var rent = await _rentsService.GetRentByIdAsync(rentId);
+             var rent = await _rentsService.GetByIdAsync(rentId);
              if (rent == null)
                  return NotFound();
              return base.Ok(RentToRentResponse(rent));
@@ -46,14 +46,14 @@ namespace FlexmodulBackendV2.Controllers.V1
          [HttpPut(ApiRoutes.Rents.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid rentId, [FromBody] UpdateRentRequest request)
         {
-          var rent = await _rentsService.GetRentByIdAsync(rentId);
+          var rent = await _rentsService.GetByIdAsync(rentId);
           rent.ProductionInformationId = request.ProductionInformationId;
           rent.StartDate = request.StartDate;
           rent.EndDate = request.EndDate;
           rent.InsurancePrice = request.InsurancePrice;
           rent.RentPrice = request.RentPrice;
 
-          var updated = await _rentsService.UpdateRentAsync(rent);
+          var updated = await _rentsService.UpdateAsync(rent);
           if (updated)
               return Ok(RentToRentResponse(rent));
           return NotFound();
@@ -74,7 +74,7 @@ namespace FlexmodulBackendV2.Controllers.V1
               RentPrice = rentRequest.RentPrice
           };
 
-          await _rentsService.CreateRentAsync(rent);
+          await _rentsService.CreateAsync(rent);
 
           var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
           var locationuri = baseurl + "/" + ApiRoutes.Rents.Get.Replace("{rentId}", rent.Id.ToString());
@@ -87,7 +87,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.Rents.Delete)]
         public async Task<ActionResult> DeleteRent([FromRoute] Guid postId)
         {
-          var deleted = await _rentsService.DeleteRentAsync(postId);
+          var deleted = await _rentsService.DeleteAsync(await _rentsService.GetByIdAsync(postId));
           if (deleted)
               return NoContent();
 

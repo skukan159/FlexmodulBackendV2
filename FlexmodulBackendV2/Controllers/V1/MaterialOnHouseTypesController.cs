@@ -20,18 +20,18 @@ namespace FlexmodulBackendV2.Controllers.V1
     public class MaterialOnHouseTypesController : ControllerBase
     {
 
-        private readonly IMaterialOnHouseTypesService _materialOnHouseTypesService;
+        private readonly IRepository<MaterialOnHouseType> _repositoryService;
 
-        public MaterialOnHouseTypesController(IMaterialOnHouseTypesService materialOnHouseTypesService)
+        public MaterialOnHouseTypesController(IRepository<MaterialOnHouseType> repositoryService)
         {
-            _materialOnHouseTypesService = materialOnHouseTypesService;
+            _repositoryService = repositoryService;
         }
 
 
         [HttpGet(ApiRoutes.MaterialOnHouseTypes.GetAll)]
         public async Task<ActionResult<IEnumerable<MaterialOnHouseType>>> GetAll()
         {
-            var materialOnHouseType = await _materialOnHouseTypesService.GetMaterialOnHouseTypesAsync();
+            var materialOnHouseType = await _repositoryService.GetAsync();
             var materialOnHouseTypeResponses = materialOnHouseType
                 .Select(MaterialOnHouseTypeToMaterialOnHouseTypeResponse).ToList();
             return Ok(materialOnHouseTypeResponses);
@@ -40,8 +40,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.MaterialOnHouseTypes.Get)]
         public async Task<ActionResult<MaterialOnHouseType>> Get([FromRoute] Guid id)
         {
-            var materialOnHouseType = await _materialOnHouseTypesService
-                .GetMaterialOnHouseTypeByIdAsync(id);
+            var materialOnHouseType = await _repositoryService
+                .GetByIdAsync(id);
             if (materialOnHouseType == null)
                 return NotFound();
             return base.Ok(MaterialOnHouseTypeToMaterialOnHouseTypeResponse(materialOnHouseType));
@@ -51,12 +51,12 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.MaterialOnHouseTypes.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMaterialOnHouseTypeRequest request)
         {
-            var materialOnHouseType = await _materialOnHouseTypesService.GetMaterialOnHouseTypeByIdAsync(id);
+            var materialOnHouseType = await _repositoryService.GetByIdAsync(id);
             materialOnHouseType.FmHouseTypeId = request.FmHouseTypeId;
             materialOnHouseType.MaterialId = request.MaterialId;
             materialOnHouseType.MaterialAmount = request.MaterialAmount;
 
-            var updated = await _materialOnHouseTypesService.UpdateMaterialOnHouseTypeAsync(materialOnHouseType);
+            var updated = await _repositoryService.UpdateAsync(materialOnHouseType);
             if (updated)
                 return Ok(MaterialOnHouseTypeToMaterialOnHouseTypeResponse(materialOnHouseType));
             return NotFound();
@@ -73,7 +73,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 MaterialAmount = materialOnHouseTypeRequest.MaterialAmount
             };
 
-            await _materialOnHouseTypesService.CreateMaterialOnHouseTypeAsync(materialOnHouseType);
+            await _repositoryService.CreateAsync(materialOnHouseType);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.MaterialOnHouseTypes.Get.Replace("{materialOnHouseTypeId}", materialOnHouseType.Id.ToString());
@@ -86,7 +86,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.MaterialOnHouseTypes.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            var deleted = await _materialOnHouseTypesService.DeleteMaterialOnHouseTypeAsync(id);
+            var deleted = await _repositoryService
+                .DeleteAsync(await _repositoryService.GetByIdAsync(id));
             if (deleted)
                 return NoContent();
 

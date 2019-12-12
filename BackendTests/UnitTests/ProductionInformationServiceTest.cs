@@ -21,7 +21,7 @@ namespace BackendTests.UnitTests
             {
                 var service = new ProductionInformationService(context);
                 var productionInformation = GenerateProductionInformation();
-                await service.CreateProductionInformationAsync(productionInformation);
+                await service.CreateAsync(productionInformation);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
@@ -30,7 +30,7 @@ namespace BackendTests.UnitTests
                 var service = new ProductionInformationService(context);
                 Assert.Equal(1, context.ProductionInformations.Count());
                 Assert.Equal("TestCompany0", 
-                    (await service.GetProductionInformationsAsync())
+                    (await service.GetAsync())
                     .Single().Customer.CompanyName);
             }
         }
@@ -45,7 +45,7 @@ namespace BackendTests.UnitTests
                 var service = new ProductionInformationService(context);
 
                 var pi = GenerateProductionInformation();
-                await service.CreateProductionInformationAsync(pi);
+                await service.CreateAsync(pi);
             }
 
 
@@ -53,7 +53,7 @@ namespace BackendTests.UnitTests
             {
                 var service = new ProductionInformationService(context);
                 var pi1 = context.ProductionInformations.Single();
-                var pi2 = await service.GetProductionInformationByIdAsync(pi1.Id);
+                var pi2 = await service.GetByIdAsync(pi1.Id);
                 Assert.Equal(pi2.ToString(), pi1.ToString());
             }
         }
@@ -69,13 +69,13 @@ namespace BackendTests.UnitTests
                 var service = new ProductionInformationService(context);
 
                 var productionInformations = GenerateManyProductionInformations(5);
-                productionInformations.ForEach(async pi => await service.CreateProductionInformationAsync(pi));
+                productionInformations.ForEach(async pi => await service.CreateAsync(pi));
             }
 
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new ProductionInformationService(context);
-                var productionInformations = await service.GetProductionInformationsAsync();
+                var productionInformations = await service.GetAsync();
                 Assert.Equal(5, productionInformations.Count);
             }
 
@@ -83,9 +83,9 @@ namespace BackendTests.UnitTests
             {
                 var service = new ProductionInformationService(context);
                 var productionInformation = context.ProductionInformations.FirstOrDefault();
-                var success = await service.DeleteProductionInformationAsync(productionInformation.Id);
+                var success = await service.DeleteAsync(productionInformation);
                 Assert.True(success);
-                var productionInformations = await service.GetProductionInformationsAsync();
+                var productionInformations = await service.GetAsync();
                 Assert.Equal(4, productionInformations.Count);
             }
         }
@@ -101,7 +101,7 @@ namespace BackendTests.UnitTests
                 var service = new ProductionInformationService(context);
 
                 var productionInformations = GenerateManyProductionInformations(5);
-                productionInformations.ForEach(async pi => await service.CreateProductionInformationAsync(pi));
+                productionInformations.ForEach(async pi => await service.CreateAsync(pi));
             }
 
             await using (var context = new ApplicationDbContext(options))
@@ -112,9 +112,9 @@ namespace BackendTests.UnitTests
                 var productionInformation = context.ProductionInformations.FirstOrDefault();
                 productionInformation.Customer = newCustomer;
 
-                var success = await service.UpdateProductionInformationAsync(productionInformation);
+                var success = await service.UpdateAsync(productionInformation);
                 Assert.True(success);
-                var updatedProductionInformation = await service.GetProductionInformationByIdAsync(productionInformation.Id);
+                var updatedProductionInformation = await service.GetByIdAsync(productionInformation.Id);
                 Assert.Equal(productionInformation.Id, updatedProductionInformation.Id);
                 Assert.Equal("TestCompany8", updatedProductionInformation.Customer.CompanyName);
             }

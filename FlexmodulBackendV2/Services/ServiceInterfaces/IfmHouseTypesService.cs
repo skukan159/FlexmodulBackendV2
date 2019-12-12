@@ -5,13 +5,8 @@ using FlexmodulBackendV2.Domain;
 
 namespace FlexmodulBackendV2.Services.ServiceInterfaces
 {
-    public interface IFmHouseTypesService
+    public interface IFmHouseTypesService : IRepository<FmHouseType>
     {
-        Task<bool> CreateFmHouseTypeAsync(FmHouseType fmHouseType);
-        Task<List<FmHouseType>> GetFmHouseTypesAsync();
-        Task<FmHouseType> GetFmHouseTypeByIdAsync(Guid fmHouseTypeId);
-        Task<bool> UpdateFmHouseTypeAsync(FmHouseType fmHouseTypeToUpdate);
-        Task<bool> DeleteFmHouseTypeAsync(Guid fmHouseTypeId);
         Task<FmHouseType> GetFmHouseTypeByTypeAsync(int houseType);
     }
 }

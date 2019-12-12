@@ -8,12 +8,12 @@ namespace FlexmodulBackendV2.Services.ServiceInterfaces
 {
     public interface IRepository<T> where T : EntityBase
     {
-        Task<T> GetById(int id);
-        Task<List<T>> Get();
-        Task<List<T>> Get(Expression<Func<T, bool>> predicate);
-        Task<bool> Create(T entity);
-        Task<bool> Delete(T entity);
-        Task<bool> Update(T entity);
+        Task<T> GetByIdAsync(Guid id);
+        Task<List<T>> GetAsync();
+        Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate);
+        Task<bool> CreateAsync(T entity);
+        Task<bool> DeleteAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
 
     }
 }

@@ -20,7 +20,7 @@ namespace BackendTests.UnitTests
                 var service = new FmHouseService(context);
 
                 var house = GenerateFmHouse(GenerateFmHouseType());
-                await service.CreateFmHouseAsync(house);
+                await service.CreateAsync(house);
             }
 
             // Use a separate instance of the context to verify correct data was saved to database
@@ -29,7 +29,7 @@ namespace BackendTests.UnitTests
                 var service = new FmHouseService(context);
                 
                 Assert.Equal(1, context.FmHouses.Count());
-                Assert.Equal(1, (await service.GetFmHousesAsync()).Single().HouseType.HouseType);
+                Assert.Equal(1, (await service.GetAsync()).Single().HouseType.HouseType);
             }
         }
 
@@ -43,7 +43,7 @@ namespace BackendTests.UnitTests
                 var service = new FmHouseService(context);
 
                 var house = GenerateFmHouse(GenerateFmHouseType());
-                await service.CreateFmHouseAsync(house);
+                await service.CreateAsync(house);
             }
 
 
@@ -51,7 +51,7 @@ namespace BackendTests.UnitTests
             {
                 var service = new FmHouseService(context);
                 var fmHouse = context.FmHouses.Single();
-                var fmHouse2 = await service.GetFmHouseByIdAsync(fmHouse.Id);
+                var fmHouse2 = await service.GetByIdAsync(fmHouse.Id);
                 Assert.Equal(1, fmHouse2.HouseType.HouseType);
                 Assert.Equal(fmHouse2.ToString(), fmHouse.ToString());
             }
@@ -67,14 +67,14 @@ namespace BackendTests.UnitTests
                 var service = new FmHouseService(context);
 
                 var fmHouses = GenerateManyFmHouses(5);
-                fmHouses.ForEach(async fmHouse => await service.CreateFmHouseAsync(fmHouse));
+                fmHouses.ForEach(async fmHouse => await service.CreateAsync(fmHouse));
             }
 
 
             await using (var context = new ApplicationDbContext(options))
             {
                 var service = new FmHouseService(context);
-                var fmHouses = await service.GetFmHousesAsync();
+                var fmHouses = await service.GetAsync();
                 Assert.Equal(5, fmHouses.Count);
             }
 
@@ -82,9 +82,9 @@ namespace BackendTests.UnitTests
             {
                 var service = new FmHouseService(context);
                 var fmHouse =  context.FmHouses.FirstOrDefault();
-                var success = await service.DeleteFmHouseAsync(fmHouse.Id);
+                var success = await service.DeleteAsync(fmHouse);
                 Assert.True(success);
-                var fmHouseTypes = await service.GetFmHousesAsync();
+                var fmHouseTypes = await service.GetAsync();
                 Assert.Equal(4, fmHouseTypes.Count);
             }
         }
@@ -99,7 +99,7 @@ namespace BackendTests.UnitTests
                 var houseService = new FmHouseService(context);
 
                 var fmHouses = GenerateManyFmHouses(5);
-                fmHouses.ForEach(async fmHouse => await houseService.CreateFmHouseAsync(fmHouse));
+                fmHouses.ForEach(async fmHouse => await houseService.CreateAsync(fmHouse));
             }
 
             await using (var context = new ApplicationDbContext(options))
@@ -108,14 +108,11 @@ namespace BackendTests.UnitTests
                 var newHouseType = GenerateFmHouseType(8);
 
                 var fmHouse = context.FmHouses.FirstOrDefault();
-                var updatedHouse = new FmHouse
-                {
-                    Id = fmHouse.Id,
-                    HouseType = newHouseType
-                };
-                var success = await houseService.UpdateFmHouseAsync(updatedHouse);
+                fmHouse.HouseType = newHouseType;
+
+                var success = await houseService.UpdateAsync(fmHouse);
                 Assert.True(success);
-                updatedHouse = await houseService.GetFmHouseByIdAsync(fmHouse.Id);
+                var updatedHouse = await houseService.GetByIdAsync(fmHouse.Id);
                 Assert.Equal(fmHouse.Id, updatedHouse.Id);
                 Assert.Equal(8, updatedHouse.HouseType.HouseType);
             }

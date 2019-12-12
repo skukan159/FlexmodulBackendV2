@@ -9,53 +9,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
 {
-    public class FmHouseService : IFmHousesService
+    public class FmHouseService : Repository<FmHouse>
     {
-        private readonly ApplicationDbContext _dataContext;
-
-        public FmHouseService(ApplicationDbContext dataContext)
+        public FmHouseService(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _dataContext = dataContext;
         }
 
-        public async Task<bool> CreateFmHouseAsync(FmHouse fmHouse)
+        public override async Task<FmHouse> GetByIdAsync(Guid fmHouseId)
         {
-            await _dataContext.AddAsync(fmHouse);
-            var created = await _dataContext.SaveChangesAsync();
-            return created > 0;
-        }
-
-        public async Task<List<FmHouse>> GetFmHousesAsync()
-        {
-            return await _dataContext.FmHouses
-                .Include(house => house.HouseType)
-                .ToListAsync();
-        }
-
-        public async Task<FmHouse> GetFmHouseByIdAsync(Guid fmHouseId)
-        {
-            return await _dataContext.FmHouses
+            return await DbContext.FmHouses
                 .Include(house => house.HouseType)
                 .SingleOrDefaultAsync(h => h.Id == fmHouseId);
         }
 
-        public async Task<bool> UpdateFmHouseAsync(FmHouse fmHouseToUpdate)
+        public override async Task<List<FmHouse>> GetAsync()
         {
-            _dataContext.FmHouses.Update(fmHouseToUpdate);
-            var updated = await _dataContext.SaveChangesAsync();
-            return updated > 0;
+            return await DbContext.FmHouses
+                .Include(house => house.HouseType)
+                .ToListAsync();
         }
 
-        public async Task<bool> DeleteFmHouseAsync(Guid fmHouseId)
-        {
-            var fmHouse = await GetFmHouseByIdAsync(fmHouseId);
-
-            if (fmHouse == null)
-                return false;
-
-            _dataContext.FmHouses.Remove(fmHouse);
-            var deleted = await _dataContext.SaveChangesAsync();
-            return deleted > 0;
-        }
     }
 }

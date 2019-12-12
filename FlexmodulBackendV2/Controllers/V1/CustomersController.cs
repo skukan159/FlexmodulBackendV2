@@ -28,7 +28,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.Customers.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var customers = await _customerService.GetCustomersAsync();
+            var customers = await _customerService.GetAsync();
             var customerResponses = customers.Select(CustomerToCustomerResponse).ToList();
             return Ok(customerResponses);
         }
@@ -37,7 +37,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.Customers.Get)]
         public async Task<IActionResult> GetCustomer([FromRoute]Guid customerId)
         {
-            var customer = await _customerService.GetCustomerByIdAsync(customerId);
+            var customer = await _customerService.GetByIdAsync(customerId);
             if (customer == null)
                 return NotFound();
             return base.Ok(CustomerToCustomerResponse(customer));
@@ -57,14 +57,14 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.Customers.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid customerId, [FromBody]UpdateCustomerRequest request)
         {
-            var customer = await _customerService.GetCustomerByIdAsync(customerId);
+            var customer = await _customerService.GetByIdAsync(customerId);
             customer.CompanyName = request.CompanyName;
             customer.CompanyTown = request.CompanyTown;
             customer.CompanyStreet = request.CompanyStreet;
             customer.CompanyPostalCode = request.CompanyPostalCode;
             customer.ContactPerson = request.ContactPerson;
 
-            var updated = await _customerService.UpdateCustomerAsync(customer);
+            var updated = await _customerService.UpdateAsync(customer);
             if (updated)
                 return Ok(CustomerToCustomerResponse(customer));
             return NotFound();
@@ -85,7 +85,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 ContactNumber = customerRequest.ContactNumber
             };
 
-            await _customerService.CreateCustomerAsync(customer);
+            await _customerService.CreateAsync(customer);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.Customers.Get.Replace("{customerId}", customer.Id.ToString());
@@ -98,7 +98,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.Customers.Delete)]
         public async Task<ActionResult> DeleteCustomer([FromRoute]Guid customerId)
         {
-            var deleted = await _customerService.DeleteCustomerAsync(customerId);
+            var customer = await _customerService.GetByIdAsync(customerId);
+            var deleted = await _customerService.DeleteAsync(customer);
             if (deleted)
                 return NoContent();
 

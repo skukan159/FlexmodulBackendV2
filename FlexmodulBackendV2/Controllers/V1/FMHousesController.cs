@@ -21,9 +21,9 @@ namespace FlexmodulBackendV2.Controllers.V1
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
     public class FmHousesController : Controller
     {
-        private readonly IFmHousesService _fmHouseService;
+        private readonly IRepository<FmHouse> _fmHouseService;
 
-        public FmHousesController(IFmHousesService fmHouseService)
+        public FmHousesController(IRepository<FmHouse> fmHouseService)
         {
             _fmHouseService = fmHouseService;
         }
@@ -32,7 +32,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.FmHouses.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var fmHouses = await _fmHouseService.GetFmHousesAsync();
+            var fmHouses = await _fmHouseService.GetAsync();
             var fmHousesResponse = fmHouses.Select(FmHouseToHouseResponse).ToList();
             return Ok(fmHousesResponse);
         }
@@ -41,7 +41,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.FmHouses.Get)]
         public async Task<IActionResult> Get([FromRoute]Guid fmHouseId)
         {
-            var fmHouse = await _fmHouseService.GetFmHouseByIdAsync(fmHouseId);
+            var fmHouse = await _fmHouseService.GetByIdAsync(fmHouseId);
             if (fmHouse == null)
                 return NotFound();
             return base.Ok(FmHouseToHouseResponse(fmHouse));
@@ -51,11 +51,11 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.FmHouses.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid fmHouseId, [FromBody]UpdateFmHouseRequest request)
         {
-            var fmHouse = await _fmHouseService.GetFmHouseByIdAsync(fmHouseId);
+            var fmHouse = await _fmHouseService.GetByIdAsync(fmHouseId);
             fmHouse.HouseType = request.HouseType;
             fmHouse.SquareMeters = request.SquareMeters;
 
-            var updated = await _fmHouseService.UpdateFmHouseAsync(fmHouse);
+            var updated = await _fmHouseService.UpdateAsync(fmHouse);
             if (updated)
                 return Ok(FmHouseToHouseResponse(fmHouse));
             return NotFound();
@@ -72,7 +72,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 SquareMeters = fmHouseRequest.SquareMeters
             };
 
-            await _fmHouseService.CreateFmHouseAsync(fmHouse);
+            await _fmHouseService.CreateAsync(fmHouse);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.FmHouses.Get.Replace("{fmHouseId}", fmHouse.Id.ToString());
@@ -85,7 +85,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.FmHouses.Delete)]
         public async Task<ActionResult> Delete([FromRoute]Guid fmHouseId)
         {
-            var deleted = await _fmHouseService.DeleteFmHouseAsync(fmHouseId);
+            var fmHouse = await _fmHouseService.GetByIdAsync(fmHouseId);
+            var deleted = await _fmHouseService.DeleteAsync(fmHouse);
             if (deleted)
                 return NoContent();
 
