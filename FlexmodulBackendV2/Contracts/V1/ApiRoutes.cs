@@ -74,7 +74,7 @@
         public static class ProductionInformations
         {
             public const string GetAll = Base + "/productioninformations";
-            public const string Get = Base + "/productioninformations/{productioninformationId}";
+            public const string Get = Base + "/productioninformations/{productionInformationId}";
             public const string Create = Base + "/productioninformations";
             public const string Update = Base + "/productioninformations/{productioninformationId}";
             public const string Delete = Base + "/productioninformations/{productioninformationId}";

@@ -33,7 +33,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.ProductionInformations.Get)]
-        public async Task<IActionResult> GetCustomer([FromRoute] Guid productionInformationId)
+        public async Task<IActionResult> GetById([FromRoute] Guid productionInformationId)
         {
             var productionInformation = await _productionInformationsService.GetByIdAsync(productionInformationId);
             if (productionInformation == null)
