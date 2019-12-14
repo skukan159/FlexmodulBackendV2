@@ -21,57 +21,24 @@ namespace FlexmodulBackendV2
                 var dbContext = serviceScope.ServiceProvider
                     .GetRequiredService<ApplicationDbContext>();
 
+                var roleManager = serviceScope.ServiceProvider
+                    .GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = serviceScope.ServiceProvider
+                    .GetRequiredService<UserManager<IdentityUser>>();
+
                 await dbContext.Database.MigrateAsync();
 
                 try
                 {
-                    DbInitializer.Initialize(dbContext);
+                    await DbInitializer.GenerateRoles(roleManager);
+                    await DbInitializer.GenerateAdmin(userManager);
+                    DbInitializer.InitializeTestData(dbContext);
                 }
                 catch (Exception ex)
                 {
                     var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred creating the DB.");
                 }
-
-                // Create User Roles
-                var roleManager = serviceScope.ServiceProvider
-                    .GetRequiredService<RoleManager<IdentityRole>>();
-
-                var userManager = serviceScope.ServiceProvider
-                    .GetRequiredService<UserManager<IdentityUser>>();
-
-                if (!await roleManager.RoleExistsAsync("SuperAdmin"))
-                {
-                    var superAdminRole = new IdentityRole("SuperAdmin");
-                    await roleManager.CreateAsync(superAdminRole);
-                }
-                if (!await roleManager.RoleExistsAsync("AdministrativeEmployee"))
-                {
-                    var administrativeEmployeeRole = new IdentityRole("AdministrativeEmployee");
-                    await roleManager.CreateAsync(administrativeEmployeeRole);
-                }
-                if (!await roleManager.RoleExistsAsync("Employee"))
-                {
-                    var employeeRole = new IdentityRole("Employee");
-                    await roleManager.CreateAsync(employeeRole);
-                }
-
-                //Delete this later in the project
-                var newUser = new IdentityUser
-                {
-                    Email = "admin@admin.com",
-                    UserName = "admin@admin.com"
-                };
-                var password = "Admin123!";
-
-                var existingUser = await userManager.FindByEmailAsync(newUser.Email);
-                if (existingUser == null)
-                {
-                    var createdUser = await userManager.CreateAsync(newUser, password);
-                    if (createdUser.Succeeded)
-                        await userManager.AddToRoleAsync(newUser, "SuperAdmin");
-                }
-
             }
 
             await host.RunAsync();

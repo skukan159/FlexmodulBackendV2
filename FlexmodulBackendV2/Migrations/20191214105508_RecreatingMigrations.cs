@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlexmodulBackendV2.Migrations
 {
-    public partial class ProjectMigrated : Migration
+    public partial class RecreatingMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -238,6 +238,25 @@ namespace FlexmodulBackendV2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FmHouses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    HouseTypeId = table.Column<Guid>(nullable: false),
+                    SquareMeters = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FmHouses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FmHouses_FmHouseTypes_HouseTypeId",
+                        column: x => x.HouseTypeId,
+                        principalTable: "FmHouseTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MaterialOnHouseTypes",
                 columns: table => new
                 {
@@ -264,42 +283,16 @@ namespace FlexmodulBackendV2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FmHouses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    HouseTypeId = table.Column<Guid>(nullable: false),
-                    SquareMeters = table.Column<int>(nullable: false),
-                    RentalOverviewId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FmHouses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FmHouses_FmHouseTypes_HouseTypeId",
-                        column: x => x.HouseTypeId,
-                        principalTable: "FmHouseTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FmHouses_RentalOverviews_RentalOverviewId",
-                        column: x => x.RentalOverviewId,
-                        principalTable: "RentalOverviews",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductionInformations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     HouseId = table.Column<Guid>(nullable: false),
                     CustomerId = table.Column<Guid>(nullable: false),
-                    ExteriorWalls = table.Column<int>(nullable: true),
-                    Ventilation = table.Column<int>(nullable: true),
+                    ExteriorWalls = table.Column<int>(nullable: false),
+                    Ventilation = table.Column<int>(nullable: false),
                     Note = table.Column<string>(nullable: true),
-                    ProductionPrice = table.Column<int>(nullable: false),
+                    ProductionPrice = table.Column<float>(nullable: false),
                     ProductionDate = table.Column<DateTime>(nullable: false),
                     LastUpdatedById = table.Column<string>(nullable: false),
                     LastUpdatedDate = table.Column<DateTime>(nullable: false),
@@ -340,10 +333,10 @@ namespace FlexmodulBackendV2.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    ProductionInformationId = table.Column<Guid>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    Price = table.Column<float>(nullable: false),
-                    ProductionInformationId = table.Column<Guid>(nullable: true)
+                    Price = table.Column<float>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -426,11 +419,6 @@ namespace FlexmodulBackendV2.Migrations
                 name: "IX_FmHouses_HouseTypeId",
                 table: "FmHouses",
                 column: "HouseTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FmHouses_RentalOverviewId",
-                table: "FmHouses",
-                column: "RentalOverviewId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MaterialOnHouseTypes_FmHouseTypeId",
@@ -521,10 +509,10 @@ namespace FlexmodulBackendV2.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "FmHouseTypes");
+                name: "RentalOverviews");
 
             migrationBuilder.DropTable(
-                name: "RentalOverviews");
+                name: "FmHouseTypes");
         }
     }
 }

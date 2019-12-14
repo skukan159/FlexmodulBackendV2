@@ -17,11 +17,16 @@ namespace FlexmodulBackendV2.Services
 
         public override async Task<List<ProductionInformation>> GetAsync()
         {
-            return await DbContext.ProductionInformations
-                .Include(pi => pi.Customer)
-                .Include(pi => pi.House)
-                .Include(pi => pi.AdditionalCosts)
-                .ToListAsync();
+            if (DbContext.ProductionInformations != null)
+            {
+                return await DbContext.ProductionInformations
+                    .Include(pi => pi.Customer)
+                    .Include(pi => pi.House)
+                    .Include(pi => pi.AdditionalCosts)
+                    .ToListAsync();
+            }
+            else return new List<ProductionInformation>();
+
         }
 
         public override async Task<ProductionInformation> GetByIdAsync(Guid productionInformationId)

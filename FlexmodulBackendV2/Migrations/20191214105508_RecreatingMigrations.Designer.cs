@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlexmodulBackendV2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191202135854_minorChanges")]
-    partial class minorChanges
+    [Migration("20191214105508_RecreatingMigrations")]
+    partial class RecreatingMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,17 +84,12 @@ namespace FlexmodulBackendV2.Migrations
                     b.Property<Guid>("HouseTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("RentalOverviewId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("SquareMeters")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HouseTypeId");
-
-                    b.HasIndex("RentalOverviewId");
 
                     b.ToTable("FmHouses");
                 });
@@ -175,7 +170,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("ExteriorWalls")
+                    b.Property<int>("ExteriorWalls")
                         .HasColumnType("int");
 
                     b.Property<Guid>("HouseId")
@@ -203,7 +198,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.Property<Guid?>("RentalOverviewId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Ventilation")
+                    b.Property<int>("Ventilation")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -514,14 +509,10 @@ namespace FlexmodulBackendV2.Migrations
             modelBuilder.Entity("FlexmodulBackendV2.Domain.FmHouse", b =>
                 {
                     b.HasOne("FlexmodulBackendV2.Domain.FmHouseType", "HouseType")
-                        .WithMany()
+                        .WithMany("Houses")
                         .HasForeignKey("HouseTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FlexmodulBackendV2.Domain.RentalOverview", null)
-                        .WithMany("RentedHouses")
-                        .HasForeignKey("RentalOverviewId");
                 });
 
             modelBuilder.Entity("FlexmodulBackendV2.Domain.MaterialOnHouseType", b =>
@@ -560,7 +551,7 @@ namespace FlexmodulBackendV2.Migrations
                         .IsRequired();
 
                     b.HasOne("FlexmodulBackendV2.Domain.RentalOverview", null)
-                        .WithMany("ProductionInformation")
+                        .WithMany("ProductionInformations")
                         .HasForeignKey("RentalOverviewId");
                 });
 

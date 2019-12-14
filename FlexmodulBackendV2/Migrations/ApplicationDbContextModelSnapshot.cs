@@ -168,7 +168,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("ExteriorWalls")
+                    b.Property<int>("ExteriorWalls")
                         .HasColumnType("int");
 
                     b.Property<Guid>("HouseId")
@@ -196,7 +196,7 @@ namespace FlexmodulBackendV2.Migrations
                     b.Property<Guid?>("RentalOverviewId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Ventilation")
+                    b.Property<int>("Ventilation")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
