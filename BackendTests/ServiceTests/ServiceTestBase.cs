@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace BackendTests.UnitTests
 {
-    public class UnitTestBase
+    public class ServiceTestBase
     {
-
         public static DbContextOptions<ApplicationDbContext> CreateInMemoryDbOptions(string dbName)
         {
             return new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: dbName)
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                .EnableSensitiveDataLogging() //debugging purpose
+                .EnableSensitiveDataLogging()
                 .Options;
         }
 
@@ -55,13 +51,9 @@ namespace BackendTests.UnitTests
             return customers;
         }
 
-        public static FmHouseType GenerateFmHouseType(int houseType = 1)
-        {
-            return new FmHouseType
-            {
-                HouseType = houseType,
-            };
-        }
+        public static FmHouseType GenerateFmHouseType(int houseType = 1) => 
+            new FmHouseType { HouseType = houseType};
+        
 
         public static List<FmHouseType> GenerateManyFmHouseTypes(int count)
         {
@@ -75,14 +67,8 @@ namespace BackendTests.UnitTests
             return fmHouseTypes;
         }
 
-        public static FmHouse GenerateFmHouse(FmHouseType houseType, int squareMeters = 10)
-        {
-            return new FmHouse
-            {
-                HouseType = houseType,
-                SquareMeters = squareMeters
-            };
-        }
+        public static FmHouse GenerateFmHouse(FmHouseType houseType, int squareMeters = 10) => 
+            new FmHouse { HouseType = houseType, SquareMeters = squareMeters};
 
         public static List<FmHouse> GenerateManyFmHouses(int count)
         {
@@ -104,14 +90,9 @@ namespace BackendTests.UnitTests
             return await service.GetUserByEmail(username);
         }
 
-        public static IdentityUser GenerateIdentityUser(string username = "testUser")
-        {
-            return new IdentityUser
-            {
-                Email = username
-            };
-        }
-
+        public static IdentityUser GenerateIdentityUser(string username = "testUser") => 
+            new IdentityUser { Email = username };
+        
         public static ProductionInformation GenerateProductionInformation(int id = 0)
         {
             var customer = GenerateTestCustomer(index:id.ToString());
@@ -232,15 +213,9 @@ namespace BackendTests.UnitTests
 
         }
 
-        public static MaterialOnHouseType GenerateMaterialOnHouseType(FmHouseType houseType, Material material, int amount = 10)
-        {
-            return new MaterialOnHouseType
-            {
-                FmHouseType = houseType,
-                Material = material,
-                MaterialAmount = amount
-            };
-        }
+        public static MaterialOnHouseType GenerateMaterialOnHouseType(FmHouseType houseType, Material material, int amount = 10) =>
+            new MaterialOnHouseType { FmHouseType = houseType, Material = material, MaterialAmount = amount};
+        
 
         public static List<MaterialOnHouseType> GenerateManyMaterialOnHouseTypes(int count)
         {
@@ -263,7 +238,8 @@ namespace BackendTests.UnitTests
             string setupAddressTown = "TestTown" + index;
 
 
-            return GenerateRentalOverview(productionInformations,estimatedPrice,purchaseStatus,setupAddressPostalCode,setupAddressStreet,setupAddressTown);
+            return GenerateRentalOverview
+                (productionInformations,estimatedPrice,purchaseStatus,setupAddressPostalCode,setupAddressStreet,setupAddressTown);
 
         }
 

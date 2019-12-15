@@ -7,7 +7,7 @@ using Xunit;
 
 namespace BackendTests.UnitTests
 {
-    public class CustomerServiceTest : UnitTestBase
+    public class CustomerServiceTest : ServiceTestBase
     {
         [Fact]
         public async Task Create_customer()

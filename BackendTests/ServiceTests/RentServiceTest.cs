@@ -9,7 +9,7 @@ using Xunit;
 
 namespace BackendTests.UnitTests
 {
-    public class RentServiceTest : UnitTestBase
+    public class RentServiceTest : ServiceTestBase
     {
       
     }

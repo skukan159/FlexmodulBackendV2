@@ -64,7 +64,7 @@ namespace BackendTests.IntegrationTests
 
         }*/
 
-
+/*
         [Fact]
         public async Task GetAll_WithoutAnyCustomers_ReturnsEmptyResponse()
         {
@@ -79,6 +79,6 @@ namespace BackendTests.IntegrationTests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             (await response.Content.ReadAsAsync<List<Customer>>()).Should().BeEmpty();
-        }
+        }*/
     }
 }

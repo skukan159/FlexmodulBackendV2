@@ -9,7 +9,7 @@ using Xunit;
 
 namespace BackendTests.UnitTests
 {
-    public class ProductionInformationServiceTest : UnitTestBase
+    public class ProductionInformationServiceTest : ServiceTestBase
     {
        [Fact]
         public async Task Create_ProductionInformation()

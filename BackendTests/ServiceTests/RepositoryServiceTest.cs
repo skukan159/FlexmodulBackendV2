@@ -10,7 +10,7 @@ using Xunit;
 
 namespace BackendTests.UnitTests
 {
-    public class RepositoryServiceTest : UnitTestBase
+    public class RepositoryServiceTest : ServiceTestBase
     {
         [Fact]
         public async Task Create_Material()

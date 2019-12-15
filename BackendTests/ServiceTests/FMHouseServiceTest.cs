@@ -7,7 +7,7 @@ using Xunit;
 
 namespace BackendTests.UnitTests
 {
-    public class FmHouseServiceTest : UnitTestBase
+    public class FmHouseServiceTest : ServiceTestBase
     {
         [Fact]
         public async Task Create_fmHouse()

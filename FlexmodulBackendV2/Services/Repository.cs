@@ -21,8 +21,6 @@ namespace FlexmodulBackendV2.Services
 
         public virtual async Task<T> GetByIdAsync(Guid id)
         {
-            /*return await _dataContext.Customers
-                .SingleOrDefaultAsync(c => c.Id == customerId);*/
             return await DbContext.Set<T>().FindAsync(id);
         }
 
@@ -43,13 +41,10 @@ namespace FlexmodulBackendV2.Services
             await DbContext.Set<T>().AddAsync(entity);
             var created = await DbContext.SaveChangesAsync();
             return created > 0;
-
         }
 
         public virtual async Task<bool> UpdateAsync(T entity)
         {
-            //DbContext.Entry(entity).State = EntityState.Modified;
-
             DbContext.Set<T>().Update(entity);
             var updated = await DbContext.SaveChangesAsync();
             return updated > 0;
