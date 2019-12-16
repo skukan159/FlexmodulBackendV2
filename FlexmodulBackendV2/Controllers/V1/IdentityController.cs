@@ -83,8 +83,6 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
-
-
         [HttpGet(ApiRoutes.Identity.GetByUsername)]
         public async Task<IActionResult> GetUserByUsername([FromRoute] string email)
         {
@@ -96,6 +94,18 @@ namespace FlexmodulBackendV2.Controllers.V1
             var responseObj = IdentityUserToUserResponse(result);
 
             return Ok(responseObj);
+        }
+
+        [Authorize(Roles = Roles.SuperAdmin)]
+        [HttpGet(ApiRoutes.Identity.DeleteUser)]
+        public async Task<IActionResult> DeleteUser([FromRoute] string userId)
+        {
+            var result = await _identityService.DeleteUser(userId);
+
+            if (result == false)
+                return NotFound("Could not delete user. Check if the right user ID was inserted.");
+
+            return Ok();
 
         }
 

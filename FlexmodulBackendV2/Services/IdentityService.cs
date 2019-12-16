@@ -46,6 +46,12 @@ namespace FlexmodulBackendV2.Services
             return await _userManager.FindByEmailAsync(email);
         }
 
+        public async Task<bool> DeleteUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.DeleteAsync(user);
+            return result.Succeeded;
+        }
 
 
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)

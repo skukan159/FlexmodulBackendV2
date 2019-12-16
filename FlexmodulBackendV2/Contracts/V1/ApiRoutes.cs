@@ -103,12 +103,14 @@
             public const string Login = Base + "/identity/login";
             public const string Register = Base + "/identity/register";
             public const string Refresh = Base + "/identity/refresh";
-            public const string GetRoles = Base + "/identity/roles";
-            public const string GetUserRoles = Base + "/identity/userrole/{userId}";
-            public const string SetUserRole = Base + "/identity/setuserrole";
             public const string GetById = Base + "/identity/getUserById/{userId}";
             public const string GetByUsername = Base + "/identity/getUserByEmail/{email}";
             public const string GetUsers = Base + "/identity/users";
+            public const string DeleteUser = Base + "/identity/deleteUser/{userId}";
+            public const string GetRoles = Base + "/identity/roles";
+            public const string GetUserRoles = Base + "/identity/userrole/{userId}";
+            public const string SetUserRole = Base + "/identity/setuserrole";
+
         }
 
         public static class Values
