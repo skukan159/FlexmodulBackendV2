@@ -2,8 +2,8 @@
 {
     public static class Roles
     {
-        public const string AdministrativeEmployee = "AdministrativeEmployee";
         public const string SuperAdmin = "SuperAdmin";
+        public const string AdministrativeEmployee = "AdministrativeEmployee";
         public const string Employee = "Employee";
     }
 }

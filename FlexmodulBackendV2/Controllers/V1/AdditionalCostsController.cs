@@ -18,9 +18,9 @@ namespace FlexmodulBackendV2.Controllers.V1
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AdditionalCostsController : Controller
     {
-        private readonly IAdditionalCostsService _additionalCostsService;
+        private readonly IRepository<AdditionalCost> _additionalCostsService;
 
-        public AdditionalCostsController(IAdditionalCostsService additionalCostsService)
+        public AdditionalCostsController(IRepository<AdditionalCost> additionalCostsService)
         {
             _additionalCostsService = additionalCostsService;
         }
@@ -28,7 +28,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.AdditionalCosts.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            var additionalCosts = await _additionalCostsService.GetAdditionalCostsAsync();
+            var additionalCosts = await _additionalCostsService.GetAsync();
             var additionalCostsResponses = additionalCosts.Select(AdditionalCostToAdditionalCostResponse).ToList();
             return Ok(additionalCostsResponses);
         }
@@ -36,7 +36,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.AdditionalCosts.Get)]
         public async Task<IActionResult> GetCustomer([FromRoute]Guid customerId)
         {
-            var additionalCost = await _additionalCostsService.GetAdditionalCostByIdAsync(customerId);
+            var additionalCost = await _additionalCostsService.GetByIdAsync(customerId);
             if (additionalCost == null)
                 return NotFound();
             return base.Ok(AdditionalCostToAdditionalCostResponse(additionalCost));
@@ -45,12 +45,12 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpPut(ApiRoutes.AdditionalCosts.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid additionalCostId, [FromBody]UpdateAdditionalCostRequest request)
         {
-            var additionalCost = await _additionalCostsService.GetAdditionalCostByIdAsync(additionalCostId);
+            var additionalCost = await _additionalCostsService.GetByIdAsync(additionalCostId);
             additionalCost.Description = request.Description;
             additionalCost.Price = request.Price;
             additionalCost.Date = request.Date;
 
-            var updated = await _additionalCostsService.UpdateAdditionalCostAsync(additionalCost);
+            var updated = await _additionalCostsService.UpdateAsync(additionalCost);
             if (updated)
                 return Ok(AdditionalCostToAdditionalCostResponse(additionalCost));
             return NotFound();
@@ -67,7 +67,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 Date = customerRequest.Date
             };
 
-            await _additionalCostsService.CreateAdditionalCostAsync(additionalCost);
+            await _additionalCostsService.CreateAsync(additionalCost);
 
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.AdditionalCosts.Get.Replace("{additionalCostId}", additionalCost.Id.ToString());
@@ -79,7 +79,8 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpDelete(ApiRoutes.AdditionalCosts.Delete)]
         public async Task<ActionResult> DeleteCustomer([FromRoute]Guid additionalCostId)
         {
-            var deleted = await _additionalCostsService.DeleteAdditionalCostAsync(additionalCostId);
+            var additionalCost = await _additionalCostsService.GetByIdAsync(additionalCostId);
+            var deleted = await _additionalCostsService.DeleteAsync(additionalCost);
             if (deleted)
                 return NoContent();
 

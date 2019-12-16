@@ -29,26 +29,26 @@ namespace FlexmodulBackendV2.Controllers.V1
         public async Task<IActionResult> GetAll()
         {
             var customers = await _customerService.GetAsync();
-            var customerResponses = customers.Select(CustomerToCustomerResponse).ToList();
+            var customerResponses = customers.Select(ToCustomerResponse).ToList();
             return Ok(customerResponses);
         }
 
         [HttpGet(ApiRoutes.Customers.Get)]
-        public async Task<IActionResult> GetCustomer([FromRoute]Guid customerId)
+        public async Task<IActionResult> Get([FromRoute]Guid customerId)
         {
             var customer = await _customerService.GetByIdAsync(customerId);
             if (customer == null)
                 return NotFound();
-            return base.Ok(CustomerToCustomerResponse(customer));
+            return base.Ok(ToCustomerResponse(customer));
         }
 
         [HttpGet(ApiRoutes.Customers.GetByName)]
-        public async Task<IActionResult> GetCustomer([FromRoute]string companyName)
+        public async Task<IActionResult> Get([FromRoute]string companyName)
         {
             var customer = await _customerService.GetCustomerByNameAsync(companyName);
             if (customer == null)
                 return NotFound();
-            return base.Ok(CustomerToCustomerResponse(customer));
+            return base.Ok(ToCustomerResponse(customer));
         }
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
@@ -64,7 +64,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
             var updated = await _customerService.UpdateAsync(customer);
             if (updated)
-                return Ok(CustomerToCustomerResponse(customer));
+                return Ok(ToCustomerResponse(customer));
             return NotFound();
 
         }
@@ -88,13 +88,13 @@ namespace FlexmodulBackendV2.Controllers.V1
             var baseurl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationuri = baseurl + "/" + ApiRoutes.Customers.Get.Replace("{customerId}", customer.Id.ToString());
 
-            var response = CustomerToCustomerResponse(customer);
+            var response = ToCustomerResponse(customer);
             return Created(locationuri, response);
         }
 
         [Authorize(Roles = Roles.SuperAdmin)]
         [HttpDelete(ApiRoutes.Customers.Delete)]
-        public async Task<ActionResult> DeleteCustomer([FromRoute]Guid customerId)
+        public async Task<ActionResult> Delete([FromRoute]Guid customerId)
         {
             var customer = await _customerService.GetByIdAsync(customerId);
             var deleted = await _customerService.DeleteAsync(customer);
@@ -104,7 +104,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return NotFound();
         }
 
-        public static CustomerResponse CustomerToCustomerResponse(Customer customer)
+        public static CustomerResponse ToCustomerResponse(Customer customer)
         {
             return new CustomerResponse
             {

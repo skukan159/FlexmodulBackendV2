@@ -21,7 +21,7 @@ namespace FlexmodulBackendV2.Installers
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IAdditionalCostsService, AdditionalCostsService>();
+            services.AddScoped<IRepository<AdditionalCost>, Repository<AdditionalCost>>();
             services.AddScoped<IFmHouseTypesService, FmHouseTypeService>();
             services.AddScoped<IRepository<FmHouse>, Repository<FmHouse>>();
             services.AddScoped<IRepository<Material>, Repository<Material>>();
