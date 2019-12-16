@@ -15,7 +15,8 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors("MyPolicy")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = Roles.Employee + "," + Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
     public class MaterialsController : Controller
     {
         private readonly IRepository<Material> _materialsService;
@@ -42,7 +43,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(MaterialToMaterialResponse(material));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.Materials.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid materialId, [FromBody] UpdateMaterialRequest request)
         {
@@ -60,7 +61,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return NotFound();
 
         }
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.Materials.Create)]
         public async Task<IActionResult> Create([FromBody] CreateMaterialRequest materialRequest)
         {
@@ -83,7 +84,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpDelete(ApiRoutes.Materials.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid materialId)
         {

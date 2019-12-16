@@ -8,7 +8,7 @@ namespace FlexmodulBackendV2.Data
 {
     public static class DbSeeder<T> where T : EntityBase
     {
-        public static void SeedDatabaseWithData(ApplicationDbContext context, IEnumerable<T> data)
+        public static async Task SeedDatabaseWithData(ApplicationDbContext context, IEnumerable<T> data)
         {
             if (context.Set<T>().Any()) return;
 
@@ -16,7 +16,7 @@ namespace FlexmodulBackendV2.Data
             {
                 context.Set<T>().Add(entity);
             }
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

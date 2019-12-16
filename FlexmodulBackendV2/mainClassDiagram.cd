@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FlexmodulBackendV2.Domain.AdditionalCost" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQEgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\AdditionalCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.AuthenticationResult" Collapsed="true">
+    <Position X="30.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAQAAAAAAAAAAAgAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Domain\AuthenticationResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.Customer" Collapsed="true">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAQBAAAAAAAAAABAAAgAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.EntityBase" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\EntityBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.FmHouse" Collapsed="true">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAIAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\FMHouse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.FmHouseType" Collapsed="true">
+    <Position X="12.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAIAAAAABAA=</HashCode>
+      <FileName>Domain\FMHouseType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.Material" Collapsed="true">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAQAAAAAAACAEAAAAAAECCA=</HashCode>
+      <FileName>Domain\Material.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.MaterialOnHouseType" Collapsed="true">
+    <Position X="17" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAwAAAAAAAAAABAAAAAAAgAAAAA=</HashCode>
+      <FileName>Domain\MaterialOnHouseType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.ProductionInformation" Collapsed="true">
+    <Position X="19.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAEgAAAkAEAAAACAAQgAAAAAAIIIAEAAAA=</HashCode>
+      <FileName>Domain\ProductionInformation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.RefreshToken" Collapsed="true">
+    <Position X="34" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAVAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAQAAAABAEA=</HashCode>
+      <FileName>Domain\RefreshToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.Rent" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAgAAAAAACAAgAAAAAAAAAAAAIEAAAAA=</HashCode>
+      <FileName>Domain\Rent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.RentalOverview" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQIAAAAAAAAAAAAABAAAAACAAAAAAAAAAAAAACAAAEA=</HashCode>
+      <FileName>Domain\RentalOverview.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Domain.UserRoles" Collapsed="true">
+    <Position X="28.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Domain\UserRoles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.AdditionalCostsController" Collapsed="true">
+    <Position X="23.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEAAAAAAABAAAAgAAAAAAAEAAAgAAAAABAAA=</HashCode>
+      <FileName>Controllers\V1\AdditionalCostsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.CustomersController" Collapsed="true">
+    <Position X="25.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAABAAAAgAIAAAAAEAAAgAAAAABAAA=</HashCode>
+      <FileName>Controllers\V1\CustomersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.FmHousesController" Collapsed="true">
+    <Position X="21.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAAAAAAABAAAAAAAAAAAEAAEAAIgAAAAAAAAA=</HashCode>
+      <FileName>Controllers\V1\FMHousesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.FmHouseTypesController" Collapsed="true">
+    <Position X="25.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEAAAAAAABAAAAAAAAAAAEAAEAAAgAAgAAAAAA=</HashCode>
+      <FileName>Controllers\V1\FMHouseTypesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.IdentityController" Collapsed="true">
+    <Position X="27" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAACIAAAAgAAAAAAAAAAAABABAAABCACQAAAAAAA=</HashCode>
+      <FileName>Controllers\V1\IdentityController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.MaterialOnHouseTypesController" Collapsed="true">
+    <Position X="21.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAABAAAACAAAAAAEAAEAAAgAAAAAAAAE=</HashCode>
+      <FileName>Controllers\V1\MaterialOnHouseTypesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.MaterialsController" Collapsed="true">
+    <Position X="25.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEAAEAAIgAAAAABAAA=</HashCode>
+      <FileName>Controllers\V1\MaterialsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.ProductionInformationsController" Collapsed="true">
+    <Position X="30.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAEAAAAAAAAAEAAEAAAgQAAAAAAIA=</HashCode>
+      <FileName>Controllers\V1\ProductionInformationsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.RentalOverviewsController" Collapsed="true">
+    <Position X="25.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAAAAAEABAAAAAAAAAAAEAAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>Controllers\V1\RentalOverviewsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.RentsController" Collapsed="true">
+    <Position X="28.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAoAAAAAAAAQAAAAAAAAAAAAAAAEAAAgAAAAAAgAA=</HashCode>
+      <FileName>Controllers\V1\RentsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Controllers.V1.ValuesController" Collapsed="true">
+    <Position X="30.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\V1\ValuesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.RentalOverview.CreateRentalOverviewRequest" Collapsed="true">
+    <Position X="34" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAEAAAAABAAAAACAAAAAAAAAAAAAACAAAEA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\RentalOverview\CreateRentalOverviewRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.RentalOverview.UpdateRentalOverviewRequest" Collapsed="true">
+    <Position X="32.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQIAAAAAAAAAAAAABAAAAACAAAAAAAAAAAAAACAAAEA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\RentalOverview\UpdateRentalOverviewRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.MaterialOnHouseType.CreateMaterialOnHouseTypeRequest" Collapsed="true">
+    <Position X="28.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAwAAAAAAAAAABAAAAAAAgAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\MaterialOnHouseType\CreateMaterialOnHouseTypeRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.MaterialOnHouseType.UpdateMaterialOnHouseTypeRequest" Collapsed="true">
+    <Position X="27" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAwAAAAAAAAAABAAAAAAAgAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\MaterialOnHouseType\UpdateMaterialOnHouseTypeRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouseType.CreateFmHouseTypeRequest" Collapsed="true">
+    <Position X="27" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\FmHouseType\CreateFmHouseTypeRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouseType.UpdateFmHouseTypeRequest" Collapsed="true">
+    <Position X="25.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\FmHouseType\UpdateFmHouseTypeRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.AdditionalCost.CreateAdditionalCostRequest" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\AdditionalCost\CreateAdditionalCostRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.AdditionalCost.UpdateAdditionalCostRequest" Collapsed="true">
+    <Position X="34" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\AdditionalCost\UpdateAdditionalCostRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Rent.CreateRentRequest" Collapsed="true">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAACAAgAAAAAAAAAAAAIEAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\Rent\CreateRentRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Rent.UpdateRentRequest" Collapsed="true">
+    <Position X="34" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAACAAgAAAAAAAAAAAAIEAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\Rent\UpdateRentRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Material.CreateMaterialRequest" Collapsed="true">
+    <Position X="30.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAQAAAAAAACAEAAAAAAECAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\Material\CreateMaterialRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Material.UpdateMaterialRequest" Collapsed="true">
+    <Position X="28.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAQAAAAAAACAEAAAAAAECAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\Material\UpdateMaterialRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.ProductionInformation.CreateProductionInformationRequest" Collapsed="true">
+    <Position X="32.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAgAAAEAEAAAACAAQAAAAAAAIIIAEAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\ProductionInformation\CreateProductionInformationRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.ProductionInformation.UpdateProductionInformationRequest" Collapsed="true">
+    <Position X="30.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAEgAAAkAEAAAACAAQAAAAAAAIIIAEAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\ProductionInformation\UpdateProductionInformationRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouse.CreateFmHouseRequest" Collapsed="true">
+    <Position X="25.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\FmHouse\CreateFmHouseRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouse.UpdateFmHouseRequest" Collapsed="true">
+    <Position X="23.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\FmHouse\UpdateFmHouseRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Customer.CreateCustomerRequest" Collapsed="true">
+    <Position X="23.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAQBAAAAAAAAAABAAAgAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\Customer\CreateCustomerRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Customer.UpdateCustomerRequest" Collapsed="true">
+    <Position X="21.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAQBAAAAAAAAAABAAAgAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\Customer\UpdateCustomerRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.RefreshTokenRequest" Collapsed="true">
+    <Position X="21.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\RefreshTokenRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.UserLoginRequest" Collapsed="true">
+    <Position X="21.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\UserLoginRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.UserRegistrationRequest" Collapsed="true">
+    <Position X="23.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\UserRegistrationRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.UserRoleRequest" Collapsed="true">
+    <Position X="27" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Contracts\V1\RequestDTO\UserRoleRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.AdditionalCostResponse" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\AdditionalCostResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.AuthFailedResponse" Collapsed="true">
+    <Position X="32.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\AuthFailedResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.AuthSuccessResponse" Collapsed="true">
+    <Position X="34" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\AuthSuccessResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.CustomerResponse" Collapsed="true">
+    <Position X="23.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACQBAAAAAAAAAABAAAgAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\CustomerResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.FmHouseResponse" Collapsed="true">
+    <Position X="34" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\FmHouseResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.FmHouseTypeResponse" Collapsed="true">
+    <Position X="23.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\FmHouseTypeResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.MaterialOnHouseTypeResponse" Collapsed="true">
+    <Position X="35" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAAAAAAAAAAwAAAAAAAAAABAAAAAAAgAAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\MaterialOnHouseTypeResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.MaterialResponse" Collapsed="true">
+    <Position X="23.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAIAAAAAAAAQAAAAAAACAEAAAAAAECAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\MaterialResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.ProductionInformationResponse" Collapsed="true">
+    <Position X="28.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAEgAAAkAEAAAACAAQAAAAAAAIIIAEAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\ProductionInformationResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.RentalOverviewResponse" Collapsed="true">
+    <Position X="23.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAAAAAAEAAAAABAAAAACAAAAAAAAAAAAAACAAAEA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\RentalOverviewResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.RentResponse" Collapsed="true">
+    <Position X="27" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAgAAAAAACAAgAAAAAAAAAAAAIEAAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\RentResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.UserResponse" Collapsed="true">
+    <Position X="25.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Contracts\V1\ResponseDTO\UserResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Contracts.V1.ApiRoutes" Collapsed="true">
+    <Position X="27" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Contracts\V1\ApiRoutes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Installers.DbInstaller" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Installers\DBInstaller.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FlexmodulBackendV2.Installers.InstallerExtensions" Collapsed="true">
+    <Position X="30.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Installers\InstallerExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Installers.MvcInstaller" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Installers\MvcInstaller.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FlexmodulBackendV2.Options.JwtSettings" Collapsed="true">
+    <Position X="32.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Options\JwtSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Options.SwaggerOptions" Collapsed="true">
+    <Position X="32.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Options\SwaggerOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Data.ApplicationDbContext" Collapsed="true">
+    <Position X="28.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEMCAAAAAAIEAIAAgAgAAAAAEAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Data\ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Data.DataGenerator" Collapsed="true">
+    <Position X="27" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAgAAQAAAAACAAAAAACAAAAAABAEAAAAAAAA=</HashCode>
+      <FileName>Data\DataGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Data.DbInitializer" Collapsed="true">
+    <Position X="28.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAQABCQAAAA=</HashCode>
+      <FileName>Data\DBInitializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Data.DbSeeder&lt;T&gt;" Collapsed="true">
+    <Position X="32.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Data\DBSeeder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Services.AdditionalCostsService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAABQAAAAAAAAAAAAAAAQAAAAAAAEAAABAA=</HashCode>
+      <FileName>Services\AdditionalCostsService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FlexmodulBackendV2.Services.CustomerService" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CustomerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlexmodulBackendV2.Services.FmHouseService" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIAA=</HashCode>
+      <FileName>Services\FmHouseService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Services.FmHouseTypeService" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\FmHouseTypeService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlexmodulBackendV2.Services.IdentityService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAABAAoIAAABAAggAAAAAAgAoEAAAAgSAIAAAAAAAA=</HashCode>
+      <FileName>Services\IdentityService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FlexmodulBackendV2.Services.ProductionInformationService" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIAA=</HashCode>
+      <FileName>Services\ProductionInformationService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Services.Repository&lt;T&gt;" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAgAAAAAIIAAIIA=</HashCode>
+      <FileName>Services\Repository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlexmodulBackendV2.Program" Collapsed="true">
+    <Position X="32.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlexmodulBackendV2.Startup" Collapsed="true">
+    <Position X="30.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAACAAAAAA=</HashCode>
+      <FileName>Startup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="FlexmodulBackendV2.Installers.IInstaller" Collapsed="true">
+    <Position X="25.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Installers\IInstaller.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlexmodulBackendV2.Services.ServiceInterfaces.IAdditionalCostsService" Collapsed="true">
+    <Position X="21.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAABQAAAAAAAAAAAAAAAAAAAAAAAEAAABAA=</HashCode>
+      <FileName>Services\ServiceInterfaces\IAdditionalCostsService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlexmodulBackendV2.Services.ServiceInterfaces.ICustomerService" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ServiceInterfaces\ICustomerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlexmodulBackendV2.Services.ServiceInterfaces.IFmHouseTypesService" Collapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ServiceInterfaces\IfmHouseTypesService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlexmodulBackendV2.Services.ServiceInterfaces.IIdentityService" Collapsed="true">
+    <Position X="23.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAAAoAAAAAAAggAAAAAAAAAAAAAAgSAAAAAAAAAA=</HashCode>
+      <FileName>Services\ServiceInterfaces\IIdentityService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlexmodulBackendV2.Services.ServiceInterfaces.IRepository&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAIIAAIIA=</HashCode>
+      <FileName>Services\ServiceInterfaces\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

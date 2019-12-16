@@ -5,20 +5,19 @@ using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouse;
 using FlexmodulBackendV2.Contracts.V1.ResponseDTO;
-using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors("MyPolicy")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = Roles.Employee+","+Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
     public class FmHousesController : Controller
     {
         private readonly IRepository<FmHouse> _fmHouseService;
@@ -28,7 +27,6 @@ namespace FlexmodulBackendV2.Controllers.V1
             _fmHouseService = fmHouseService;
         }
 
-        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.FmHouses.GetAll)]
         public async Task<IActionResult> GetAll()
         {
@@ -37,7 +35,6 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Ok(fmHousesResponse);
         }
 
-        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.FmHouses.Get)]
         public async Task<IActionResult> Get([FromRoute]Guid fmHouseId)
         {
@@ -47,7 +44,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(FmHouseToHouseResponse(fmHouse));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.FmHouses.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid fmHouseId, [FromBody]UpdateFmHouseRequest request)
         {
@@ -62,7 +59,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.FmHouses.Create)]
         public async Task<IActionResult> Create([FromBody] CreateFmHouseRequest fmHouseRequest)
         {
@@ -81,7 +78,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpDelete(ApiRoutes.FmHouses.Delete)]
         public async Task<ActionResult> Delete([FromRoute]Guid fmHouseId)
         {

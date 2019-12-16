@@ -32,7 +32,9 @@ namespace FlexmodulBackendV2
                 {
                     await DbInitializer.GenerateRoles(roleManager);
                     await DbInitializer.GenerateAdmin(userManager);
-                    DbInitializer.InitializeTestData(dbContext);
+                    await DbInitializer.GenerateAdministrativeEmployee(userManager);
+                    await DbInitializer.GenerateEmployee(userManager);
+                    await DbInitializer.InitializeTestData(dbContext,userManager);
                 }
                 catch (Exception ex)
                 {

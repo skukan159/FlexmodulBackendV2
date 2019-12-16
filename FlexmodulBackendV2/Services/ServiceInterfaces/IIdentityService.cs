@@ -15,6 +15,7 @@ namespace FlexmodulBackendV2.Services.ServiceInterfaces
         Task<List<UserRoles>> GetUserRoles(string userId);
         Task<AuthenticationResult> RegisterAndAddSuperAdminRole(string email, string password);
         Task<IdentityUser> GetUserById(string userId);
+        Task<List<IdentityUser>> GetUsers();
         Task<IdentityUser> GetUserByEmail(string email);
     }
 }

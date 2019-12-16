@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.RequestDTO;
 using FlexmodulBackendV2.Contracts.V1.ResponseDTO;
+using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
@@ -21,7 +23,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             _identityService = identityService;
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.Identity.SetRole)]
         public async Task<IActionResult> SetUserRole([FromRoute] string userId,[FromBody] string roleId)
         { 
@@ -33,7 +35,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Ok(true);
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = Roles.SuperAdmin)]
         [HttpGet(ApiRoutes.Identity.GetRoles)]
         public async Task<IActionResult> GetUserRoles([FromRoute] string userId)
         {
@@ -44,23 +46,35 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
+        [Authorize(Roles = Roles.Employee + "," + Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
+        [HttpGet(ApiRoutes.Identity.GetUsers)]
+        public async Task<IActionResult> GetUsers()
+        {
+            var result = await _identityService.GetUsers();
+            if (result == null)
+                return NotFound("Cannot find users");
+
+            var userResponses = result.Select(IdentityUserToUserResponse).ToList();
+
+            return Ok(userResponses);
+
+        }
+
         [HttpGet(ApiRoutes.Identity.GetById)]
         public async Task<IActionResult> GetUserById([FromRoute] string userId)
         {
-            var result = await _identityService.GetUserById(userId);
+            IdentityUser result = await _identityService.GetUserById(userId);
             if (result == null)
                 return NotFound("Cannot find user with this ID");
 
-            var responseObj = new UserResponse()
-            {
-                Id = result.Id,
-                Email = result.Email,
-                UserName = result.UserName
-            };
+            UserResponse responseObj = IdentityUserToUserResponse(result);
 
             return Ok(responseObj);
 
         }
+
+
+
         [HttpGet(ApiRoutes.Identity.GetByUsername)]
         public async Task<IActionResult> GetUserByUsername([FromRoute] string email)
         {
@@ -69,12 +83,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             if (result == null)
                 return NotFound();
 
-            var responseObj = new UserResponse()
-            {
-                Id = result.Id,
-                Email = result.Email,
-                UserName = result.UserName
-            };
+            var responseObj = IdentityUserToUserResponse(result);
 
             return Ok(responseObj);
 
@@ -108,8 +117,6 @@ namespace FlexmodulBackendV2.Controllers.V1
                     Errors = authResponse.Errors
                 });
             }
-
-
 
             return Ok(new AuthSuccessResponse
             {
@@ -169,6 +176,16 @@ namespace FlexmodulBackendV2.Controllers.V1
             if (result == false)
                 return NotFound();
             return Ok(true);
+        }
+
+        private UserResponse IdentityUserToUserResponse(IdentityUser identityUser)
+        {
+            return new UserResponse()
+            {
+                Id = identityUser.Id,
+                Email = identityUser.Email,
+                UserName = identityUser.UserName
+            };
         }
     }
 }

@@ -15,7 +15,8 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors("MyPolicy")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = Roles.Employee + "," + Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
     public class RentalOverviewsController : Controller
     {
         private readonly IRepository<RentalOverview> _rentalOverviewsService;
@@ -42,7 +43,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(RentalOverviewToResponse(rentalOverview));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.RentalOverviews.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid rentalOverviewId, [FromBody] UpdateRentalOverviewRequest request)
         {
@@ -62,7 +63,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.RentalOverviews.Create)]
         public async Task<IActionResult> Create([FromBody] CreateRentalOverviewRequest rentalOverviewRequest)
         {
@@ -85,7 +86,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpDelete(ApiRoutes.RentalOverviews.Delete)]
         public async Task<ActionResult> Delete([FromRoute] Guid rentalOverviewId)
         {

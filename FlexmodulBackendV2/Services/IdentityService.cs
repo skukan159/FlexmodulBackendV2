@@ -36,6 +36,11 @@ namespace FlexmodulBackendV2.Services
             return await _userManager.FindByIdAsync(userId);
         }
 
+        public async Task<List<IdentityUser>> GetUsers()
+        {
+            return await _userManager.Users.ToListAsync();
+        }
+
         public async Task<IdentityUser> GetUserByEmail(string email)
         {
             return await _userManager.FindByEmailAsync(email);

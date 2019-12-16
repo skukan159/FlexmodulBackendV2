@@ -19,7 +19,8 @@ namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors("MyPolicy")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Employee,Admin,SuperAdmin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = Roles.Employee + "," + Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
     public class FmHouseTypesController : Controller
     {
 

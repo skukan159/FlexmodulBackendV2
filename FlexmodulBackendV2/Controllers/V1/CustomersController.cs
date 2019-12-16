@@ -14,7 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace FlexmodulBackendV2.Controllers.V1
 {
     [EnableCors("MyPolicy")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = Roles.Employee + "," + Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
     public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;
@@ -24,7 +25,6 @@ namespace FlexmodulBackendV2.Controllers.V1
             _customerService = customerService;
         }
 
-        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.Customers.GetAll)]
         public async Task<IActionResult> GetAll()
         {
@@ -33,7 +33,6 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Ok(customerResponses);
         }
 
-        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.Customers.Get)]
         public async Task<IActionResult> GetCustomer([FromRoute]Guid customerId)
         {
@@ -43,7 +42,6 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(CustomerToCustomerResponse(customer));
         }
 
-        [Authorize(Roles = "Employee,Admin,SuperAdmin")]
         [HttpGet(ApiRoutes.Customers.GetByName)]
         public async Task<IActionResult> GetCustomer([FromRoute]string companyName)
         {
@@ -53,7 +51,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return base.Ok(CustomerToCustomerResponse(customer));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.Customers.Update)]
         public async Task<IActionResult> Update([FromRoute]Guid customerId, [FromBody]UpdateCustomerRequest request)
         {
@@ -71,7 +69,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.Customers.Create)]
         public async Task<IActionResult> Create([FromBody] CreateCustomerRequest customerRequest)
         {
@@ -94,7 +92,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             return Created(locationuri, response);
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = Roles.SuperAdmin)]
         [HttpDelete(ApiRoutes.Customers.Delete)]
         public async Task<ActionResult> DeleteCustomer([FromRoute]Guid customerId)
         {

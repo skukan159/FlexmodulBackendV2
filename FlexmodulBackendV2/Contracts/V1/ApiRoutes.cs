@@ -107,6 +107,7 @@
             public const string SetRole = Base + "/identity/role/{userId}";
             public const string GetById = Base + "/identity/getUserById/{userId}";
             public const string GetByUsername = Base + "/identity/getUserByEmail/{email}";
+            public const string GetUsers = Base + "/identity/users";
         }
 
         public static class Values

@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
-    //[Authorize]
     [EnableCors("MyPolicy")]
     [ApiController]
+    //Used to test connection to the API
     public class ValuesController : Controller
     {
         [HttpGet(ApiRoutes.Values.GetAll)]
