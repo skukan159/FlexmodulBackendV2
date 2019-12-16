@@ -46,6 +46,8 @@ namespace FlexmodulBackendV2.Services
             return await _userManager.FindByEmailAsync(email);
         }
 
+
+
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
         {
             var existingUser = await _userManager.FindByEmailAsync(email);
@@ -159,7 +161,13 @@ namespace FlexmodulBackendV2.Services
             return await GenerateAuthenticationResultForUserAsync(user);
         }
 
-        public async Task<bool> UpdateUserRoles(string userId,List<string> roleNames)
+        public async Task<IEnumerable<string>> GetRoles()
+        {
+            var roles = await _context.Roles.ToListAsync();
+            var roleNames = roles.Select(role => role.Name);
+            return roleNames;
+        }
+        public async Task<bool> UpdateUserRoles(string userId,IEnumerable<string> roleNames)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -170,15 +178,19 @@ namespace FlexmodulBackendV2.Services
             }
 
             var roles = await _userManager.GetRolesAsync(user);
-            var result = await _userManager.RemoveFromRolesAsync(user, roles);
-
-            if (!result.Succeeded)
+            if (roles.Count != 0)
             {
-                return false;
-                //return new UserRoles { Errors = new[] { "Cannot remove user existing roles" } };
+                var removeRolesResult = await _userManager.RemoveFromRolesAsync(user, roles);
+
+                if (!removeRolesResult.Succeeded)
+                {
+                    return false;
+                    //return new UserRoles { Errors = new[] { "Cannot remove user existing roles" } };
+                }
             }
 
-            result = await _userManager.AddToRolesAsync(user,roleNames);
+
+            var result = await _userManager.AddToRolesAsync(user,roleNames);
 
             if (!result.Succeeded)
             {

@@ -11,11 +11,12 @@ namespace FlexmodulBackendV2.Services.ServiceInterfaces
         Task<AuthenticationResult> RegisterAsync(string email, string password);
         Task<AuthenticationResult> LoginAsync(string email, string password);
         Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken);
-        Task<bool> UpdateUserRoles(string userId, List<string> userRoles);
+        Task<bool> UpdateUserRoles(string userId, IEnumerable<string> userRoles);
         Task<List<UserRoles>> GetUserRoles(string userId);
         Task<AuthenticationResult> RegisterAndAddSuperAdminRole(string email, string password);
         Task<IdentityUser> GetUserById(string userId);
         Task<List<IdentityUser>> GetUsers();
         Task<IdentityUser> GetUserByEmail(string email);
+        Task<IEnumerable<string>> GetRoles();
     }
 }

@@ -24,22 +24,32 @@ namespace FlexmodulBackendV2.Controllers.V1
         }
 
         [Authorize(Roles = Roles.SuperAdmin)]
-        [HttpPost(ApiRoutes.Identity.SetRole)]
-        public async Task<IActionResult> SetUserRole([FromRoute] string userId,[FromBody] string roleId)
-        { 
-            var roles = new List<string>{roleId};
-            var result = await _identityService.UpdateUserRoles(userId,roles);
+        [HttpPost(ApiRoutes.Identity.SetUserRole)]
+        public async Task<IActionResult> SetUserRole([FromBody] SetUserRoleRequest setUserRoleRequest)
+        {
+            var result = await _identityService.UpdateUserRoles(setUserRoleRequest.UserId, setUserRoleRequest.Roles);
 
             if (result == false)
-                return NotFound();
+                return NotFound("Updating user role failed.");
             return Ok(true);
         }
 
         [Authorize(Roles = Roles.SuperAdmin)]
-        [HttpGet(ApiRoutes.Identity.GetRoles)]
+        [HttpGet(ApiRoutes.Identity.GetUserRoles)]
         public async Task<IActionResult> GetUserRoles([FromRoute] string userId)
         {
             var result = await _identityService.GetUserRoles(userId);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+
+        }
+
+        [Authorize(Roles = Roles.SuperAdmin)]
+        [HttpGet(ApiRoutes.Identity.GetRoles)]
+        public async Task<IActionResult> GetRoles()
+        {
+            var result = await _identityService.GetRoles();
             if (result == null)
                 return NotFound();
             return Ok(result);
