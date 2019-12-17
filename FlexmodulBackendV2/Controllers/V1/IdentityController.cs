@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.RequestDTO;
@@ -63,7 +64,13 @@ namespace FlexmodulBackendV2.Controllers.V1
             if (result == null)
                 return NotFound("Cannot find users");
 
-            var userResponses = result.Select(IdentityUserToUserResponse).ToList();
+            var userResponses = new List<UserResponse>();
+
+            foreach (var user in result)
+            {
+                var userResponse = await IdentityUserToUserResponse(user);
+                userResponses.Add(userResponse);
+            }
 
             return Ok(userResponses);
 
@@ -72,27 +79,27 @@ namespace FlexmodulBackendV2.Controllers.V1
         [HttpGet(ApiRoutes.Identity.GetById)]
         public async Task<IActionResult> GetUserById([FromRoute] string userId)
         {
-            IdentityUser result = await _identityService.GetUserById(userId);
-            if (result == null)
+            var user = await _identityService.GetUserById(userId);
+            if (user == null)
                 return NotFound("Cannot find user with this ID");
 
-            UserResponse responseObj = IdentityUserToUserResponse(result);
+            var userResponse = await IdentityUserToUserResponse(user);
 
-            return Ok(responseObj);
+            return Ok(userResponse);
 
         }
 
         [HttpGet(ApiRoutes.Identity.GetByUsername)]
         public async Task<IActionResult> GetUserByUsername([FromRoute] string email)
         {
-            var result = await _identityService.GetUserByEmail(email);
+            var user = await _identityService.GetUserByEmail(email);
 
-            if (result == null)
+            if (user == null)
                 return NotFound();
 
-            var responseObj = IdentityUserToUserResponse(result);
+            var userResponse = await IdentityUserToUserResponse(user);
 
-            return Ok(responseObj);
+            return Ok(userResponse);
         }
 
         [Authorize(Roles = Roles.SuperAdmin)]
@@ -175,13 +182,21 @@ namespace FlexmodulBackendV2.Controllers.V1
             });
         }
 
-        private static UserResponse IdentityUserToUserResponse(IdentityUser identityUser)
+        private async Task<UserResponse> IdentityUserToUserResponse(IdentityUser user)
         {
-            return new UserResponse()
+            var roles = await _identityService.GetUserRoles(user.Id);
+            var roleNames = roles.Select(role => role.RoleName);
+            return IdentityUserToUserResponse(user, roleNames);
+        }
+
+        private static UserResponse IdentityUserToUserResponse(IdentityUser user, IEnumerable<string> roles)
+        {
+            return new UserResponse
             {
-                Id = identityUser.Id,
-                Email = identityUser.Email,
-                UserName = identityUser.UserName
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                Roles = roles
             };
         }
     }
