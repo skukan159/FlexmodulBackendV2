@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Domain;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +13,6 @@ namespace FlexmodulBackendV2.Services.ServiceInterfaces
         Task<IEnumerable<string>> GetRoles();
         Task<List<UserRoles>> GetUserRoles(string userId);
         Task<bool> UpdateUserRoles(string userId, IEnumerable<string> userRoles);
-        Task<AuthenticationResult> RegisterAndAddSuperAdminRole(string email, string password);
         Task<IdentityUser> GetUserById(string userId);
         Task<List<IdentityUser>> GetUsers();
         Task<IdentityUser> GetUserByEmail(string email);

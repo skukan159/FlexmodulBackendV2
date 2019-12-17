@@ -11,14 +11,10 @@ namespace FlexmodulBackendV2.Services
         public FmHouseTypeService(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-
-
         public async Task<FmHouseType> GetFmHouseTypeByTypeAsync(int houseType)
         {
             return await DbContext.FmHouseTypes
                 .SingleOrDefaultAsync(ht => ht.HouseType == houseType);
         }
-
-
     }
 }

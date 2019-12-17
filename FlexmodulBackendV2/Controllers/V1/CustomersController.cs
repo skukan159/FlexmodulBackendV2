@@ -53,7 +53,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.Customers.Update)]
-        public async Task<IActionResult> Update([FromRoute]Guid customerId, [FromBody]UpdateCustomerRequest request)
+        public async Task<IActionResult> Update([FromRoute]Guid customerId, [FromBody]CustomerRequest request)
         {
             var customer = await _customerService.GetByIdAsync(customerId);
             customer.CompanyName = request.CompanyName;
@@ -71,7 +71,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.Customers.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateCustomerRequest customerRequest)
+        public async Task<IActionResult> Create([FromBody] CustomerRequest customerRequest)
         {
             var customer = new Customer
             {

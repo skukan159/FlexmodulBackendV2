@@ -45,7 +45,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.Materials.Update)]
-        public async Task<IActionResult> Update([FromRoute] Guid materialId, [FromBody] UpdateMaterialRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid materialId, [FromBody] MaterialRequest request)
         {
             var material = await _materialsService.GetByIdAsync(materialId);
             material.Category = request.Category;
@@ -63,7 +63,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         }
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.Materials.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateMaterialRequest materialRequest)
+        public async Task<IActionResult> Create([FromBody] MaterialRequest materialRequest)
         {
             var material = new Material
             {

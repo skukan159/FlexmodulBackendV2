@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FlexmodulBackendV2.Options
+﻿namespace FlexmodulBackendV2.Options
 {
     public class SwaggerOptions
     {

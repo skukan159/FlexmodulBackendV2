@@ -2,7 +2,7 @@
 
 namespace FlexmodulBackendV2.Contracts.V1.RequestDTO.Rent
 {
-    public class UpdateRentRequest
+    public class RentRequest
     {
         public Guid ProductionInformationId { get; set; }
         public DateTime StartDate { get; set; }

@@ -45,11 +45,11 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.RentalOverviews.Update)]
-        public async Task<IActionResult> Update([FromRoute] Guid rentalOverviewId, [FromBody] UpdateRentalOverviewRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid rentalOverviewId, [FromBody] RentalOverviewRequest request)
         {
             var rentalOverview = await _rentalOverviewsService.GetByIdAsync(rentalOverviewId);
             rentalOverview.EstimatedPrice = request.EstimatedPrice;
-            rentalOverview.ProductionInformations = request.ProductionInformations;
+            rentalOverview.ProductionInformations = request.ProductionInformation;
             rentalOverview.PurchaseStatus = request.PurchaseStatus;
             rentalOverview.SetupAddressPostalCode = request.SetupAddressPostalCode;
             rentalOverview.SetupAddressStreet = request.SetupAddressStreet;
@@ -65,7 +65,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.RentalOverviews.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateRentalOverviewRequest rentalOverviewRequest)
+        public async Task<IActionResult> Create([FromBody] RentalOverviewRequest rentalOverviewRequest)
         {
             var rentalOverview = new RentalOverview
             {

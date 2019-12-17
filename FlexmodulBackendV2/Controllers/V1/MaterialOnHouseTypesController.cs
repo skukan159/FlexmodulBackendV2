@@ -50,7 +50,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.MaterialOnHouseTypes.Update)]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMaterialOnHouseTypeRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] MaterialOnHouseTypeRequest request)
         {
             var materialOnHouseType = await _repositoryService.GetByIdAsync(id);
             materialOnHouseType.FmHouseTypeId = request.FmHouseTypeId;
@@ -65,7 +65,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.MaterialOnHouseTypes.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateMaterialOnHouseTypeRequest materialOnHouseTypeRequest)
+        public async Task<IActionResult> Create([FromBody] MaterialOnHouseTypeRequest materialOnHouseTypeRequest)
         {
             var materialOnHouseType = new MaterialOnHouseType
             {

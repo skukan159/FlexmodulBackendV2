@@ -2,7 +2,7 @@
 
 namespace FlexmodulBackendV2.Contracts.V1.RequestDTO.RentalOverview
 {
-    public class CreateRentalOverviewRequest
+    public class RentalOverviewRequest
     {
         public ICollection<Domain.ProductionInformation> ProductionInformation { get; set; }
         public Domain.RentalOverview.PurchaseStatuses PurchaseStatus { get; set; }

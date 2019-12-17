@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouseType;
 using FlexmodulBackendV2.Contracts.V1.ResponseDTO;
-using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Controllers.V1
 {
@@ -59,11 +55,10 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut(ApiRoutes.FmHouseTypes.Update)]
-        public async Task<IActionResult> Update([FromRoute]Guid fmHouseTypeId, [FromBody]UpdateFmHouseTypeRequest request)
+        public async Task<IActionResult> Update([FromRoute]Guid fmHouseTypeId, [FromBody]FmHouseTypeRequest request)
         {
             var fmHouseType = await _fmHouseTypeService.GetByIdAsync(fmHouseTypeId);
             fmHouseType.HouseType = request.HouseType;
-            fmHouseType.MaterialsOnHouse = request.MaterialsOnHouse;
 
             var updated = await _fmHouseTypeService.UpdateAsync(fmHouseType);
             if (updated)
@@ -74,7 +69,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost(ApiRoutes.FmHouseTypes.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateFmHouseTypeRequest fmHouseRequest)
+        public async Task<IActionResult> Create([FromBody] FmHouseTypeRequest fmHouseRequest)
         {
             var fmHouseType = new FmHouseType
             {

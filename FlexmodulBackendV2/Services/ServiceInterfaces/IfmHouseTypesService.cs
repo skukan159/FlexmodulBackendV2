@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FlexmodulBackendV2.Domain;
 
 namespace FlexmodulBackendV2.Services.ServiceInterfaces

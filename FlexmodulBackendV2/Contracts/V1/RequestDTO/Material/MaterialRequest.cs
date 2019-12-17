@@ -1,6 +1,6 @@
 ﻿namespace FlexmodulBackendV2.Contracts.V1.RequestDTO.Material
 {
-    public class UpdateMaterialRequest
+    public class MaterialRequest
     {
         public Domain.Material.HouseSections HouseSection { get; set; }
         public string Category { get; set; }

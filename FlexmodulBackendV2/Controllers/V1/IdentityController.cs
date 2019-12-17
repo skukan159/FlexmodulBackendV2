@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.RequestDTO;
@@ -120,23 +119,11 @@ namespace FlexmodulBackendV2.Controllers.V1
                 });
             }
 
-            Domain.AuthenticationResult authResponse;
-
-            // TODO: Throw this out later in the project - this is only for testing purposes
-            if (request.SecretPassword == "SuperSecretPassword")
-            { 
-                authResponse = await _identityService.RegisterAndAddSuperAdminRole(request.Email, request.Password);
-            }
-            else
-                authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
+            var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
 
             if (!authResponse.Success)
-            {
-                return BadRequest(new AuthFailedResponse
-                {
-                    Errors = authResponse.Errors
-                });
-            }
+                return BadRequest(new AuthFailedResponse { Errors = authResponse.Errors});
+            
 
             return Ok(new AuthSuccessResponse
             {
@@ -188,17 +175,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             });
         }
 
-        private async Task<IActionResult> AddRoleToRegisteredUser(string userId, string roleId)
-        {
-            var roles = new List<string> { roleId };
-            var result = await _identityService.UpdateUserRoles(userId, roles);
-
-            if (result == false)
-                return NotFound();
-            return Ok(true);
-        }
-
-        private UserResponse IdentityUserToUserResponse(IdentityUser identityUser)
+        private static UserResponse IdentityUserToUserResponse(IdentityUser identityUser)
         {
             return new UserResponse()
             {

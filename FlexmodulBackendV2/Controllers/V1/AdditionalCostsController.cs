@@ -43,7 +43,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         }
 
         [HttpPut(ApiRoutes.AdditionalCosts.Update)]
-        public async Task<IActionResult> Update([FromRoute]Guid additionalCostId, [FromBody]UpdateAdditionalCostRequest request)
+        public async Task<IActionResult> Update([FromRoute]Guid additionalCostId, [FromBody]AdditionalCostRequest request)
         {
             var additionalCost = await _additionalCostsService.GetByIdAsync(additionalCostId);
             additionalCost.Description = request.Description;
@@ -58,7 +58,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         }
 
         [HttpPost(ApiRoutes.AdditionalCosts.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateAdditionalCostRequest customerRequest)
+        public async Task<IActionResult> Create([FromBody] AdditionalCostRequest customerRequest)
         {
             var additionalCost = new AdditionalCost
             {

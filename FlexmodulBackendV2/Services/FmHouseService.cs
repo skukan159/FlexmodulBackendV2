@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
-using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
@@ -28,6 +26,5 @@ namespace FlexmodulBackendV2.Services
                 .Include(house => house.HouseType)
                 .ToListAsync();
         }
-
     }
 }

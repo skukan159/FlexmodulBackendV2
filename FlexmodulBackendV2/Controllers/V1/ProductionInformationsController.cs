@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
 using FlexmodulBackendV2.Contracts.V1.RequestDTO.ProductionInformation;
+using FlexmodulBackendV2.Contracts.V1.ResponseDTO;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -104,13 +105,12 @@ namespace FlexmodulBackendV2.Controllers.V1
             return NotFound();
         }
 
-        public static ProductionInformation ProdInfoToProdInfoResponse(ProductionInformation prodInfo)
+        public static ProductionInformationResponse ProdInfoToProdInfoResponse(ProductionInformation prodInfo)
         {
-            return new ProductionInformation
+            return new ProductionInformationResponse
             {
                 Id = prodInfo.Id,
                 HouseId = prodInfo.HouseId,
-                House = prodInfo.House,
                 Rents = prodInfo.Rents,
                 Customer = prodInfo.Customer,
                 ExteriorWalls = prodInfo.ExteriorWalls,

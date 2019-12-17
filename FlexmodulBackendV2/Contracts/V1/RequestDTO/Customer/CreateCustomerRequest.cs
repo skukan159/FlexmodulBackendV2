@@ -1,6 +1,6 @@
 ﻿namespace FlexmodulBackendV2.Contracts.V1.RequestDTO.Customer
 {
-    public class CreateCustomerRequest
+    public class CustomerRequest
     {
         public string CompanyName { get; set; }
         public string CompanyTown { get; set; }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace FlexmodulBackendV2.Domain
+﻿namespace FlexmodulBackendV2.Domain
 {
     public class Customer : EntityBase
     {

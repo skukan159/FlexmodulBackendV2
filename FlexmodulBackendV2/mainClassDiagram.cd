@@ -122,7 +122,7 @@
   <Class Name="FlexmodulBackendV2.Controllers.V1.IdentityController" Collapsed="true">
     <Position X="20.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAACIAAAAgAAEAAAAgAAAABABAAABCACQAAAAAAA=</HashCode>
+      <HashCode>IAAAAACIAAAAgAAEAAAAgAAAABABAAABCAAQAAAAAAA=</HashCode>
       <FileName>Controllers\V1\IdentityController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -168,11 +168,11 @@
       <FileName>Controllers\V1\ValuesController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Rent.CreateRentRequest" Collapsed="true">
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Rent.RentRequest" Collapsed="true">
     <Position X="18" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAACAAgAAAAAAAAAAAAIEAAAAA=</HashCode>
-      <FileName>Contracts\V1\RequestDTO\Rent\CreateRentRequest.cs</FileName>
+      <FileName>Contracts\V1\RequestDTO\Rent\RentRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.ProductionInformation.UpdateProductionInformationRequest" Collapsed="true">
@@ -182,32 +182,18 @@
       <FileName>Contracts\V1\RequestDTO\ProductionInformation\UpdateProductionInformationRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouse.CreateFmHouseRequest" Collapsed="true">
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouse.FmHouseRequest" Collapsed="true">
     <Position X="20.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Contracts\V1\RequestDTO\FmHouse\CreateFmHouseRequest.cs</FileName>
+      <FileName>Contracts\V1\RequestDTO\FmHouse\FmHouseRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.FmHouse.UpdateFmHouseRequest" Collapsed="true">
-    <Position X="16" Y="3" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Contracts\V1\RequestDTO\FmHouse\UpdateFmHouseRequest.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Customer.CreateCustomerRequest" Collapsed="true">
+  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Customer.CustomerRequest" Collapsed="true">
     <Position X="15.75" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>QAAAQBAAAAAAAAAABAAAgAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Contracts\V1\RequestDTO\Customer\CreateCustomerRequest.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.Customer.UpdateCustomerRequest" Collapsed="true">
-    <Position X="15.75" Y="3" Width="2" />
-    <TypeIdentifier>
-      <HashCode>QAAAQBAAAAAAAAAABAAAgAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Contracts\V1\RequestDTO\Customer\UpdateCustomerRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.RefreshTokenRequest" Collapsed="true">
@@ -225,7 +211,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FlexmodulBackendV2.Contracts.V1.RequestDTO.UserRoleRequest" Collapsed="true">
-    <Position X="22.25" Y="3" Width="1.5" />
+    <Position X="20.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Contracts\V1\RequestDTO\UserRoleRequest.cs</FileName>
@@ -239,7 +225,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.CustomerResponse" Collapsed="true">
-    <Position X="17.75" Y="3" Width="1.75" />
+    <Position X="15.75" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>QAACQBAAAAAAAAAABAAAgAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Contracts\V1\ResponseDTO\CustomerResponse.cs</FileName>
@@ -260,21 +246,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.RentalOverviewResponse" Collapsed="true">
-    <Position X="19.5" Y="3" Width="1.25" />
+    <Position X="17.5" Y="3" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AQACAAAAAAEAAAAABAAAAACAAAAAAAAAAAAAACAAAEA=</HashCode>
       <FileName>Contracts\V1\ResponseDTO\RentalOverviewResponse.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.RentResponse" Collapsed="true">
-    <Position X="23.75" Y="3" Width="1.5" />
+    <Position X="21.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAgAAAAAACAAgAAAAAAAAAAAAIEAAAAA=</HashCode>
       <FileName>Contracts\V1\ResponseDTO\RentResponse.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FlexmodulBackendV2.Contracts.V1.ResponseDTO.UserResponse" Collapsed="true">
-    <Position X="20.75" Y="3" Width="1.5" />
+    <Position X="18.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAACAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Contracts\V1\ResponseDTO\UserResponse.cs</FileName>
@@ -378,7 +364,7 @@
   <Class Name="FlexmodulBackendV2.Services.IdentityService" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="25" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IgAABAAoIAAABAAkgAAAgAAgAoEAAAAgSAIAAAAAAAA=</HashCode>
+      <HashCode>IgAABAAoIAAABAAkgAAAgAAgAoEAAAAgCAIAAAAAAAA=</HashCode>
       <FileName>Services\IdentityService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -436,7 +422,7 @@
   <Interface Name="FlexmodulBackendV2.Services.ServiceInterfaces.IIdentityService" Collapsed="true">
     <Position X="14.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IgAAAAAoAAAAAAAkgAAAgAAAAAAAAAAgSAAAAAAAAAA=</HashCode>
+      <HashCode>IgAAAAAoAAAAAAAkgAAAgAAAAAAAAAAgCAAAAAAAAAA=</HashCode>
       <FileName>Services\ServiceInterfaces\IIdentityService.cs</FileName>
     </TypeIdentifier>
   </Interface>

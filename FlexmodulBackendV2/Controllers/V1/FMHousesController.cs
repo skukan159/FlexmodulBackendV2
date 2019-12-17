@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Contracts.V1;
@@ -46,7 +45,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPut(ApiRoutes.FmHouses.Update)]
-        public async Task<IActionResult> Update([FromRoute]Guid fmHouseId, [FromBody]UpdateFmHouseRequest request)
+        public async Task<IActionResult> Update([FromRoute]Guid fmHouseId, [FromBody]FmHouseRequest request)
         {
             var fmHouse = await _fmHouseService.GetByIdAsync(fmHouseId);
             fmHouse.HouseType = request.HouseType;
@@ -61,7 +60,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.FmHouses.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateFmHouseRequest fmHouseRequest)
+        public async Task<IActionResult> Create([FromBody] FmHouseRequest fmHouseRequest)
         {
             var fmHouse = new FmHouse
             {

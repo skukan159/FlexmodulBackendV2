@@ -45,7 +45,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
          [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
          [HttpPut(ApiRoutes.Rents.Update)]
-        public async Task<IActionResult> Update([FromRoute] Guid rentId, [FromBody] UpdateRentRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid rentId, [FromBody] RentRequest request)
         {
           var rent = await _rentsService.GetByIdAsync(rentId);
           rent.ProductionInformationId = request.ProductionInformationId;
@@ -63,7 +63,7 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         [Authorize(Roles = Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
         [HttpPost(ApiRoutes.Rents.Create)]
-        public async Task<IActionResult> Create([FromBody] CreateRentRequest rentRequest)
+        public async Task<IActionResult> Create([FromBody] RentRequest rentRequest)
         {
 
           var rent = new Rent

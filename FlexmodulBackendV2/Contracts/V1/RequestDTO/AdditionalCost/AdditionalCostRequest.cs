@@ -2,7 +2,7 @@
 
 namespace FlexmodulBackendV2.Contracts.V1.RequestDTO.AdditionalCost
 {
-    public class UpdateAdditionalCostRequest
+    public class AdditionalCostRequest
     {
         public string Description { get; set; }
         public DateTime Date { get; set; }
