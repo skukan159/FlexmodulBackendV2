@@ -73,7 +73,7 @@ namespace BackendTests.IntegrationTests
             return registrationResponse.Token;
         }
 
-        protected async Task<CustomerResponse> CreateCustomerAsync(CreateCustomerRequest request)
+        protected async Task<CustomerResponse> CreateCustomerAsync(CustomerRequest request)
         {
             var response = await testClient.PostAsJsonAsync(ApiRoutes.Customers.Create, request);
             return await response.Content.ReadAsAsync<CustomerResponse>();
