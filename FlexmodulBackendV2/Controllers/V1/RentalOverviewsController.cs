@@ -50,7 +50,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             var rentalOverview = await _rentalOverviewsService.GetByIdAsync(rentalOverviewId);
             rentalOverview.EstimatedPrice = request.EstimatedPrice;
             rentalOverview.ProductionInformations = request.ProductionInformation;
-            rentalOverview.PurchaseStatus = request.PurchaseStatus;
+            rentalOverview.PurchaseStatus = PurchaseStatusStringToEnum(request.PurchaseStatus);
             rentalOverview.SetupAddressPostalCode = request.SetupAddressPostalCode;
             rentalOverview.SetupAddressStreet = request.SetupAddressStreet;
             rentalOverview.SetupAddressTown = request.SetupAddressTown;
@@ -71,7 +71,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             {
                 ProductionInformations = rentalOverviewRequest.ProductionInformation,
                 EstimatedPrice = rentalOverviewRequest.EstimatedPrice,
-                PurchaseStatus = rentalOverviewRequest.PurchaseStatus,
+                PurchaseStatus = PurchaseStatusStringToEnum(rentalOverviewRequest.PurchaseStatus),
                 SetupAddressPostalCode = rentalOverviewRequest.SetupAddressPostalCode,
                 SetupAddressStreet = rentalOverviewRequest.SetupAddressStreet,
                 SetupAddressTown = rentalOverviewRequest.SetupAddressTown
@@ -105,12 +105,27 @@ namespace FlexmodulBackendV2.Controllers.V1
                 Id = rentalOverview.Id,
                 EstimatedPrice = rentalOverview.EstimatedPrice,
                 ProductionInformation = rentalOverview.ProductionInformations,
-                PurchaseStatus = rentalOverview.PurchaseStatus,
+                PurchaseStatus = rentalOverview.PurchaseStatus.ToString(),
                 SetupAddressPostalCode = rentalOverview.SetupAddressPostalCode,
                 SetupAddressStreet = rentalOverview.SetupAddressStreet,
                 SetupAddressTown = rentalOverview.SetupAddressTown
                 
             };
+        }
+
+        public static RentalOverview.PurchaseStatuses PurchaseStatusStringToEnum(string purchaseStatus)
+        {
+            var returnedPurchaseStatus = RentalOverview.PurchaseStatuses.Unknown;
+            var purchaseStatuses = Enum.GetValues(typeof(RentalOverview.PurchaseStatuses)).Cast<RentalOverview.PurchaseStatuses>();
+            foreach (var status in purchaseStatuses)
+            {
+                if (status.ToString() == purchaseStatus)
+                {
+                    returnedPurchaseStatus = status;
+                }
+            }
+
+            return returnedPurchaseStatus;
         }
     }
 }

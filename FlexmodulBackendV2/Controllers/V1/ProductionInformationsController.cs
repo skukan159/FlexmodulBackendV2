@@ -19,9 +19,9 @@ namespace FlexmodulBackendV2.Controllers.V1
         Roles = Roles.Employee + "," + Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
     public class ProductionInformationsController : Controller
     {
-        private readonly IRepository<ProductionInformation> _productionInformationsService;
+        private readonly IProductionInformationService _productionInformationsService;
 
-        public ProductionInformationsController(IRepository<ProductionInformation> productionInformationsService)
+        public ProductionInformationsController(IProductionInformationService productionInformationsService)
         {
             _productionInformationsService = productionInformationsService;
         }
@@ -118,7 +118,7 @@ namespace FlexmodulBackendV2.Controllers.V1
                 Note = prodInfo.Note,
                 ProductionPrice = prodInfo.ProductionPrice,
                 AdditionalCosts = prodInfo.AdditionalCosts,
-                LastUpdatedBy = prodInfo.LastUpdatedBy,
+                LastUpdatedBy = prodInfo.LastUpdatedBy.Email,
                 LastUpdatedDate = prodInfo.LastUpdatedDate,
                 IsActive = prodInfo.IsActive
             };

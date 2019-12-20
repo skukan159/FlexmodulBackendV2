@@ -17,7 +17,7 @@ namespace FlexmodulBackendV2.Contracts.V1.ResponseDTO
         public float ProductionPrice { get; set; }
         public DateTime ProductionDate { get; set; }
         public ICollection<AdditionalCost> AdditionalCosts { get; set; }
-        public IdentityUser LastUpdatedBy { get; set; }
+        public string LastUpdatedBy { get; set; }
         public DateTime LastUpdatedDate { get; set; }
         public bool IsActive { get; set; }
     }

@@ -19,9 +19,9 @@ namespace FlexmodulBackendV2.Controllers.V1
         Roles = Roles.Employee+","+Roles.AdministrativeEmployee + "," + Roles.SuperAdmin)]
     public class FmHousesController : Controller
     {
-        private readonly IRepository<FmHouse> _fmHouseService;
+        private readonly IFmHouseService _fmHouseService;
 
-        public FmHousesController(IRepository<FmHouse> fmHouseService)
+        public FmHousesController(IFmHouseService fmHouseService)
         {
             _fmHouseService = fmHouseService;
         }
@@ -94,8 +94,9 @@ namespace FlexmodulBackendV2.Controllers.V1
             return new FmHouseResponse
             {
                 Id = fmHouse.Id,
-                HouseType = fmHouse.HouseType,
-                SquareMeters = fmHouse.SquareMeters
+                HouseType = fmHouse.HouseType.HouseType,
+                SquareMeters = fmHouse.SquareMeters,
+                MaterialsOnHouse = fmHouse.HouseType.MaterialsOnHouse
             };
         }
     }

@@ -10,7 +10,8 @@ namespace FlexmodulBackendV2.Domain
             ContractNotInitiated,
             Terminated,
             Stock,
-            SoldOut
+            SoldOut,
+            Unknown
         }
         public ICollection<ProductionInformation> ProductionInformations { get; set; }
         public PurchaseStatuses PurchaseStatus { get; set; }

@@ -23,9 +23,9 @@ namespace FlexmodulBackendV2.Installers
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IRepository<AdditionalCost>, Repository<AdditionalCost>>();
             services.AddScoped<IFmHouseTypesService, FmHouseTypeService>();
-            services.AddScoped<IRepository<FmHouse>, Repository<FmHouse>>();
+            services.AddScoped<IFmHouseService, FmHouseService>();
             services.AddScoped<IRepository<Material>, Repository<Material>>();
-            services.AddScoped<IRepository<ProductionInformation>, ProductionInformationService>();
+            services.AddScoped<IProductionInformationService, ProductionInformationService>();
             services.AddScoped<IRepository<RentalOverview>, Repository<RentalOverview>>();
             services.AddScoped<IRepository<Rent>, Repository<Rent>>();
             services.AddScoped<IRepository<MaterialOnHouseType>, Repository<MaterialOnHouseType>>();

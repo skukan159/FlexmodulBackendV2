@@ -12,7 +12,8 @@ namespace FlexmodulBackendV2.Domain
             AssembleWalls,
             InnerWalls,
             DoorsWindows,
-            RoofCeiling
+            RoofCeiling,
+            Unknown
         }
 
         public HouseSections HouseSection { get; set; }

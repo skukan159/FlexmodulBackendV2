@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
+using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlexmodulBackendV2.Services
 {
-    public class FmHouseService : Repository<FmHouse>
+    public class FmHouseService : Repository<FmHouse>, IFmHouseService
     {
         public FmHouseService(ApplicationDbContext dbContext) : base(dbContext)
         {

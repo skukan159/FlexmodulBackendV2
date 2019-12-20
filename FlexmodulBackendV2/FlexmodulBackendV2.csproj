@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>aspnet-FlexmodulBackendV2-4A3680EB-5EC3-4627-8FC5-2E63F76853E4</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
 

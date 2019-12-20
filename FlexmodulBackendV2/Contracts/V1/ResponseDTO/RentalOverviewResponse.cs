@@ -8,7 +8,7 @@ namespace FlexmodulBackendV2.Contracts.V1.ResponseDTO
     {
         public Guid Id { get; set; }
         public ICollection<ProductionInformation> ProductionInformation { get; set; }
-        public RentalOverview.PurchaseStatuses PurchaseStatus { get; set; }
+        public string PurchaseStatus { get; set; }
         public string SetupAddressTown { get; set; }
         public string SetupAddressStreet { get; set; }
         public int SetupAddressPostalCode { get; set; }

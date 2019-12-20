@@ -49,7 +49,7 @@ namespace FlexmodulBackendV2.Controllers.V1
         {
             var material = await _materialsService.GetByIdAsync(materialId);
             material.Category = request.Category;
-            material.HouseSection = request.HouseSection;
+            material.HouseSection = HouseSectionStringToEnum(request.HouseSection);
             material.Name = request.Name;
             material.PricePerUnit = request.PricePerUnit;
             material.Supplier = request.Supplier;
@@ -69,7 +69,7 @@ namespace FlexmodulBackendV2.Controllers.V1
             {
                 Name = materialRequest.Name,
                 Category = materialRequest.Category,
-                HouseSection = materialRequest.HouseSection,
+                HouseSection = HouseSectionStringToEnum(materialRequest.HouseSection),
                 PricePerUnit = materialRequest.PricePerUnit,
                 Supplier = materialRequest.Supplier,
                 Units = materialRequest.Units
@@ -102,12 +102,27 @@ namespace FlexmodulBackendV2.Controllers.V1
             {
                 Id = material.Id,
                 Category = material.Category,
-                HouseSection = material.HouseSection,
+                HouseSection = material.HouseSection.ToString(),
                 Name = material.Name,
                 PricePerUnit = material.PricePerUnit,
                 Supplier = material.Supplier,
                 Units = material.Units
             };
+        }
+
+         public static Material.HouseSections HouseSectionStringToEnum(string houseSection)
+        {
+            var returnedHouseSection = Material.HouseSections.Unknown;
+            var houseSections = Enum.GetValues(typeof(Material.HouseSections)).Cast<Material.HouseSections>();
+            foreach (var status in houseSections)
+            {
+                if (status.ToString() == houseSection)
+                {
+                    returnedHouseSection = status;
+                }
+            }
+
+            return returnedHouseSection;
         }
     }
 }
