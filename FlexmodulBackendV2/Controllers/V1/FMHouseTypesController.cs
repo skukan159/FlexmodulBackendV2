@@ -36,9 +36,9 @@ namespace FlexmodulBackendV2.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.FmHouseTypes.Get)]
-        public async Task<IActionResult> Get([FromRoute]Guid fmHouseId)
+        public async Task<IActionResult> Get([FromRoute]Guid fmHouseTypeId)
         {
-            var fmHouseType = await _fmHouseTypeService.GetByIdAsync(fmHouseId);
+            var fmHouseType = await _fmHouseTypeService.GetByIdAsync(fmHouseTypeId);
             if (fmHouseType == null)
                 return NotFound();
             return base.Ok(FmHouseTypeToFmHouseTypeResponse(fmHouseType));
@@ -99,11 +99,16 @@ namespace FlexmodulBackendV2.Controllers.V1
 
         public static FmHouseTypeResponse FmHouseTypeToFmHouseTypeResponse(FmHouseType fmHouseType)
         {
+            var materialsOnHouseType = fmHouseType
+                .MaterialsOnHouse
+                .Select(MaterialOnHouseTypesController.MaterialOnHouseTypeToMaterialOnHouseTypeResponse)
+                .ToList();
+
             return new FmHouseTypeResponse
             {
                 Id = fmHouseType.Id,
                 HouseType = fmHouseType.HouseType,
-                MaterialsOnHouse = fmHouseType.MaterialsOnHouse
+                MaterialsOnHouse = materialsOnHouseType
             };
         }
         

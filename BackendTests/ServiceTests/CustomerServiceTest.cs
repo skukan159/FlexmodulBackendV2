@@ -5,7 +5,7 @@ using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
 using Xunit;
 
-namespace BackendTests.UnitTests
+namespace BackendTests.ServiceTests
 {
     public class CustomerServiceTest : ServiceTestBase
     {

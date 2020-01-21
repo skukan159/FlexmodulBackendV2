@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
-using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
 using Xunit;
 
-namespace BackendTests.UnitTests
+namespace BackendTests.ServiceTests
 {
     public class FmHouseServiceTest : ServiceTestBase
     {

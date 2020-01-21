@@ -25,6 +25,7 @@ namespace FlexmodulBackendV2.Services
         {
             return await DbContext.FmHouseTypes
                 .Include(ht => ht.MaterialsOnHouse)
+                //.Include(ht => ht.HouseType)
                 .ToListAsync();
         }
         public async Task<FmHouseType> GetFmHouseTypeByTypeAsync(int houseType)

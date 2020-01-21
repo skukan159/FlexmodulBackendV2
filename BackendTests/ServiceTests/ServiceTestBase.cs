@@ -7,7 +7,7 @@ using FlexmodulBackendV2.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace BackendTests.UnitTests
+namespace BackendTests.ServiceTests
 {
     public class ServiceTestBase
     {

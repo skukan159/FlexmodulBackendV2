@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using FlexmodulBackendV2.Data;
 using FlexmodulBackendV2.Domain;
 using FlexmodulBackendV2.Services;
-using FlexmodulBackendV2.Services.ServiceInterfaces;
 using Xunit;
 
-namespace BackendTests.UnitTests
+namespace BackendTests.ServiceTests
 {
     public class RepositoryServiceTest : ServiceTestBase
     {
